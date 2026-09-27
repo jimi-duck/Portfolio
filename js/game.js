@@ -990,7 +990,9 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     // built big); then what moves on it. A Klingon's engines go to full
     // during a charge, which is a second telegraph on top of the flash.
     var FR = BT.hull === 'drone' ? R * 1.25 : (b.fac === 'klingon' ? R : R * 1.12);
-    if(BT.hull === 'drone') ctx.rotate(b.rot * 0.6); else ctx.rotate(b.face);
+    // a cube has no bow, and its sprite is drawn in perspective, so it is
+    // never turned
+    if(BT.hull !== 'drone') ctx.rotate(b.face);
     ctx.scale(HULL_VIS * (1 + flash * 0.06), HULL_VIS * (1 + flash * 0.06));
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
@@ -1053,8 +1055,9 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     } else strobes(BT.hull, FR, b.id);
 
     // the core, which on a Klingon is also the charge telegraph: it swells
-    // and whites out on the beat before the hull commits
-    hullCore(R*0.05, R * (0.24 + 0.03 * Math.sin(gameTime * (b.enraged ? 9 : 4)) + flash * 0.16),
+    // and whites out on the beat before the hull commits. A cube has its own
+    // core burning out of its top face, painted in.
+    if(BT.hull !== 'drone') hullCore(R*0.05, R * (0.24 + 0.03 * Math.sin(gameTime * (b.enraged ? 9 : 4)) + flash * 0.16),
              crgb, 0.85 + flash * 0.15);
     ctx.restore();
 
@@ -5852,7 +5855,9 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     // drawn UNDER the hull and twice as wide: the painting then covers the
     // inner half, so only a clean outer edge shows and no internal seam — a
     // wing root, a nacelle on a hull — gets traced in neon
-    g.lineWidth = Math.min(4.4, Math.max(3, R * 0.1));
+    // two pixels wide under the hull (one shows), the rest is glow: a halo
+    // round the hull, as in the reference, rather than a drawn outline
+    g.lineWidth = Math.min(3.2, Math.max(2.2, R * 0.07));
     g.lineJoin = 'round';
     pathFn(); g.stroke();
     g.restore();
@@ -5864,6 +5869,40 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     g.fillRect(-1e4, -1e4, 2e4, 2e4);
     g.restore();
   }
+  // ── volume ──
+  // What made the reference ships read as models rather than cut-outs: every
+  // plate is lit along the edge facing the light and falls into shadow along
+  // the edge turned away from it. This is the classic inner bevel — fill the
+  // world OUTSIDE the part, clipped to the part, so only the fill's offset
+  // shadow lands inside, hugging the edges. White offset down from the top
+  // edge, black offset up from the bottom. It is soft and low-frequency on
+  // purpose: blurred light does not shimmer when the hull turns, which is
+  // the lesson the last painted pass taught.
+  function emboss(g, R, pathFn, hi, lo){
+    var big = R * 5;
+    g.save();
+    pathFn(); g.clip();
+    g.fillStyle = '#000';
+    g.shadowColor = 'rgba(255,255,255,' + hi + ')';
+    g.shadowBlur = R * 0.16 * bakeScale;
+    g.shadowOffsetX = R * 0.03 * bakeScale; g.shadowOffsetY = R * 0.08 * bakeScale;
+    pathFn(); g.rect(-big, -big, big * 2, big * 2); g.fill('evenodd');
+    g.shadowColor = 'rgba(0,0,0,' + lo + ')';
+    g.shadowBlur = R * 0.24 * bakeScale;
+    g.shadowOffsetX = -R * 0.04 * bakeScale; g.shadowOffsetY = -R * 0.12 * bakeScale;
+    pathFn(); g.rect(-big, -big, big * 2, big * 2); g.fill('evenodd');
+    g.restore();
+  }
+  // a soft bright ridge along a line — the spine of a hull catching the light
+  function ridge(g, x0, x1, y, w, a){
+    var rg = g.createLinearGradient(0, y - w, 0, y + w);
+    rg.addColorStop(0, 'rgba(255,255,255,0)');
+    rg.addColorStop(0.5, 'rgba(255,255,255,' + a + ')');
+    rg.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = rg;
+    g.beginPath(); g.ellipse((x0 + x1) / 2, y, Math.abs(x1 - x0) / 2, w, 0, 0, Math.PI * 2); g.fill();
+  }
+
   function canopy(g, x, y, rx, ry, rim){
     g.fillStyle = 'rgba(5,12,24,.92)';
     g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); g.fill();
@@ -5902,6 +5941,8 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     g.shadowBlur = 0;
     sheen(g, R, 0.18);
     g.restore();
+    emboss(g, R, function(){ silhouette(g, kind, R, 'wings'); }, 0.6, 0.85);
+    if(D.crystal) crystalFacets(g, R, D);
 
     // body
     silhouette(g, kind, R, 'body');
@@ -5923,6 +5964,8 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
       g.fillStyle = 'rgba(255,255,255,.16)'; g.fillRect(gx, -R * beam * 0.26, gw, R * beam * 0.09);
     }
     g.restore();
+    emboss(g, R, function(){ silhouette(g, kind, R, 'body'); }, 0.7, 0.9);
+    ridge(g, -R * 0.6, R * (nose - 0.1), -R * beam * 0.28, R * beam * 0.22, 0.5);
 
     // seams and the faction's pattern, bevelled
     for(s=-1; s<=1; s+=2){
@@ -5975,59 +6018,98 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     g.restore();
   }
 
-  // ── the Borg: a box, dense with machinery, lit green from inside ──
-  function paintCube(g, R, cap, adapted, rim){
-    var P = HULL_PAINT.borg, q = R * 0.74, rand = prng(cap ? 991 : 313), i;
-    var box = function(){ g.beginPath(); g.rect(-q, -q, q * 2, q * 2); };
-    castShadow(g, R, box, P.lo);
-    rimGlow(g, R, box, rim || P.rim, 0.55);
-    var fg = g.createLinearGradient(-q, -q, q, q);
-    fg.addColorStop(0, P.hi); fg.addColorStop(0.5, P.mid); fg.addColorStop(1, P.lo);
-    box(); g.fillStyle = fg; g.fill();
-    g.save();
-    box(); g.clip();
-    for(i=0;i<(cap ? 460 : 40);i++){
-      var w = q * ((cap ? 0.04 : 0.1) + rand() * 0.16), h = q * ((cap ? 0.04 : 0.1) + rand() * 0.16);
-      var x = -q + rand() * q * 2, y = -q + rand() * q * 2;
-      g.fillStyle = rand() < 0.5 ? 'rgba(0,0,0,' + (0.2 + rand() * 0.35).toFixed(3) + ')'
-                                 : 'rgba(205,215,210,' + (0.05 + rand() * 0.12).toFixed(3) + ')';
-      g.fillRect(x, y, w, h);
+  // Tholian: every spike is a crystal with a lit face and a dark face, split
+  // along its length, so the ship reads as cut glass rather than as a star
+  function crystalFacets(g, R, D){
+    var tips = [D.tip, D.tip2], s, i;
+    for(s=-1; s<=1; s+=2) for(i=0;i<tips.length;i++){
+      var t = tips[i];
+      if(!t) continue;
+      var tx = R * t[0], ty = s * R * t[1], bx = R * (t[0] > 0 ? 0.1 : -0.12), by = s * R * 0.1;
+      var mx = (bx + tx) / 2, my = (by + ty) / 2;
+      g.fillStyle = 'rgba(255,245,225,.28)';
+      g.beginPath(); g.moveTo(bx, by); g.lineTo(tx, ty); g.lineTo(mx - s * R * 0.05, my + R * 0.04); g.closePath(); g.fill();
+      g.fillStyle = 'rgba(40,10,60,.3)';
+      g.beginPath(); g.moveTo(bx, by + s * R * 0.14); g.lineTo(tx, ty); g.lineTo(mx - s * R * 0.05, my + R * 0.04); g.closePath(); g.fill();
     }
-    // conduits
-    g.strokeStyle = 'rgba(0,0,0,.5)'; g.lineWidth = Math.max(0.5, q * 0.025);
+  }
+
+  // ── the Borg: a cube you can see is a cube ──
+  // Seen from a little above and in front: the top face, and the two faces
+  // turned toward the viewer, each crammed with machinery and threaded with
+  // green light, and a green core burning out of the top. A cube has no bow,
+  // so this sprite is never rotated (see drawCapital and alienFacing) and
+  // the perspective always holds.
+  function cubeCorners(R){
+    var s = R * 0.54, d = R * 0.5;
+    return { tl:[-s - d / 2, -s - d / 2], tr:[s - d / 2, -s - d / 2], br:[s - d / 2, s - d / 2], bl:[-s - d / 2, s - d / 2],
+             BR:[s + d / 2, s + d / 2], TR:[s + d / 2, -s + d / 2], BL:[-s + d / 2, s + d / 2] };
+  }
+  function cubePath(g, R, face){
+    var c = cubeCorners(R);
     g.beginPath();
-    for(i=0;i<(cap ? 16 : 6);i++){
-      var a = -q + rand() * q * 2;
-      if(rand() < 0.5){ g.moveTo(-q, a); g.lineTo(q, a); } else { g.moveTo(a, -q); g.lineTo(a, q); }
+    function poly(pts){ g.moveTo(pts[0][0], pts[0][1]); for(var i=1;i<pts.length;i++) g.lineTo(pts[i][0], pts[i][1]); g.closePath(); }
+    if(face === 'top') poly([c.tl, c.tr, c.br, c.bl]);
+    else if(face === 'east') poly([c.tr, c.TR, c.BR, c.br]);
+    else if(face === 'south') poly([c.bl, c.br, c.BR, c.BL]);
+    else poly([c.tl, c.tr, c.TR, c.BR, c.BL, c.bl]);
+  }
+  function paintCube(g, R, cap, adapted, rim){
+    var P = HULL_PAINT.borg, rand = prng(cap ? 991 : 313), i, f;
+    var crgb = adapted ? '255,255,255' : P.glow, c = cubeCorners(R);
+    castShadow(g, R, function(){ cubePath(g, R, 'all'); }, P.lo);
+    rimGlow(g, R, function(){ cubePath(g, R, 'all'); }, rim || '126,255,110', 0.45);
+    var faces = [['south', 0.6], ['east', 0.78], ['top', 1]];
+    for(f=0; f<faces.length; f++){
+      var face = faces[f][0], lit = faces[f][1];
+      cubePath(g, R, face);
+      var fg = g.createLinearGradient(-R, -R, R, R);
+      fg.addColorStop(0, face === 'top' ? P.hi : P.mid); fg.addColorStop(1, P.lo);
+      g.fillStyle = fg; g.fill();
+      g.save();
+      cubePath(g, R, face); g.clip();
+      // machinery: blocks of plate, a few big, most small — fewer on a drone
+      for(i=0;i<(cap ? 190 : 34);i++){
+        var w = R * ((cap ? 0.03 : 0.07) + rand() * 0.13), h = R * ((cap ? 0.03 : 0.07) + rand() * 0.13);
+        var x = -R + rand() * R * 2, y = -R + rand() * R * 2;
+        g.fillStyle = rand() < 0.55 ? 'rgba(0,0,0,' + (0.25 + rand() * 0.35).toFixed(3) + ')'
+                                    : 'rgba(210,220,215,' + ((0.06 + rand() * 0.12) * lit).toFixed(3) + ')';
+        g.fillRect(x, y, w, h);
+      }
+      g.strokeStyle = 'rgba(0,0,0,.5)'; g.lineWidth = Math.max(0.6, R * 0.025);
+      g.beginPath();
+      for(i=0;i<(cap ? 9 : 4);i++){ var a = -R + rand() * R * 2; if(rand() < 0.5){ g.moveTo(-R, a); g.lineTo(R, a); } else { g.moveTo(a, -R); g.lineTo(a, R); } }
+      g.stroke();
+      // green light threaded through the machinery
+      g.globalCompositeOperation = 'lighter';
+      for(i=0;i<(cap ? 18 : 6);i++){
+        var hz = rand() < 0.5, x0 = -R + rand() * R * 2, y0 = -R + rand() * R * 2, L = R * (0.15 + rand() * 0.45);
+        g.strokeStyle = 'rgba(' + crgb + ',' + ((0.3 + rand() * 0.4) * (0.5 + lit / 2)).toFixed(3) + ')';
+        g.lineWidth = Math.max(0.7, R * 0.028);
+        g.beginPath(); g.moveTo(x0, y0); g.lineTo(hz ? x0 + L : x0, hz ? y0 : y0 + L); g.stroke();
+      }
+      g.globalCompositeOperation = 'source-over';
+      // the face turned from the light is darker overall
+      if(lit < 1){ g.fillStyle = 'rgba(0,0,0,' + (0.62 - lit * 0.6).toFixed(3) + ')'; g.fillRect(-R * 2, -R * 2, R * 4, R * 4); }
+      g.restore();
     }
-    g.stroke();
-    // green circuitry, lit from inside
+    // the core burning out of the top face, and the lit nodes round it
+    var tc = [(c.tl[0] + c.br[0]) / 2, (c.tl[1] + c.br[1]) / 2], q = R * 0.6;
+    g.save();
     g.globalCompositeOperation = 'lighter';
-    var crgb = adapted ? '255,255,255' : P.glow;
-    for(i=0;i<(cap ? 30 : 10);i++){
-      var hz = rand() < 0.5, x0 = -q + rand() * q * 2, y0 = -q + rand() * q * 2, L = q * (0.18 + rand() * 0.55);
-      g.strokeStyle = 'rgba(' + crgb + ',' + (0.3 + rand() * 0.4).toFixed(3) + ')';
-      g.lineWidth = Math.max(0.5, q * 0.022);
-      g.beginPath(); g.moveTo(x0, y0); g.lineTo(hz ? x0 + L : x0, hz ? y0 : y0 + L); g.stroke();
-    }
+    glowDot(g, tc[0], tc[1], R * 0.42, crgb, adapted ? 0.8 : 0.6);
     for(var gx=-1; gx<=1; gx++) for(var gy=-1; gy<=1; gy++){
       if(!gx && !gy) continue;
-      glowDot(g, gx * q * 0.52, gy * q * 0.52, q * 0.14, crgb, adapted ? 0.95 : 0.85);
+      glowDot(g, tc[0] + gx * q * 0.55, tc[1] + gy * q * 0.55, R * 0.09, crgb, 0.9);
     }
-    glowDot(g, 0, 0, q * 0.4, crgb, 0.45);
-    g.globalCompositeOperation = 'source-over';
-    // the recessed inner block
-    g.strokeStyle = 'rgba(0,0,0,.6)'; g.lineWidth = q * 0.05;
-    g.strokeRect(-q * 0.55, -q * 0.55, q * 1.1, q * 1.1);
-    g.strokeStyle = 'rgba(255,255,255,.16)'; g.lineWidth = q * 0.02;
-    g.strokeRect(-q * 0.52, -q * 0.52, q * 1.1, q * 1.1);
     g.restore();
-    // bevelled edges: lit top and left, shaded bottom and right
-    g.lineWidth = q * 0.07;
-    g.strokeStyle = 'rgba(255,255,255,.26)';
-    g.beginPath(); g.moveTo(-q, q); g.lineTo(-q, -q); g.lineTo(q, -q); g.stroke();
-    g.strokeStyle = 'rgba(0,0,0,.6)';
-    g.beginPath(); g.moveTo(q, -q); g.lineTo(q, q); g.lineTo(-q, q); g.stroke();
+    // hard edges: the lit rims of the top face, and the corner seams
+    g.lineCap = 'round';
+    g.strokeStyle = 'rgba(255,255,255,.4)'; g.lineWidth = Math.max(0.8, R * 0.035);
+    g.beginPath(); g.moveTo(c.bl[0], c.bl[1]); g.lineTo(c.tl[0], c.tl[1]); g.lineTo(c.tr[0], c.tr[1]); g.stroke();
+    g.strokeStyle = 'rgba(0,0,0,.6)'; g.lineWidth = Math.max(0.8, R * 0.03);
+    g.beginPath(); g.moveTo(c.tr[0], c.tr[1]); g.lineTo(c.br[0], c.br[1]); g.lineTo(c.bl[0], c.bl[1]);
+    g.moveTo(c.br[0], c.br[1]); g.lineTo(c.BR[0], c.BR[1]); g.stroke();
   }
 
   // ── the Klingon flagship's own hull: keel, raked wings, pylons ──
@@ -6072,6 +6154,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     g.shadowBlur = 0;
     sheen(g, R, 0.18);
     g.restore();
+    emboss(g, R, function(){ klingonCapPath(g, R, 'wings'); }, 0.6, 0.85);
     for(s=-1; s<=1; s+=2){
       bevel(g, -R*0.22, s*R*0.40, -R*0.72, s*R*0.84, sw);
       bevel(g, -R*0.36, s*R*0.32, -R*0.88, s*R*0.80, sw);
@@ -6086,6 +6169,8 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     plating(g, R, rand, 60, 1);
     g.fillStyle = 'rgba(255,255,255,.2)'; g.fillRect(-R * 0.75, -R * 0.1, R * 1.6, R * 0.03);
     g.restore();
+    emboss(g, R, function(){ klingonCapPath(g, R, 'keel'); }, 0.7, 0.9);
+    ridge(g, -R * 0.7, R * 0.9, -R * 0.05, R * 0.06, 0.5);
     for(x = 0.5; x > -0.7; x -= 0.3) bevel(g, R * x, -R * 0.15, R * x, R * 0.15, sw);
     canopy(g, R * 0.68, 0, R * 0.09, R * 0.055, P.rim);
     g.save();
@@ -6215,6 +6300,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
       g.fillStyle = cg;
       g.fillRect(-n[2] * 0.42, -n[3] * 0.18, n[2] * 0.8, n[3] * 0.36);
       g.restore();
+      emboss(g, 5, (function(nn){ return function(){ g.beginPath(); capsule(g, nn[0], nn[1], nn[2], nn[3], nn[4]); }; })(n), 0.8, 0.8);
       g.beginPath(); capsule(g, n[0], n[1], n[2], n[3], n[4]);
       g.strokeStyle = 'rgba(0,0,0,.55)'; g.lineWidth = 0.4; g.stroke();
     }
@@ -6269,6 +6355,8 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
       g.fillRect(5.6, -0.45, 1, 0.3);
     }
     g.restore();
+    emboss(g, 14, function(){ fedPath(g, F, 'hull'); }, 0.75, 0.85);
+    ridge(g, -12, 14, -0.8, 1.4, 0.35);
   }
   function fedLights(g, F, P){
     var i;
@@ -6296,7 +6384,10 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   function alienSprite(kind, variant){
     var AT = ALIEN_TYPES[kind];
     return hullSprite('a:' + kind + ':' + (variant || ''), AT.r * 1.4 + 12, function(g){
-      if(variant === 'mask'){ maskPaint(g, function(){ silhouette(g, kind, AT.r, 'all'); }, AT.r); return; }
+      if(variant === 'mask'){
+        maskPaint(g, function(){ if(kind === 'drone') cubePath(g, AT.r, 'all'); else silhouette(g, kind, AT.r, 'all'); }, AT.r);
+        return;
+      }
       if(kind === 'drone') paintCube(g, AT.r, false, variant === 'adapted');
       else paintWinged(g, kind, AT.r, false);
     });
@@ -6310,7 +6401,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
         paintKlingonCap(g, R, rim);
       } else if(BT.hull === 'drone'){
         var FRd = R * 1.25;
-        if(variant === 'mask'){ maskPaint(g, function(){ g.beginPath(); g.rect(-FRd * 0.74, -FRd * 0.74, FRd * 1.48, FRd * 1.48); }, FRd); return; }
+        if(variant === 'mask'){ maskPaint(g, function(){ cubePath(g, FRd, 'all'); }, FRd); return; }
         paintCube(g, FRd, true, false, rim);
       } else {
         var FR = R * 1.12;
