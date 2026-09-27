@@ -120,12 +120,13 @@
         <p class="lede">Interviews in all three cities kept returning one word: confidence. Riders wanted to know they’d picked the right moped, what the app was doing, and what to do when something failed. So we rebuilt every step around one question: what now?</p>
         <p class="prose">Bluetooth dropped and unlocks failed, and the old app left riders guessing. We mapped every moment of hesitation, then rebuilt each one around clear guidance, honest errors and the fastest route back to riding.</p>
       </div>
-      <div>
-        <img class="img is-cutout device" src="img/coup-scooter.png" width="840" height="840" alt="The Coup e-moped" loading="lazy">
-        <img class="img device sp-s" src="img/coup-ride-flow.png" alt="Redesigned ride experience: route to scooter, reservation, unlock and cancellation" loading="lazy" width="1256" height="656">
-        <p class="cap">The rebuilt ride: route, reservation, unlock and cancel.</p>
-      </div>
+      <img class="img is-cutout device" src="img/coup-scooter.png" width="840" height="840" alt="The Coup e-moped" loading="lazy">
     </div>
+
+    <!-- The chapter's actual work, so it runs at full width rather than under
+         the moped at a size where the three phones were 105px wide. -->
+    <img class="img device sp-l" src="img/coup-ride-flow.png" alt="Redesigned ride experience: route to scooter, reservation, unlock and cancellation" loading="lazy" width="1256" height="656">
+    <p class="cap">The rebuilt ride: route, reservation, unlock and cancel.</p>
 
     <div class="three sp-l">
       <img class="img" src="img/coup-moped-canal.jpeg" alt="A Coup e-moped parked by the canal in Berlin" loading="lazy" width="860" height="613">
@@ -145,8 +146,8 @@
         <p class="lede">Damaged moped, flat battery, missing helmet? Without a reason, every fix was a guess. We added one step to cancelling: a short list of reasons, one tap, done. For the first time, ops had a timestamped record of why rides failed.</p>
       </div>
       <div>
-        <img class="img device" style="max-width:360px" src="img/coup-cancellation.png" alt="Cancellation flow with structured reason prompt" loading="lazy" width="840" height="1434">
-        <p class="cap" style="text-align:center;margin-inline:auto">A structured reason, asked at a moment riders were already in.</p>
+        <img class="img device device-1up" src="img/coup-cancellation.png" alt="Cancellation flow with structured reason prompt" loading="lazy" width="840" height="1434">
+        <p class="cap is-center">A structured reason, asked at a moment riders were already in.</p>
       </div>
     </div>
   </section>
@@ -199,6 +200,23 @@
       </div>
     </div>
 
+    <!-- The screens follow the three cards above: the dispatcher's view of the
+         fleet, the tickets they send out, then the field app that receives
+         them. Dispatcher on a laptop, field worker on a phone. -->
+    <div class="two is-top sp-l">
+      <div>
+        <img class="img device" src="img/coup-scooter-status.png" alt="Dispatcher fleet status: a city map with every moped marked by battery level and coloured by status, maintained, available or assigned" loading="lazy" width="860" height="598">
+        <p class="cap">Fleet status: every moped on one map, by whether it’s available, assigned or in maintenance.</p>
+      </div>
+      <div>
+        <img class="img device" src="img/coup-dispatcher-overview.png" alt="Dispatcher overview: bookability, average battery level and maintained scooters, above counts of open tickets by type" loading="lazy" width="860" height="598">
+        <p class="cap">The overview: bookability, battery and open tickets across the fleet.</p>
+      </div>
+    </div>
+    <div class="sp-m">
+      <img class="img device device-wide" src="img/coup-tickets.png" alt="Dispatcher ticket queue with battery swaps queued, in progress and completed" loading="lazy" width="1600" height="1113">
+      <p class="cap is-center">The dispatcher’s ticket queue: every task categorised, assigned and tracked.</p>
+    </div>
     <div class="two is-top sp-l">
       <div>
         <img class="img device" src="img/coup-field-assignment.png" alt="Field worker app assignment view" loading="lazy" width="1288" height="672">
@@ -208,15 +226,6 @@
         <img class="img device" src="img/coup-maintenance-report.png" alt="Maintenance report screen" loading="lazy" width="1288" height="672">
         <p class="cap">Maintenance report: consistent outcomes, building the ops picture over time.</p>
       </div>
-    </div>
-    <div class="three sp-s">
-      <img class="img device" src="img/coup-field-login.png" alt="Field worker app sign-in screen" loading="lazy" width="860" height="598">
-      <img class="img device" src="img/coup-scooter-status.png" alt="Scooter status view: battery level, location and open faults for one vehicle" loading="lazy" width="860" height="598">
-      <img class="img device" src="img/coup-dispatcher-overview.png" alt="Dispatcher overview: the live fleet map with vehicles grouped by status" loading="lazy" width="860" height="598">
-    </div>
-    <div class="sp-s">
-      <img class="img device" src="img/coup-tickets.png" alt="Dispatcher ticket queue with battery swaps queued, in progress and completed" loading="lazy" width="1600" height="1113">
-      <p class="cap">The dispatcher’s ticket queue: every task categorised, assigned and tracked.</p>
     </div>
   </section>
 

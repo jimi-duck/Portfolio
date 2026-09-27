@@ -17,10 +17,10 @@
 <script>(function(){var r=document.documentElement;r.className+=' js';try{var t=localStorage.getItem('theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}r.setAttribute('data-theme',t);}catch(e){}if(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)r.className+=' coarse';setTimeout(function(){if(!r.dataset.swiss)r.className=r.className.replace(/\bjs\b/,'').replace(/\bintroing\b/,'');},4000);})();</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20fill%3D%27%23131311%27%2F%3E%3Ccircle%20cx%3D%2750%27%20cy%3D%2750%27%20r%3D%2726%27%20fill%3D%27%23e23a16%27%2F%3E%3C%2Fsvg%3E">
 <!-- /@head -->
-<meta name="description" content="A field tool that let tradespeople survey a house well enough to build Germany’s official retrofit plan from, and the report homeowners saw before anyone left.">
+<meta name="description" content="A field app that let tradespeople capture a house in one visit, well enough to build Germany’s official retrofit plan from, and the AI report homeowners used to choose their measures on site.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Enter · James Ciclitira">
-<meta property="og:description" content="A field tool that let tradespeople survey a house well enough to build Germany’s official retrofit plan from, and the report homeowners saw before anyone left.">
+<meta property="og:description" content="A field app that let tradespeople capture a house in one visit, well enough to build Germany’s official retrofit plan from, and the AI report homeowners used to choose their measures on site.">
 <meta property="og:image" content="https://www.jciclitira.com/Man_selecting_the_footprint.jpg">
 <meta property="og:url" content="https://www.jciclitira.com/enter.html">
 <link rel="canonical" href="https://www.jciclitira.com/enter.html">
@@ -88,7 +88,7 @@
     <a href="index.html" class="back">← All work</a>
     <p class="eyebrow">Climate tech · Field operations · 6&nbsp;min&nbsp;read</p>
     <h1 class="cs-title"><em>Enter</em></h1>
-    <p class="cs-tagline">I designed the app tradespeople used to survey a house, and the report the homeowner saw before anyone left.</p>
+    <p class="cs-tagline">I designed the app tradespeople used to capture a whole house in one visit, and the AI report that let the homeowner choose their measures before anyone left.</p>
   </div>
   <div class="meta-grid">
     <div class="meta-item"><label>Role</label><p>Senior Product Designer</p></div>
@@ -100,9 +100,9 @@
 <!-- The whole case in one band. If this is all somebody reads, they leave
      with the problem, the work and the outcome. -->
 <dl class="glance" data-reveal>
-  <div><dt>The problem</dt><dd>Germany pays up to 70% towards a home retrofit, but only against an official plan built from a site survey. That survey ran on paper, and rarely arrived complete.</dd></div>
-  <div><dt>What I did</dt><dd>Designed a survey app a tradesperson could finish in the house, and a report that gave the homeowner their findings on the spot.</dd></div>
-  <div><dt>The result</dt><dd>Shorter visits, more complete data, and the findings talked through in the homeowner’s kitchen rather than a week later.</dd></div>
+  <div><dt>The problem</dt><dd>Germany pays up to 70% towards a home retrofit, but only against an iSFP: an official plan an architect builds from a site survey. That survey ran on paper, and rarely arrived complete.</dd></div>
+  <div><dt>What I did</dt><dd>Designed an app that let a tradesperson capture everything the architect needs in one visit, and an AI report they presented on site to agree which measures went into the iSFP.</dd></div>
+  <div><dt>The result</dt><dd>Shorter visits, more complete data, and the homeowner’s choice of measures made in their kitchen, not on a call a week later.</dd></div>
 </dl>
 
 <!-- Hero photo: field worker in a garden selecting the building footprint on a map -->
@@ -111,7 +111,7 @@
 <div class="stats" data-reveal>
   <div class="stat"><div class="stat-n">25%</div><div class="stat-l">Less time per on-site survey,<br>enough for one more appointment a day</div></div>
   <div class="stat"><div class="stat-n">80 → 95%</div><div class="stat-l">Data completeness on surveys<br>reaching the energy model</div></div>
-  <div class="stat"><div class="stat-n">1 visit</div><div class="stat-l">Survey, findings and next steps,<br>before anyone leaves the house</div></div>
+  <div class="stat"><div class="stat-n">1 visit</div><div class="stat-l">Survey, findings and the homeowner’s<br>choice of measures, before anyone leaves</div></div>
 </div>
 
 <!-- ═══ 01 · THE PROBLEM ══════════════════════════════════ -->
@@ -124,8 +124,8 @@
     <div class="two is-wide is-top">
       <h2>The funding existed. The data to claim it <em>didn’t.</em></h2>
       <div>
-        <p class="lede">Every retrofit subsidy needs an iSFP, an official renovation roadmap drawn up from a survey of the house. Enter split that job in two: somebody visits and captures the building, and the model and the certified plan are built from their data afterwards.</p>
-        <p class="prose">That only works if the data is good enough to build on. And the person who visits is usually a <span lang="de">Handwerker</span>: a tradesperson who knows buildings inside out and has never opened a modelling tool.</p>
+        <p class="lede">Every retrofit subsidy needs an iSFP, an official renovation roadmap an architect draws up from a survey of the house. Enter split that job in two: a tradesperson captures the building in one visit, and the architect builds the model and the plan from their data, back in the office.</p>
+        <p class="prose">That only works if one visit captures everything, well enough to build on. And the person on site is usually a <span lang="de">Handwerker</span>: a tradesperson who knows buildings inside out, has never opened a modelling tool, and has far less training than the architect.</p>
       </div>
     </div>
   </section>
@@ -244,7 +244,7 @@
       <div>
         <h2>The paper survey became four <em>sections.</em></h2>
         <p class="lede">Nobody surveys a house in order. You go down to the boiler, up to the loft, then back to the room someone was asleep in. So the survey became four tabs you can leave and come back to.</p>
-        <p class="prose">Almost nothing is free text. Heat sources, wall build-ups and glazing are presets, because the person answering knows buildings, not energy models. Behind it, every appointment, photo, ticket and finished iSFP hangs off one customer project, and submit stays locked until all four sections are done.</p>
+        <p class="prose">Almost nothing is free text. Heat sources, wall build-ups and glazing are presets, so the app carries the modelling knowledge and the person on site brings what they can see and measure. Behind it, every appointment, photo, ticket and finished iSFP hangs off one customer project, and submit stays locked until all four sections are done.</p>
       </div>
       <!-- Illustrative, not documentary: this frame is generated, unlike the
            field photography elsewhere on the page. The caption describes the
@@ -431,10 +431,10 @@
   <div class="dark-band-inner">
     <p class="lbl"><span class="lbl-n">08</span>The customer report</p>
     <div class="two is-wide is-top sp-mb">
-      <h2>The findings arrive before <em>anyone leaves.</em></h2>
+      <h2>The homeowner chooses their measures <em>before anyone leaves.</em></h2>
       <div>
-        <p class="lede">The moment the survey was sent, AI returned a report on the same tablet: where the house stands, what it could reach, and what each measure costs and saves. Not the iSFP, which still needs qualified hands, but the conversation that used to come a week later.</p>
-        <p class="prose">That mattered commercially. Enter earned its money arranging the retrofit work, and quotes that arrived days later from a stranger converted poorly. I designed the report from scratch, for a tradesperson to walk through and end on an agreed set of measures.</p>
+        <p class="lede">The moment the survey was sent, AI returned a report on the same tablet: where the house stands, what it could reach, and what each measure costs and saves. The tradesperson presented it there and then, and the homeowner picked the measures they wanted.</p>
+        <p class="prose">Those choices went back with the survey, so the iSFP the architect wrote in the office afterwards included the measures the homeowner had asked for. That mattered commercially. Enter earned its money arranging the retrofit work, and quotes that arrived days later from a stranger converted poorly. I designed the report from scratch, for a tradesperson rather than an architect to present.</p>
       </div>
     </div>
 
@@ -460,7 +460,7 @@
         <div class="walk-text">
           <p class="walk-n">03 · Renovation roadmap</p>
           <h3 class="walk-t">Every measure, ranked</h3>
-          <p class="walk-d">Tick measures to build a package, and watch the saving, energy class and subsidy move.</p>
+          <p class="walk-d">Tick measures to build a package, and watch the saving, energy class and subsidy move. The package they settle on goes into the iSFP.</p>
         </div>
       </div>
       <div class="walk-row">
