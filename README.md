@@ -126,10 +126,22 @@ They also share one structure, written for a reader with five minutes:
   one headline that makes one claim and one `lede` beside it, set larger than
   body copy. Headline plus lede is the skim path; anything after the lede is
   the second read, so keep it short and let the screens carry the detail.
+- **`stats`**, the figures band under the hero image, only where the figures
+  add something the glance doesn't: Enter's measured results, Coup's scale.
+  Cooler Future and Vivy carry none, because every figure they had restated
+  a line from the glance or a headline.
 - **Captions** are sentence case, not tracked capitals, because they are
   sentences.
 
 Adding a chapter means adding a headline and a lede, not another paragraph.
+
+Image size follows the story, not the slot. The screens that carry a chapter
+run large (Coup's ride flow at the full measure); scene-setting ones sit beside
+the text at half the measure (Vivy's onboarding); a sequence runs as one row
+in reading order (Enter's report, Vivy's sprint days). No render is taller
+than a laptop viewport: `device-wide` caps a laptop mockup at 1040px.
+Photographs are greyscale; product renders stay in colour, including a hero
+made of them (`hero-img is-screens`).
 
 They also form one chain: the homepage links all four, and each page's `.next`
 card carries you to the following one — Enter → Coup → Cooler Future → Vivy,

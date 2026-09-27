@@ -921,6 +921,11 @@ h2+.lede{margin-top:0}
    to a fixed height and desaturated like the photographic banners. */
 .hero-img.is-art,[data-theme="dark"] .hero-img.is-art{
   height:auto;aspect-ratio:16/9;filter:none}
+/* Product renders rather than photography: phones on a plain ground. Greyscale
+   is how the documentary banners read as evidence; on a composite of the
+   product it only turned the UI the rest of the page shows in colour to grey.
+   Same crop as a photographic banner, colour kept. */
+.hero-img.is-screens,[data-theme="dark"] .hero-img.is-screens{filter:none}
 
 .stats{display:grid;grid-template-columns:repeat(3,1fr);padding:clamp(2rem,4vw,3.4rem) var(--pad);
   border-bottom:1px solid var(--rule);gap:var(--gap);max-width:var(--frame);margin-inline:auto}
@@ -1043,11 +1048,19 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
    single phone renders at twice the size of one inside a composite sheet. */
 .device{border:0;background:none;display:block;margin-inline:auto;height:auto}
 .device-1up{max-width:380px}
+/* A laptop render at the full measure stood 930px tall at 1440: taller than
+   the screen it was read on, so it could never be seen whole. */
+.device-wide{max-width:1040px}
 /* two single devices read as one comparison pair, not as two column fillers
    marooned at opposite ends of the grid */
 .device-pair{display:flex;justify-content:center;align-items:flex-end;
-  gap:clamp(1.2rem,3.5vw,3rem);flex-wrap:wrap}
-.device-pair>.device-1up{margin-inline:0}
+  gap:clamp(1.2rem,3.5vw,3rem)}
+/* The basis, not a width of 100%, sizes each device. The flex items are the
+   lightbox's .zoom buttons (or the bare images without script), and both are
+   width:100%, so each claimed the whole row and wrapped: the pair rendered as
+   a stack of two. They still wrap to one per line on a phone. */
+.device-pair>*{width:auto;min-width:0;flex:0 1 380px}
+.device-pair .device-1up{margin-inline:0}
 /* a cutout has no edges to frame, and sits on whatever band it lands in */
 .img.is-cutout{border:0;max-width:min(100%,420px);margin-inline:auto}
 /* inside a band the artwork is mostly transparent mockups — a frame just
@@ -1070,6 +1083,9 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
    for three words and hard work for fifteen: every caption on the site is a
    sentence, and uppercase takes away the word shapes a sentence is read by. */
 .cap{margin-top:.7rem;font-size:var(--t-small);line-height:1.5;color:var(--mute);max-width:56ch}
+/* Under a single centred device, where a left-set caption hangs off the page
+   edge instead of sitting under the screen it describes. */
+.cap.is-center{text-align:center;margin-inline:auto}
 /* .tall/.wide/.short are legacy hooks in the markup — deliberately inert, so
    nothing crops. Set an aspect-ratio inline on a specific image if you want one. */
 
@@ -1259,9 +1275,12 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
 .flow-t,.day-t,.walk-t{margin-top:.5rem;font-size:var(--t-h3);font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .flow-d,.day-d,.walk-d{margin-top:.45rem;font-size:var(--t-small);color:var(--ink-2);line-height:1.5;
   max-width:58ch}
-/* Report walkthrough — a 2x2 plate. Four full-width rows of a portrait
-   screenshot left acres of empty column beside the short commentary. */
-.walk{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.8rem,3.6vw,3.4rem) var(--gap)}
+/* Report walkthrough — one row, read left to right in the order the report
+   runs. Four full-width rows left acres of empty column beside the commentary,
+   and the 2x2 plate that replaced them still left half of every cell empty
+   beside a 340px render. Four across puts the renders at the same size with
+   nothing beside them, and the sequence reads as one. Drops to 2x2 at 1080. */
+.walk{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1.8rem,3.6vw,3.4rem) var(--gap)}
 .walk-row{display:flex;flex-direction:column;border-top:1px solid var(--rule);padding-top:1rem}
 /* No plate. These ship as transparent tablet renders carrying their own soft
    shadow, so a --sheet panel behind them just draws a grey box around empty
@@ -1276,17 +1295,20 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
 .walk-media{--dev:340px;background:none;padding:0;margin-bottom:.3rem}
 .walk-media img{width:100%;max-width:var(--dev);height:auto;display:block;
   margin:0 0 0 calc(var(--dev) * -.046)}
-.walk-text{padding-right:var(--gap)}
 .walk-d{max-width:48ch}
+/* The four sprint days, as a row like the three stages on Enter. As a single
+   column each day was a full-width row holding one short line, with the rest
+   of the measure empty beside it. */
+.sprint{grid-template-columns:repeat(4,minmax(0,1fr))}
 /* Device screenshots. Without a width cap these render at natural pixel size —
    600px+ phone shots blown up to half the container. */
 .phone-col{display:flex;flex-direction:column}
 .phone-col .cap{text-align:center}
+/* Always the media column of a .two, so it starts level with the headline
+   beside it. Every use used to zero the top margin inline. */
 .phones-pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);
-  max-width:520px;margin:clamp(1.6rem,3vw,3rem) auto 0;align-items:end}
+  max-width:520px;margin:0 auto;align-items:end}
 .phones-pair .phone-col:first-child{margin-top:clamp(1.2rem,2.5vw,2.5rem)}
-.phones-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);align-items:end}
-.phones-trio .phone-col:nth-child(1),.phones-trio .phone-col:nth-child(3){margin-top:clamp(1.6rem,4vw,4rem)}
 
 /* A run of app screens, each carrying its own caption block: the render on top,
    then the same rule / accent label / heading / description stack as .flow-step,
@@ -1342,6 +1364,7 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
    underneath: an arrangement nobody chose, and one that re-wrapped at every
    width. It is a stack, built from the same parts as .flow-step:
    rule, accent label, heading, description. */
+.utypes{display:flex;flex-direction:column;gap:clamp(1.6rem,3vw,2.4rem)}
 .utype{border-top:1px solid var(--rule);padding-top:1rem}
 .utype-tag{display:block;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);
   text-transform:uppercase;color:var(--red-ink);margin-bottom:.55rem}
@@ -1372,12 +1395,15 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
    no note of is which is which, so every one of them looked like a stray. They
    are, top to bottom:
 
-     1080   the client logo row drops to three across; the footer to two columns
+     1080   the client logo row drops to three across; the footer to two columns;
+            the report walkthrough and the sprint days drop to two across
      1024   the nav collapses to the burger (the note below says why not 900)
       900   the main breakpoint: every two-column grid on the site goes single
       700   the lightbox stops fitting the image to the height and scrolls
       600   the game launcher stands down (section 17b, below)
-      560   the field-photograph pair stacks; the back-to-top button shrinks
+      560   the field-photograph pair and the device pair stack; the report
+            walkthrough and sprint days go to one column; the back-to-top
+            button shrinks
 
    The --t-hero steps near the top of this file (1440/1200/1024/900/640/400) are
    a separate ladder and stay separate: they are sized against the longest line
@@ -1388,6 +1414,7 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
 @media (max-width:1080px){
   .cli{grid-template-columns:repeat(3,1fr)}
   .f-grid{grid-template-columns:repeat(2,1fr);row-gap:2rem}
+  .walk,.sprint{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 /* The nav collapses here, not at 900px. Five links plus the theme switch were
    still nominally fitting between 900 and 1024, but only by closing the gaps to
@@ -1454,11 +1481,10 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
   .glance>div:first-child{border-top:0}
   .glance>div::before{display:none}
   .mgrid.is-compact{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .two,.two.lean,.three,.phones-trio{grid-template-columns:1fr}
+  .two,.two.lean,.three{grid-template-columns:1fr}
   .two>*,
   .two.lean>:first-child,.two.lean>:last-child,
   .two.is-wide>:first-child,.two.is-wide>:last-child{grid-column:auto}
-  .walk{grid-template-columns:1fr}
   .walk-media{--dev:300px}
   .mgrid{grid-template-columns:1fr}
   /* Two of six, still on the grid. */
@@ -1499,6 +1525,7 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
   .cli{grid-template-columns:repeat(2,1fr)}
   .f-grid{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr}
+  .walk,.sprint{grid-template-columns:1fr}
   .mgrid.is-compact{grid-template-columns:1fr}
   .phones-pair{grid-template-columns:1fr}
   /* One screen at a time. Two 150px renders side by side are a texture, not a
@@ -1516,6 +1543,8 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
   .phones-pair .phone-col:first-child{margin-top:0}
   .phones-pair{gap:clamp(1.8rem,6vw,2.4rem)}
   .doc-row{gap:1.8rem}
+  /* Above this the pair shrinks side by side; below it, one screen a line. */
+  .device-pair{flex-wrap:wrap}
   /* the numeral stops being a rail and becomes a marker above the step */
 }
 
