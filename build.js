@@ -28,16 +28,6 @@
    it. The @game pair is optional and only the two pages that open the game
    carry it.
    TO CHANGE THE NAV OR FOOTER: edit partials/, then run this.
-
-   THE PM FORK. pm/ is a second, parallel set of pages: the same work written
-   up for product manager roles, served at /pm/ on the same domain. It shares
-   every stylesheet, font, image and script with the main site, and differs
-   only in its words and its nav. A page with `set: 'pm'` takes each partial
-   from partials/pm/ when one exists there, and from partials/ when not — so
-   the head, the chrome and the analytics stay single copies, and the fork
-   carries only the two blocks that really are different. The main site's
-   pages never see partials/pm/, which is what keeps it byte-for-byte as it
-   was.
    ═══════════════════════════════════════════════════════════════════════════ */
 'use strict';
 
@@ -94,17 +84,6 @@ const PAGES = {
   'cooler-future.html':  { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },
   'vivy.html':           { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },
   '404.html':            { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '/' },
-
-  /* The PM fork. root is '../' because every asset lives one level up; the
-     fork's own nav and footer link between pm/ pages with bare relative
-     paths and reach back to the main site through {{root}}. No curtain, no
-     grid hint, no game: the fork is for a reader who came to read. */
-  'pm/index.html':         { set: 'pm', home: '',           intro: '', keys: '', reveal: ' data-reveal', curtain: '', root: '../' },
-  'pm/cv.html':            { set: 'pm', home: 'index.html', intro: '', keys: '', reveal: '', curtain: '', root: '../' },
-  'pm/enter.html':         { set: 'pm', home: 'index.html', intro: '', keys: '', reveal: '', curtain: '', root: '../' },
-  'pm/coup.html':          { set: 'pm', home: 'index.html', intro: '', keys: '', reveal: '', curtain: '', root: '../' },
-  'pm/cooler-future.html': { set: 'pm', home: 'index.html', intro: '', keys: '', reveal: '', curtain: '', root: '../' },
-  'pm/vivy.html':          { set: 'pm', home: 'index.html', intro: '', keys: '', reveal: '', curtain: '', root: '../' },
 };
 
 /* marker name → the partial that fills it */
@@ -159,22 +138,12 @@ function stamp(html, name, body, file) {
   });
 }
 
-/* The partial a page gets: its set's own copy if it has one, else the shared. */
-function partialFor(vars, partial) {
-  if (vars.set) {
-    const own = path.join(PARTIALS, vars.set, partial);
-    if (fs.existsSync(own)) return own;
-  }
-  return path.join(PARTIALS, partial);
-}
-
 function build(file) {
   const vars = PAGES[file];
   let html = read(path.join(ROOT, file));
   for (const [name, partial] of Object.entries(BLOCKS)) {
     if (OPTIONAL.has(name) && !has(html, name)) continue;
-    const src = partialFor(vars, partial);
-    const body = fill(read(src), vars, path.relative(PARTIALS, src));
+    const body = fill(read(path.join(PARTIALS, partial)), vars, partial);
     html = stamp(html, name, body, file);
   }
   return html;

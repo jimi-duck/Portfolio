@@ -17,20 +17,14 @@ coup.html            Case study — Coup Mobility
 cooler-future.html   Case study — Cooler Future
 vivy.html            Case study — Vivy
 
-pm/                  The PM fork: the same work written up for product manager
-                     roles, served at /pm/. See "The PM fork" below
-
 partials/            The shared chrome — nav, site menu, footer, head boilerplate,
                      plus the game board, which only two pages carry
-partials/pm/         The fork's own nav and footer; everything else is shared
 build.js             Stamps partials/ into every page. See "The chrome" below
 
 css/swiss.css        The whole design system — every page loads this
 css/about.css        About-only. Outside the case-study vocabulary on purpose
 css/cv.css           Résumé-only screen styles + the A4 print sheet
 css/game.css         Chrome for the hidden easter egg. Fetched on first launch
-css/pm.css           PM fork only: text-led work slabs, the habits table, a
-                     five-step flow. Loaded after swiss.css
 js/swiss.js          Shared behaviour (reveals, menu, theme, grid overlay, launcher)
 js/about.js          About-only. Makes the photo pile clickable, and nothing else
 js/game.js           The easter egg itself. Fetched on first launch
@@ -229,52 +223,6 @@ the tag sat outside the markers.
 
 **Edit `partials/`, not the marked regions.** Anything you write between the
 markers is overwritten on the next build.
-
-## The PM fork (/pm/)
-
-A second version of the site, written for product-led roles including PM
-ones, lives in `pm/` and is served at `www.jciclitira.com/pm/` from the same
-deploy. It is unlisted rather than private: this repository is public, so the
-folder is visible here, but nothing on the site links to it. The main
-site is untouched by it: no root page links to `/pm/`, and `build.js` gives
-the fork its own nav and footer from `partials/pm/` while every other region,
-and every stylesheet, font, image and script, is shared.
-
-```
-pm/index.html          Home: "Evidence before engineering", the work slabs
-                       turned text-first, and an Approach section mapping six
-                       product skills to the case studies that show them
-pm/cv.html             Résumé with the real job titles, rewritten around the
-                       product calls; one-page A4 print sheet
-pm/enter.html          Case studies, same facts as the main pages. Each opens
-pm/coup.html           on the business (chapter 01), then a "Project outline"
-pm/cooler-future.html  band whose steps link to the chapters that follow
-pm/vivy.html           (.outline in pm.css). Enter, Coup and Cooler Future
-                       follow the order the sources give; Vivy's sources give
-                       none, so its outline follows the product's three sides
-```
-
-The rules that keep it honest:
-
-- **The positioning:** a senior product designer who is most interested in
-  the product side, and open to PM roles too. The hero strip says "Product"
-  and "Open to PM roles"; the résumé header says "Senior Product Designer ·
-  Open to PM roles". Every job title is the real one.
-- **No new facts.** Every claim is on the main site, in `COPY-site.md`, or in
-  the interview deck the case studies were written from.
-- **Kept out of search.** Every fork page carries `noindex` and none is in
-  `sitemap.xml`, so the main site is what people find and the fork is what
-  gets sent. `/pm/` is deliberately **not** listed in `robots.txt`: a
-  `Disallow` there would announce the path to anyone who reads the file, and
-  would stop crawlers from ever seeing the `noindex` that actually keeps the
-  pages out of results. Going public means removing the robots line from each
-  page and adding the pages to the sitemap in the same commit.
-- **The contact form tags its subject** with `[PM]`, so a message from the fork
-  can be told apart from one sent from the main site. Cloudflare Analytics
-  reports `/pm/` paths separately with no extra set-up.
-
-Adding a fork page means adding it to `PAGES` in `build.js` with `set: 'pm'`
-and `root: '../'`, and prefixing every asset path in it with `../`.
 
 ## Before you deploy
 
