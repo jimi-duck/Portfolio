@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coup Mobility · James Ciclitira</title>
+<!-- @head -->
+<!-- Runs before the first paint, which is the whole point of it being inline
+     and not in swiss.js: a stylesheet chosen a frame late is a white flash on
+     a dark-mode page. It sets the theme from storage (or the OS preference on
+     a first visit), marks the document as script-enabled so the reveal start
+     states can be scoped to html.js, and flags a coarse pointer.
+
+     The timeout is the no-script-file failsafe. swiss.js sets data-swiss as
+     soon as it boots; if it never arrives — blocked, failed, cached wrong —
+     the js class comes off after 4s and every hidden start state stops
+     applying, so the page renders in full rather than staying blank. -->
+<script>(function(){var r=document.documentElement;r.className+=' js';try{var t=localStorage.getItem('theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}r.setAttribute('data-theme',t);}catch(e){}if(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)r.className+=' coarse';setTimeout(function(){if(!r.dataset.swiss)r.className=r.className.replace(/\bjs\b/,'').replace(/\bintroing\b/,'');},4000);})();</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20fill%3D%27%23131311%27%2F%3E%3Ccircle%20cx%3D%2750%27%20cy%3D%2750%27%20r%3D%2726%27%20fill%3D%27%23e23a16%27%2F%3E%3C%2Fsvg%3E">
+<!-- /@head -->
+<meta name="robots" content="noindex">
+<meta name="description" content="Bosch’s e-moped service in three cities: a rider app rebuilt around where rides failed, a pilot run before any infrastructure, and two ops tools from a blank page.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Coup Mobility · James Ciclitira">
+<meta property="og:description" content="Bosch’s e-moped service in three cities: a rider app rebuilt around where rides failed, a pilot run before any infrastructure, and two ops tools from a blank page.">
+<meta property="og:image" content="https://www.jciclitira.com/img/coup-hero.jpeg">
+<meta property="og:url" content="https://www.jciclitira.com/pm/coup.html">
+<link rel="canonical" href="https://www.jciclitira.com/pm/coup.html">
+<meta name="twitter:card" content="summary_large_image">
+<!-- @head-assets -->
+<!-- Regular and Bold are preloaded because every page sets in them from the
+     first paint. The italic cut is not: it is used by the reader quotes on one
+     case study, so it can be fetched when that page asks for it. -->
+<link rel="preload" href="../fonts/texgyreheros-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/texgyreheros-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/swiss.css">
+<!-- /@head-assets -->
+<link rel="stylesheet" href="../css/pm.css">
+</head>
+<body>
+<!-- @chrome -->
+<a class="skip" href="#main">Skip to content</a>
+<div id="prog" aria-hidden="true"></div>
+<div id="gridov" aria-hidden="true"></div>
+<div id="gridhint" aria-hidden="true">Grid · press G</div>
+<!-- /@chrome -->
+<!-- @nav -->
+<!-- The PM fork's nav. Same markup as partials/nav.html, different sections:
+     Approach takes the slot About has on the main site, because on this
+     version the about section is where the product habits are laid out.
+     Links stay inside pm/; the main site is reached from the footer. -->
+<nav aria-label="Primary">
+  <div class="nav-in edge">
+    <a href="index.html" class="nav-logo">James Ciclitira</a>
+    <div class="nav-desk">
+      <ol class="nav-links">
+        <li><a href="index.html#work"><span class="num">01</span>Work</a></li>
+        <li><a href="index.html#approach"><span class="num">02</span>Approach</a></li>
+        <li><a href="index.html#contact"><span class="num">03</span>Contact</a></li>
+        <li><a href="cv.html">Résumé ↗</a></li>
+      </ol>
+      <button class="tt" id="theme-toggle" type="button" aria-label="Switch between light and dark mode"><i class="tt-knob"></i><svg class="tt-ic tt-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><g stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 2.4v2.3"/><path d="M12 19.3v2.3"/><path d="M4.2 4.2l1.6 1.6"/><path d="M18.2 18.2l1.6 1.6"/><path d="M2.4 12h2.3"/><path d="M19.3 12h2.3"/><path d="M4.2 19.8l1.6-1.6"/><path d="M18.2 5.8l1.6-1.6"/></g></svg><svg class="tt-ic tt-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.4 14.5A8.6 8.6 0 1 1 9.5 3.6a6.9 6.9 0 0 0 10.9 10.9z"/></svg></button>
+    </div>
+    <div class="nav-mob">
+      <button class="tt" id="theme-toggle-m" type="button" aria-label="Switch between light and dark mode"><i class="tt-knob"></i><svg class="tt-ic tt-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><g stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 2.4v2.3"/><path d="M12 19.3v2.3"/><path d="M4.2 4.2l1.6 1.6"/><path d="M18.2 18.2l1.6 1.6"/><path d="M2.4 12h2.3"/><path d="M19.3 12h2.3"/><path d="M4.2 19.8l1.6-1.6"/><path d="M18.2 5.8l1.6-1.6"/></g></svg><svg class="tt-ic tt-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.4 14.5A8.6 8.6 0 1 1 9.5 3.6a6.9 6.9 0 0 0 10.9 10.9z"/></svg></button>
+      <button class="burger" type="button" aria-controls="menu" aria-expanded="false"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="b-t">Menu</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Closed with visibility:hidden, not clip-path alone — clipping leaves its
+     links in the tab order. swiss.js owns the open state. -->
+<nav id="menu" aria-label="Site menu">
+  <a href="index.html#work"><span class="n">01</span>Work</a>
+  <a href="index.html#approach"><span class="n">02</span>Approach</a>
+  <a href="index.html#contact"><span class="n">03</span>Contact</a>
+  <a href="cv.html"><span class="n">04</span>Résumé</a>
+  <div class="foot">
+    <a href="https://linkedin.com/in/jciclitira" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a href="mailto:jciclitira@gmail.com">Email ↗</a>
+    <span class="lab lab-mute">Berlin, DE</span>
+  </div>
+</nav>
+<!-- /@nav -->
+
+<main id="main" tabindex="-1">
+
+<!-- The fork's Coup page, on the same pattern as Enter: the business first,
+     then an outline of the project with each step linking to its chapter,
+     then the chapters in that order. The order is the one the old copy
+     states: the ride was "the first job", the operation behind it "the
+     second challenge". Same facts as /coup.html. -->
+<header class="cs-hero" data-reveal>
+  <div>
+    <a href="index.html" class="back">← All work</a>
+    <p class="eyebrow">Urban mobility · Consumer and operations · 4&nbsp;min&nbsp;read</p>
+    <h1 class="cs-title">Coup<br><em>Mobility</em></h1>
+    <p class="cs-tagline">I rebuilt Bosch’s e-moped rider app around the moments rides went wrong, and designed the tools that kept 5,000 mopeds on the road.</p>
+  </div>
+  <div class="meta-grid">
+    <div class="meta-item"><label>Role</label><p>Senior Product Designer</p></div>
+    <div class="meta-item"><label>Years</label><p>2019–2020</p></div>
+    <div class="meta-item"><label>Worked with</label><p>Operations · Dispatchers · Field teams</p></div>
+    <div class="meta-item"><label>Shipped</label><p>Rider app · Dispatcher dashboard · Field worker app</p></div>
+  </div>
+</header>
+
+<dl class="glance" data-reveal>
+  <div><dt>The problem</dt><dd>The rider app had been built fast to get the fleet live, and it left riders stuck when a ride went wrong. Nobody knew why rides failed, and field work ran on WhatsApp.</dd></div>
+  <div><dt>What I did</dt><dd>Rebuilt the ride around where it failed, gave operations a record of why rides were cancelled, tested a costly idea before anyone built it, and designed two ops tools.</dd></div>
+  <div><dt>The result</dt><dd>A rebuilt rider app in three cities, the first data on failed rides, and field work tracked in one system instead of group chats.</dd></div>
+</dl>
+
+<img fetchpriority="high" class="hero-img" src="../img/coup-hero.jpeg" alt="Two riders on Coup’s red shared e-mopeds waiting at a Berlin intersection" width="700" height="448">
+
+<div class="stats" data-reveal>
+  <div class="stat"><div class="stat-n">5,000</div><div class="stat-l">Electric mopeds across<br>Berlin, Paris and Madrid</div></div>
+  <div class="stat"><div class="stat-n">1 in 8</div><div class="stat-l">Rides cancelled before the engine<br>started, with no reason recorded</div></div>
+  <div class="stat"><div class="stat-n">Zero</div><div class="stat-l">Tools built for the field team<br>before this project</div></div>
+</div>
+
+<!-- ═══ 01 · THE BUSINESS ═════════════════════════════════ -->
+<div class="body">
+  <section class="section" id="business" data-reveal>
+    <p class="lbl"><span class="lbl-n">01</span>The business</p>
+    <div class="two is-wide is-top">
+      <h2>A service people loved, on an app that <em>let them down.</em></h2>
+      <div>
+        <p class="lede">Coup ran electric, free-floating mopeds in three cities, backed by Bosch and growing quickly. The app had been built to get the fleet on the street fast, and it showed: riders were missing information at the moments they needed it.</p>
+        <p class="prose">Behind it, field operations ran on WhatsApp and spreadsheets, and every moped stuck off the road was lost revenue.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ OUTLINE ═══════════════════════════════════════════ -->
+<div class="warm-band" data-reveal>
+  <div class="warm-band-inner">
+    <p class="lbl">Project outline</p>
+    <div class="two is-wide is-top">
+      <h2>The ride first. Then the operation <em>behind it.</em></h2>
+      <p class="lede">The first job was the rider app. The second was the part riders never saw: the dispatchers and field workers keeping the fleet running.</p>
+    </div>
+
+    <ol class="flow n4 outline sp-l">
+      <li><a class="flow-step" href="#ride">
+        <div class="flow-n">02</div>
+        <div class="flow-t">The ride</div>
+        <div class="flow-d">Interviews in three cities, then every step rebuilt around one question.</div>
+      </a></li>
+      <li><a class="flow-step" href="#cancellations">
+        <div class="flow-n">03</div>
+        <div class="flow-t">Cancellations</div>
+        <div class="flow-d">One tap on cancel, and the first record of why rides failed.</div>
+      </a></li>
+      <li><a class="flow-step" href="#pilot">
+        <div class="flow-n">04</div>
+        <div class="flow-t">The pilot</div>
+        <div class="flow-d">Rider battery swaps, tested inside the app before any infrastructure.</div>
+      </a></li>
+      <li><a class="flow-step" href="#ops-tools">
+        <div class="flow-n">05</div>
+        <div class="flow-t">Ops tools</div>
+        <div class="flow-d">Ride-alongs and dispatcher sessions, then two connected products.</div>
+      </a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ═══ 02 · THE RIDE — DARK BAND ═════════════════════════ -->
+<div class="dark-band" id="ride" data-reveal>
+  <div class="dark-band-inner">
+    <p class="lbl"><span class="lbl-n">02</span>The ride</p>
+    <div class="two is-wide is-top">
+      <h2>Interviews in three cities kept returning <em>one word.</em></h2>
+      <div>
+        <p class="lede">The word was confidence. Riders wanted to know they’d picked the right moped, what the app was doing, and what to do when something went wrong. So we rebuilt every step of the ride around one question: what now?</p>
+        <p class="prose">Bluetooth dropped and unlocks failed, and the old app left riders guessing. We found each of those moments and rebuilt it around clear guidance and honest error messages.</p>
+      </div>
+    </div>
+
+    <img class="img device sp-l" src="../img/coup-ride-flow.png" alt="Redesigned ride experience: route to scooter, reservation, unlock and cancellation" loading="lazy" width="1256" height="656">
+    <p class="cap">The rebuilt ride: route, reservation, unlock and cancel.</p>
+  </div>
+</div>
+
+<div class="body">
+  <!-- ═══ 03 · CANCELLATIONS ═══════════════════════════════ -->
+  <section class="section" id="cancellations" data-reveal>
+    <p class="lbl"><span class="lbl-n">03</span>Cancellations</p>
+    <div class="two is-wide is-top">
+      <div>
+        <h2>One in eight rides was cancelled. Nobody knew <em>why.</em></h2>
+        <p class="lede">Damaged moped, flat battery, missing helmet? Without a reason, every fix was a guess. So we added one step to cancelling: a short list of reasons, one tap, and you’re done. For the first time, operations had a timestamped record of why rides failed.</p>
+        <p class="prose">A separate reporting feature would have asked riders for extra effort. A step inside a flow they were already in cost them one tap.</p>
+      </div>
+      <div>
+        <img class="img device device-1up" src="../img/coup-cancellation.png" alt="Cancellation flow with structured reason prompt" loading="lazy" width="840" height="1434">
+        <p class="cap is-center">A structured reason, asked at a moment riders were already in.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ 04 · THE PILOT ═══════════════════════════════════ -->
+<div class="warm-band" id="pilot" data-reveal>
+  <div class="warm-band-inner">
+    <p class="lbl"><span class="lbl-n">04</span>The pilot</p>
+    <div class="two is-wide is-top">
+      <div>
+        <h2>Test the expensive idea <em>before building it.</em></h2>
+        <p class="lede">Could riders swap flat batteries themselves for ride credit, and cut operating costs? Proving it properly needed charging infrastructure that didn’t exist yet, so we ran a small pilot inside the app and watched what riders did. That gave the business enough to decide without building anything.</p>
+      </div>
+      <div>
+        <img class="img device" src="../img/coup-battery-swap.png" alt="Community battery swap pilot" loading="lazy" width="1294" height="676">
+        <p class="cap">The battery swap pilot: testing intent before infrastructure.</p>
+      </div>
+    </div>
+
+    <div class="pbox is-claim">
+      <p>The pilot’s job was to answer a question, not to ship a feature.</p>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+  <!-- ═══ 05 · OPS TOOLS ═══════════════════════════════════ -->
+  <section class="section" id="ops-tools" data-reveal>
+    <p class="lbl"><span class="lbl-n">05</span>Ops tools</p>
+    <div class="two is-wide is-top">
+      <h2>No brief, so we started with <em>the work itself.</em></h2>
+      <div>
+        <p class="lede">Jobs arrived through group chats, repairs were logged if at all, and dispatchers had no live view of the fleet. So we rode along with field workers and sat with dispatchers. Dispatchers needed to see and steer the fleet; field workers needed clear jobs and a quick way to close them.</p>
+        <p class="prose">That became two connected products: a web dashboard for dispatch, and a mobile app for the field built for rain, winter and gloved hands.</p>
+      </div>
+    </div>
+
+    <div class="cards sp-l">
+      <div class="icard">
+        <div class="icard-icon"></div>
+        <div class="icard-t">Fleet status at a glance</div>
+        <p class="icard-d">Every moped’s availability, open issues and maintenance, live.</p>
+      </div>
+      <div class="icard">
+        <div class="icard-icon"></div>
+        <div class="icard-t">Jobs on the worker’s phone</div>
+        <p class="icard-d">Dispatchers assign and reprioritise jobs in the tool, instead of by phone or chat.</p>
+      </div>
+      <div class="icard">
+        <div class="icard-icon"></div>
+        <div class="icard-t">Repairs that leave a record</div>
+        <p class="icard-d">Guided steps and consistent outcomes, so every job has a history.</p>
+      </div>
+    </div>
+
+    <div class="two is-top sp-l">
+      <div>
+        <img class="img device" src="../img/coup-scooter-status.png" alt="Dispatcher fleet status: a city map with every moped marked by battery level and coloured by status, maintained, available or assigned" loading="lazy" width="860" height="598">
+        <p class="cap">The dispatcher’s view: every moped on one map, by status.</p>
+      </div>
+      <div>
+        <img class="img device" src="../img/coup-field-assignment.png" alt="Field worker app assignment view" loading="lazy" width="1288" height="672">
+        <p class="cap">The field worker’s view: the job, its status and the repair log.</p>
+      </div>
+    </div>
+    <div class="sp-m">
+      <img class="img device device-wide" src="../img/coup-tickets.png" alt="Dispatcher ticket queue with battery swaps queued, in progress and completed" loading="lazy" width="1600" height="1113">
+      <p class="cap is-center">The ticket queue that replaced the group chats.</p>
+    </div>
+  </section>
+
+  <!-- ═══ 06 · HOW WE MEASURED IT ══════════════════════════ -->
+  <section class="section" data-reveal>
+    <p class="lbl"><span class="lbl-n">06</span>How we measured it</p>
+    <h2>Judged on the fleet, <em>not the screens.</em></h2>
+    <div class="mgrid is-compact">
+      <article class="mcard">
+        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.4" cy="17.6" r="3.1"/><circle cx="18.6" cy="17.6" r="3.1"/><path d="M8.5 17.6h7"/><path d="M5.4 14.5V9.8h4.9l3.4 4.7"/><path d="M10.3 9.8h3.9"/><path d="M17.4 6.2h4"/><path d="M19.4 4.2v4"/></svg></span>
+        <p><strong>Scooter downtime</strong>Time a moped spends off the road.</p>
+      </article>
+      <article class="mcard">
+        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.6 4.2H6.4v16.4h11.2V4.2h-2.2"/><path d="M9.2 2.6h5.6v3H9.2z"/><path d="M12.9 9.2l-2.6 4h3.4l-2.6 4"/></svg></span>
+        <p><strong>Task completion</strong>Field jobs closed, and how fast.</p>
+      </article>
+      <article class="mcard">
+        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.2 6.2h11v7.2h-6l-3 2.6v-2.6h-2z"/><path d="M17 9.6h3.8v7.2h-2v2.6l-3-2.6h-3.4"/><path d="M20.4 3.6 3.6 20.4"/></svg></span>
+        <p><strong>Manual coordination</strong>Work still running through chats and spreadsheets.</p>
+      </article>
+      <article class="mcard">
+        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 20.2V13l3.3-5.4h7.1l3.3 5.4v7.2"/><circle cx="7.1" cy="20.2" r="1.6"/><circle cx="14" cy="20.2" r="1.6"/><path d="M3.4 15.4h13.7"/><path d="M19.4 4.6v6.2"/><path d="M16.8 7.2l2.6-2.6 2.6 2.6"/></svg></span>
+        <p><strong>Rides per scooter</strong>Trips from each vehicle, each day it’s on the street.</p>
+      </article>
+    </div>
+  </section>
+</div>
+
+<a href="cooler-future.html" class="next" data-reveal>
+  <div class="next-l">
+    <div><p class="next-eyebrow">Next case study →</p><div class="next-title">Cooler<br><em>Future</em></div></div>
+    <p class="next-sub">A regulated investing app, from the first interview to launch</p>
+  </div>
+  <div class="next-r"><img class="next-img" src="../img/cooler-future-card.jpg" alt="" loading="lazy" width="700" height="448"></div>
+</a>
+
+</main>
+
+<button id="totop" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19.2V5.4"/><path d="M5.6 11.8 12 5.4l6.4 6.4"/></svg>
+  <span>Top</span>
+</button>
+
+<!-- @footer -->
+<footer>
+  <div class="edge">
+    <div class="f-grid">
+      <div class="f-col">
+        <h2>Index</h2>
+        <a href="index.html#work">Selected work</a>
+        <a href="index.html#approach">Approach</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="cv.html">Résumé</a>
+      </div>
+      <div class="f-col">
+        <h2>Case studies</h2>
+        <a href="enter.html">01 · Enter</a>
+        <a href="coup.html">02 · Coup Mobility</a>
+        <a href="cooler-future.html">03 · Cooler Future</a>
+        <a href="vivy.html">04 · Vivy</a>
+      </div>
+      <div class="f-col">
+        <h2>Elsewhere</h2>
+        <a href="../index.html">Design portfolio ↗</a>
+        <a href="../lab.html">Side projects ↗</a>
+        <a href="https://linkedin.com/in/jciclitira" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="mailto:jciclitira@gmail.com">Email ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="edge">
+    <div class="f-bar">
+      <span>© 2026 James Ciclitira · Product · Berlin</span>
+      <a href="#" class="f-top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+<!-- /@footer -->
+
+<script src="../js/swiss.js"></script>
+<!-- @analytics -->
+<!-- Cloudflare Web Analytics -->
+<!-- Cookieless. No client-side state, nothing stored on the visitor, so there
+     is no consent banner to show and nothing to keep in step with one. One
+     token across nine pages, which is the reason it lives here: nine pasted
+     copies of a script tag is the drift this whole arrangement exists to stop,
+     and --check had no opinion on it while it sat outside the markers. -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "39562e228b684fa0a9ce1c1d056ee97c"}'></script>
+<!-- /@analytics -->
+</body>
+</html>
