@@ -1456,9 +1456,21 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   // outright and pays for it on another:
   //
   //             top speed   coast (1/e)   turn     phasers    hull
-  //   Defiant    ~500px/s      0.5s       205°/s   x1.22      3    the fast one
+  //   Defiant    ~450px/s      0.42s      227°/s   x1.22      3    the fast one
   //   Nova       ~420px/s      0.43s      275°/s   x0.87      2    the nimble one
   //   Sovereign  ~315px/s      0.72s      155°/s   x1.00      4    the heavy one
+  //
+  // The Defiant also has `grip`, and is the only hull that does. It was
+  // given the most speed and the least control over it: at top speed a 90°
+  // dodge carried it 334px further along its old line (Nova 221, Sovereign
+  // 293), and it took 298px to turn round. It was the fastest ship and the
+  // hardest to fly. It now pushes harder and bleeds speed sooner (it gets
+  // going and stops in less room than before), comes round a little
+  // quicker, and while the engines are lit the slide across its nose bleeds
+  // away (see applyGrip). Its top speed also came down from ~500 to 450px/s
+  // ("still too fast"), still the quickest of the three. A 90° dodge now
+  // costs 194px and turning round 189px, a little under the Nova's, while
+  // the Nova keeps the tightest turn and the fastest nose.
   //
   // (The Sovereign's phaser figure looks ordinary, but it fires a three-beam
   // cone from the first second, which is two and a half times the beams of
@@ -1472,16 +1484,31 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   // which ship you picked, so a hull can be retuned here without hunting
   // through the flight code.
   var HULL_MODS = {
-    torp:   { thrust:1.78, rot:1.00, drag:0.968, cool:0.82, lives:3, magnet:1 },
-    spread: { thrust:0.80, rot:0.76, drag:0.977, cool:1.00, lives:4, magnet:1 },
-    mine:   { thrust:1.78, rot:1.34, drag:0.962, cool:1.15, lives:2, magnet:1.8 }
+    torp:   { thrust:1.965, rot:1.10, drag:0.961, cool:0.82, lives:3, magnet:1,  grip:0.05 },
+    spread: { thrust:0.80, rot:0.76, drag:0.977, cool:1.00, lives:4, magnet:1,   grip:0 },
+    mine:   { thrust:1.78, rot:1.34, drag:0.962, cool:1.15, lives:2, magnet:1.8, grip:0 }
   };
   // The unmodified ship. It is never flown — a run always has a hull by the
   // time anything moves — but every stat function reads through hullMods(),
   // and those functions are also called by the upgrade cards before the pick
   // panel has closed. This is what they read until then.
-  var HULL_BASE = { thrust:1, rot:1, drag:0.98, cool:1, lives:START_LIVES, magnet:1 };
+  var HULL_BASE = { thrust:1, rot:1, drag:0.98, cool:1, lives:START_LIVES, magnet:1, grip:0 };
   function hullMods(){ return HULL_MODS[hull] || HULL_BASE; }
+  // Grip, for a hull that has it: while the engines are lit, the part of the
+  // ship's velocity running across its nose bleeds away at `g` a frame, and
+  // GRIP_CARVE of what it sheds comes back as speed along the nose. The ship
+  // carves a turn instead of skidding through it. Most of the slide turns
+  // into forward speed rather than simply vanishing, so a turn is not also a
+  // brake. It only acts under thrust: let go and the ship drifts as every
+  // hull does, which is still how you slide past a rock with the guns on it.
+  var GRIP_CARVE = 0.6;
+  function applyGrip(g, sf){
+    var hx = Math.cos(ship.angle), hy = Math.sin(ship.angle);
+    var f = ship.vx * hx + ship.vy * hy, l = ship.vy * hx - ship.vx * hy;
+    var nl = l * Math.pow(1 - g, sf);
+    if(f > 0) f = Math.sqrt(f * f + (l * l - nl * nl) * GRIP_CARVE);
+    ship.vx = f * hx - nl * hy; ship.vy = f * hy + nl * hx;
+  }
 
   // ── permanent upgrades ───────────────────────────────────────────────────
   var up = { fire:0, thrust:0, spread:0, pierce:0, dmg:0, magnet:0, range:0, guard:0,
@@ -4862,6 +4889,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     if(ship.thrusting){
       ship.vx += Math.cos(ship.angle) * thrustPower() * thrustAmt * sf;
       ship.vy += Math.sin(ship.angle) * thrustPower() * thrustAmt * sf;
+      if(hullMods().grip) applyGrip(hullMods().grip * thrustAmt, sf);
     }
     // Per-hull, not a constant: this is the number that makes the Sovereign
     // feel like it has mass and the Nova feel like it stops when you stop.
@@ -6200,25 +6228,38 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     g.closePath();
     g.restore();
   }
+  // one half of a hull that is symmetric about its axis, drawn out and back
+  function mirrorPath(g, pts){
+    var i;
+    g.moveTo(pts[0][0], pts[0][1]);
+    for(i=1;i<pts.length;i++) g.lineTo(pts[i][0], pts[i][1]);
+    for(i=pts.length-2;i>0;i--) g.lineTo(pts[i][0], -pts[i][1]);
+    g.closePath();
+  }
+  // Defiant, top half, prow notch to stern: a forked prow, swept armoured
+  // shoulders, a flat flank under each nacelle and a short impulse deck
+  var DEFIANT_EDGE = [[13.4, 0], [16.9, -1.2], [16.6, -2.7], [11.8, -4], [7, -5.4], [1, -9.6],
+                      [-3, -11], [-12, -9.6], [-12.6, -6.4], [-11, -5], [-14.2, -3.2], [-14.6, 0]];
+  var DEFIANT_HUB = [-1, 0, 5];
   var FED = {
-    // Defiant: a compact armoured wedge with the nacelles built into its flanks
+    // Defiant, after the pick card's art: a charcoal armoured arrowhead with
+    // a forked prow, a raised round deck amidships and the nacelles sunk
+    // into its aft flanks, burning blue out of their ends. The first build
+    // was a pale wedge no longer than it was wide, and at thirty pixels
+    // nothing on it said which end was the front. Now the prow is two amber
+    // points and the stern is two blue fires, so the heading reads from
+    // either end.
     torp: {
-      hull: function(g){
-        g.moveTo(15.5, 0);
-        g.bezierCurveTo(13, -3.2, 9, -5.6, 4, -7.2);
-        g.lineTo(-3, -11.4); g.lineTo(-11, -11.6);
-        g.quadraticCurveTo(-13.6, -11.2, -13.4, -8.4);
-        g.lineTo(-12.2, -5.2); g.lineTo(-9.4, -3.6); g.lineTo(-10.8, 0);
-        g.lineTo(-9.4, 3.6); g.lineTo(-12.2, 5.2); g.lineTo(-13.4, 8.4);
-        g.quadraticCurveTo(-13.6, 11.2, -11, 11.6);
-        g.lineTo(-3, 11.4); g.lineTo(4, 7.2);
-        g.bezierCurveTo(9, 5.6, 13, 3.2, 15.5, 0);
-        g.closePath();
-      },
-      nacelles: [[-6, -9.4, 14, 3.4, 0], [-6, 9.4, 14, 3.4, 0]], pylons: [], podsOnTop: true,
-      engines: [[-13.2, -9.4], [-13.2, 9.4], [-10.6, 0]], core: [-4, 0], coreR: 2.4,
-      bussards: [[0.6, -9.4], [0.6, 9.4]], deflector: [11.5, 0],
-      windows: [[6, -3.2], [4, -4.2], [2, -5.2], [6, 3.2], [4, 4.2], [2, 5.2]], saucer: null
+      hull: function(g){ mirrorPath(g, DEFIANT_EDGE); },
+      nacelles: [[-10.6, -10.8, 13.4, 4.4, 0], [-10.6, 10.8, 13.4, 4.4, 0]], pylons: [], podsOnTop: true,
+      aftBurn: true,
+      engines: [[-17, -10.8], [-17, 10.8], [-14.4, 0]], core: [-8.6, 0], coreR: 2,
+      bussards: [[16.2, -2], [16.2, 2]], deflector: null,
+      windows: [[9, -2.6], [7.4, -3.2], [9, 2.6], [7.4, 3.2], [-6.6, -5.6], [-8.2, -5.6], [-6.6, 5.6], [-8.2, 5.6]],
+      saucer: null, detail: defiantDetail,
+      // gunmetal rather than the fleet's pale grey: the one warship of the
+      // three, and it is what the card art shows
+      paint: { hi:'#d6dde6', mid:'#77828f', lo:'#1a2029', rim:'0,240,255', glow:'70,150,255', win:'255,226,180' }
     },
     // Sovereign: the long oval saucer, a slim engineering hull and long
     // nacelles on swept pylons trailing well behind it
@@ -6261,7 +6302,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     }
   }
   function paintFed(g, id, rim){
-    var F = FED[id] || FED.torp, P = HULL_PAINT.federation, rand = prng(strSeed(id)), i, s, n;
+    var F = FED[id] || FED.torp, P = F.paint || HULL_PAINT.federation, rand = prng(strSeed(id)), i, s, n;
     var R = 16;
     castShadow(g, R, function(){ fedPath(g, F, 'all'); }, P.lo);
     rimGlow(g, R, function(){ fedPath(g, F, 'all'); }, rim, 0.75);
@@ -6290,15 +6331,37 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
       n = F.nacelles[i];
       g.beginPath(); capsule(g, n[0], n[1], n[2], n[3], n[4]);
       var ng = g.createLinearGradient(0, n[1] - n[3] / 2, 0, n[1] + n[3] / 2);
-      ng.addColorStop(0, P.hi); ng.addColorStop(0.5, P.mid); ng.addColorStop(1, P.lo);
+      // a burning pod is a gunmetal cylinder with a narrow highlight, so the
+      // fire at its end is what you see rather than the pod itself
+      if(F.aftBurn){ ng.addColorStop(0, P.mid); ng.addColorStop(0.28, P.hi); ng.addColorStop(0.55, P.mid); }
+      else { ng.addColorStop(0, P.hi); ng.addColorStop(0.5, P.mid); }
+      ng.addColorStop(1, P.lo);
       g.fillStyle = ng; g.fill();
       g.save();
       g.globalCompositeOperation = 'lighter';
       g.translate(n[0], n[1]); g.rotate(n[4]);
       var cg = g.createLinearGradient(-n[2] / 2, 0, n[2] / 2, 0);
-      cg.addColorStop(0, 'rgba(' + P.glow + ',.1)'); cg.addColorStop(0.5, 'rgba(' + P.glow + ',.95)'); cg.addColorStop(1, 'rgba(' + P.glow + ',.25)');
-      g.fillStyle = cg;
-      g.fillRect(-n[2] * 0.42, -n[3] * 0.18, n[2] * 0.8, n[3] * 0.36);
+      if(F.aftBurn){
+        // The Defiant's nacelles burn out of their aft ends — the first
+        // thing the card art shows, and the surest tell of the stern. The
+        // coil strip runs hot at the back and cools toward the bow, on the
+        // outboard side, so the brightest thing on the hull is its tail.
+        var out = n[1] < 0 ? -1 : 1, ax = -n[2] / 2 + n[3] * 0.4;
+        cg.addColorStop(0, 'rgba(' + P.glow + ',.9)'); cg.addColorStop(0.6, 'rgba(' + P.glow + ',.35)'); cg.addColorStop(1, 'rgba(' + P.glow + ',.05)');
+        g.fillStyle = cg;
+        g.fillRect(-n[2] * 0.42, out * n[3] * 0.08 - n[3] * 0.14, n[2] * 0.78, n[3] * 0.28);
+        var ag = g.createRadialGradient(ax, 0, 0, ax, 0, n[3] * 1.2);
+        ag.addColorStop(0, 'rgba(240,252,255,1)');
+        ag.addColorStop(0.3, 'rgba(150,215,255,.95)');
+        ag.addColorStop(0.62, 'rgba(' + P.glow + ',.55)');
+        ag.addColorStop(1, 'rgba(' + P.glow + ',0)');
+        g.fillStyle = ag;
+        g.beginPath(); g.ellipse(ax - n[3] * 0.1, 0, n[3] * 1.2, n[3] * 0.72, 0, 0, Math.PI * 2); g.fill();
+      } else {
+        cg.addColorStop(0, 'rgba(' + P.glow + ',.1)'); cg.addColorStop(0.5, 'rgba(' + P.glow + ',.95)'); cg.addColorStop(1, 'rgba(' + P.glow + ',.25)');
+        g.fillStyle = cg;
+        g.fillRect(-n[2] * 0.42, -n[3] * 0.18, n[2] * 0.8, n[3] * 0.36);
+      }
       g.restore();
       emboss(g, 5, (function(nn){ return function(){ g.beginPath(); capsule(g, nn[0], nn[1], nn[2], nn[3], nn[4]); }; })(n), 0.8, 0.8);
       g.beginPath(); capsule(g, n[0], n[1], n[2], n[3], n[4]);
@@ -6335,28 +6398,72 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
       g.fillStyle = P.hi;
       g.beginPath(); g.ellipse(sc[0] + 0.5, 0, 2.2, 1.9, 0, 0, Math.PI * 2); g.fill();
       g.strokeStyle = 'rgba(0,0,0,.35)'; g.lineWidth = 0.4; g.stroke();
-    } else {
-      // Defiant: an armoured wedge — heavy plates, a raised spine and a
-      // small low bridge, not a dome
-      g.fillStyle = 'rgba(0,0,0,.22)';
-      g.beginPath(); g.moveTo(2, -4); g.lineTo(-9, -7.5); g.lineTo(-9, -3); g.lineTo(2, -1.4); g.closePath(); g.fill();
-      g.beginPath(); g.moveTo(2, 4); g.lineTo(-9, 7.5); g.lineTo(-9, 3); g.lineTo(2, 1.4); g.closePath(); g.fill();
-      g.fillStyle = 'rgba(255,255,255,.16)';
-      g.beginPath(); g.moveTo(13, -0.9); g.lineTo(-8, -1.3); g.lineTo(-8, 0); g.lineTo(13, 0); g.closePath(); g.fill();
-      bevel(g, 12, 0, -9, 0, 0.5);
-      bevel(g, 6, -5.5, 6, 5.5, 0.45);
-      bevel(g, -2, -9, -2, 9, 0.45);
-      bevel(g, 9, -3.6, 1, -7.8, 0.4);
-      bevel(g, 9, 3.6, 1, 7.8, 0.4);
-      g.fillStyle = P.mid;
-      g.beginPath(); g.ellipse(5.5, 0, 1.8, 1.1, 0, 0, Math.PI * 2); g.fill();
-      g.strokeStyle = 'rgba(0,0,0,.4)'; g.lineWidth = 0.35; g.stroke();
-      g.fillStyle = 'rgba(225,245,255,.7)';
-      g.fillRect(5.6, -0.45, 1, 0.3);
-    }
+    } else if(F.detail) F.detail(g, P, rand);
     g.restore();
     emboss(g, 14, function(){ fedPath(g, F, 'hull'); }, 0.75, 0.85);
-    ridge(g, -12, 14, -0.8, 1.4, 0.35);
+    if(F.detail) F.detail(g, P, rand, true);
+    else ridge(g, -12, 14, -0.8, 1.4, 0.35);
+  }
+  // The Defiant's plating, painted inside the hull's clip; then, `late`,
+  // the parts that stand proud of the hull's own bevel — the round deck
+  // amidships and a ridge down each prong.
+  function defiantDetail(g, P, rand, late){
+    var H = DEFIANT_HUB, i, a, c, sn;
+    function hub(){ g.beginPath(); g.arc(H[0], H[1], H[2], 0, Math.PI * 2); }
+    if(!late){
+      // the shoulders sit a step below the spine: darker, with a lit lip
+      // where the spine drops to them
+      g.fillStyle = 'rgba(0,0,0,.2)';
+      g.fillRect(-20, -14, 40, 28);
+      // a lighter armour plate on each forward shoulder, the layered
+      // plating of the card art at the one size it survives
+      g.fillStyle = 'rgba(255,255,255,.13)';
+      g.beginPath(); g.moveTo(7.4, -4.4); g.lineTo(1.6, -8.4); g.lineTo(-0.8, -7); g.lineTo(5, -3.4); g.closePath(); g.fill();
+      g.fillStyle = 'rgba(255,255,255,.07)';
+      g.beginPath(); g.moveTo(7.4, 4.4); g.lineTo(1.6, 8.4); g.lineTo(-0.8, 7); g.lineTo(5, 3.4); g.closePath(); g.fill();
+      g.beginPath();
+      mirrorPath(g, [[12.6, 0], [12.6, -2.1], [5, -3.1], [-5, -3.3], [-13.4, -2.5], [-13.8, 0]]);
+      var sg = g.createLinearGradient(0, -3.3, 0, 3.3);
+      sg.addColorStop(0, 'rgba(255,255,255,.3)'); sg.addColorStop(1, 'rgba(255,255,255,.06)');
+      g.fillStyle = sg; g.fill();
+      bevel(g, 12.6, -2.1, 5, -3.1, 0.45); bevel(g, 5, -3.1, -13.4, -2.5, 0.45);
+      bevel(g, 12.6, 2.1, 5, 3.1, 0.45);   bevel(g, 5, 3.1, -13.4, 2.5, 0.45);
+      // the armoured lip along each leading edge
+      bevel(g, 6.6, -4.3, 0.6, -8.5, 0.4); bevel(g, 0.6, -8.5, -3.2, -9.8, 0.4);
+      bevel(g, 6.6, 4.3, 0.6, 8.5, 0.4);   bevel(g, 0.6, 8.5, -3.2, 9.8, 0.4);
+      // plate seams running out from the deck, and two across the stern
+      for(i=0;i<4;i++){
+        a = 0.75 + i * 0.52; c = Math.cos(a); sn = Math.sin(a);
+        bevel(g, H[0] + c * H[2], -sn * H[2], H[0] + c * H[2] * 2.1, -sn * H[2] * 2.1, 0.4);
+        bevel(g, H[0] + c * H[2], sn * H[2], H[0] + c * H[2] * 2.1, sn * H[2] * 2.1, 0.4);
+      }
+      bevel(g, -10, -2.4, -10, 2.4, 0.4);
+      // the slot between the prongs runs back into the hull
+      g.fillStyle = 'rgba(0,0,0,.7)';
+      g.beginPath(); g.moveTo(13.6, 0); g.lineTo(10.4, -0.45); g.lineTo(10.4, 0.45); g.closePath(); g.fill();
+      return;
+    }
+    // the deck: its own shadow on the hull, then a raised disc, two rings
+    // and a boss
+    castShadow(g, 6, hub, P.lo);
+    hub();
+    var hg = g.createLinearGradient(H[0] - H[2], -H[2], H[0] + H[2] * 0.6, H[2]);
+    hg.addColorStop(0, P.hi); hg.addColorStop(0.5, P.mid); hg.addColorStop(1, P.lo);
+    g.fillStyle = hg; g.fill();
+    emboss(g, 6, hub, 0.9, 0.9);
+    g.lineWidth = 0.45;
+    g.strokeStyle = 'rgba(0,0,0,.55)';
+    g.beginPath(); g.arc(H[0], 0, H[2] * 0.66, 0, Math.PI * 2); g.stroke();
+    g.strokeStyle = 'rgba(255,255,255,.3)';
+    g.beginPath(); g.arc(H[0], -0.4, H[2] * 0.66, Math.PI * 1.1, Math.PI * 1.9); g.stroke();
+    g.fillStyle = P.lo;
+    g.beginPath(); g.arc(H[0], 0, H[2] * 0.3, 0, Math.PI * 2); g.fill();
+    g.fillStyle = 'rgba(255,255,255,.4)';
+    g.beginPath(); g.arc(H[0] - 0.3, -0.45, H[2] * 0.11, 0, Math.PI * 2); g.fill();
+    ridge(g, 10.4, 16.6, -2.05, 0.6, 0.35);
+    ridge(g, 10.4, 16.6, 2.05, 0.6, 0.2);
+    ridge(g, 4.2, 12.2, -1.1, 1, 0.3);
+    ridge(g, -13.4, -6.2, -1.1, 1, 0.25);
   }
   function fedLights(g, F, P){
     var i;
@@ -6372,7 +6479,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
       }
     }
     if(F.windows) for(i=0;i<F.windows.length;i++) g.fillRect(F.windows[i][0] - 0.35, F.windows[i][1] - 0.35, 0.7, 0.7);
-    glowDot(g, F.deflector[0], F.deflector[1], 2.6, '90,170,255', 0.9);
+    if(F.deflector) glowDot(g, F.deflector[0], F.deflector[1], 2.6, '90,170,255', 0.9);
     // Bussards amber, never red: red and pink are spoken for (Klingon, and
     // alert), and the player's own nacelles are the last place to borrow them
     for(i=0;i<F.bussards.length;i++) glowDot(g, F.bussards[i][0], F.bussards[i][1], 2.3, '255,176,110', 0.95);

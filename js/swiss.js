@@ -370,7 +370,10 @@
       document.body.classList.remove('lb-on');
       document.body.style.paddingRight = '';
       lbImg.removeAttribute('src');
+      if (map) map.close();
     }
+    // Built on the first diagram opened, not on load: most pages have none.
+    var map = null;
     function shut() { if (dlg.open) dlg.close(); done(); }
 
     // The caption already exists on the page in one of three shapes. Carry it
@@ -393,15 +396,36 @@
 
     imgs.forEach(function (im) {
       var btn = document.createElement('button');
+      // A diagram carrying data-map opens as a map to move around in, from a
+      // larger render than the page shows. The cue says so on the page itself:
+      // a zoom-in cursor alone doesn't tell anyone they'll be able to pan.
+      var isMap = !!im.getAttribute('data-map');
       btn.type = 'button';
-      btn.className = 'zoom';
-      btn.setAttribute('aria-label', 'Enlarge image' + (im.alt ? ': ' + im.alt : ''));
+      btn.className = isMap ? 'zoom is-map' : 'zoom';
+      btn.setAttribute('aria-label', (isMap ? 'Explore diagram' : 'Enlarge image') + (im.alt ? ': ' + im.alt : ''));
       im.parentNode.insertBefore(btn, im);
       btn.appendChild(im);
+      if (isMap) {
+        btn.insertAdjacentHTML('beforeend',
+          '<span class="map-cue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+          'stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/>' +
+          '<path d="M10.5 7.8v5.4"/><path d="M7.8 10.5h5.4"/></svg>Zoom in</span>');
+        // The larger render is fetched on intent, so it's usually in hand by
+        // the time the click lands, and pages that are only read never pay for it.
+        var warm = function () {
+          im.getAttribute('data-map').trim().split(/\s+/).forEach(function (u) { new Image().src = u; });
+        };
+        btn.addEventListener('pointerenter', warm, { once: true });
+        btn.addEventListener('focus', warm, { once: true });
+      }
       btn.addEventListener('click', function () {
         var cap = captionFor(im, btn);
-        lbImg.src = im.currentSrc || im.src;
-        lbImg.alt = im.alt || '';
+        dlg.classList.toggle('is-map', isMap);
+        dlg.setAttribute('aria-label', isMap ? 'Zoomable diagram' : 'Enlarged image');
+        if (!isMap) {
+          lbImg.src = im.currentSrc || im.src;
+          lbImg.alt = im.alt || '';
+        }
         lbCap.innerHTML = cap.html;
         lbCap.hidden = !cap.html;
         lbCap.classList.toggle('is-plain', cap.plain);
@@ -414,6 +438,9 @@
         if (sbw > 0) document.body.style.paddingRight = sbw + 'px';
         document.body.classList.add('lb-on');
         dlg.showModal();
+        // After showModal, not before: the map frames itself to the viewport
+        // it measures, and a closed dialog measures nothing.
+        if (isMap) (map = map || mapView(dlg)).open(im, cap.html);
       });
     });
 
@@ -425,6 +452,261 @@
     // so the page is unlocked on the same tick the dialog goes.
     dlg.addEventListener('cancel', function (e) { e.preventDefault(); shut(); });
     dlg.addEventListener('close', done);
+  }
+
+  /* ── DIAGRAM MAP ───────────────────────────────────────────────────────── */
+  /* A flowchart is read by following it, and at the page's measure its boxes
+     are four pixels tall. So a diagram with data-map opens full screen as a
+     map: it moves the way Figma does, since that is where it was drawn.
+     Scroll or drag pans, pinch or ⌘/Ctrl + scroll zooms, double-click zooms in
+     at the pointer, and the bar carries buttons for anyone without a trackpad.
+
+       data-map       the larger render, one file or several stacked bands
+                      (a very tall render is cut in equal bands so no single
+                      image has to be decoded at 30 megapixels)
+       data-map-size  its full size in pixels, "3000x9810"
+       data-map-view  the part the page shows, as fractions "x y w h". The map
+                      opens framed on it, so the first thing you see is the
+                      thing you clicked, only bigger
+
+     The view is kept in fractions so a sharper export can replace the files
+     with only data-map-size changing. The sheet is one transformed element;
+     will-change goes on only while it's moving, because a layer promoted for
+     good is rastered once and then just stretched, and zoomed text goes soft. */
+  function mapView(dlg) {
+    var mac = /Mac|iP(hone|ad|od)/.test(navigator.platform || navigator.userAgent);
+    var coarse = document.documentElement.classList.contains('coarse');
+    var box = document.createElement('div');
+    box.className = 'lb-map';
+    box.innerHTML =
+      '<div class="lb-stage" role="img"><div class="lb-sheet"></div></div>' +
+      '<p class="lb-hint" aria-hidden="true">' + (coarse
+        ? 'Drag to move · Pinch to zoom'
+        : 'Scroll or drag to move · Pinch or ' + (mac ? '⌘' : 'Ctrl') + ' + scroll to zoom') + '</p>' +
+      '<div class="lb-bar">' +
+        '<p class="lb-mcap"></p>' +
+        '<div class="lb-ctl">' +
+          '<button type="button" class="lb-btn" data-z="out" aria-label="Zoom out">&minus;</button>' +
+          '<output class="lb-pct"></output>' +
+          '<button type="button" class="lb-btn" data-z="in" aria-label="Zoom in">+</button>' +
+          '<button type="button" class="lb-btn lb-fit" data-z="fit" aria-label="Show the whole diagram">Fit</button>' +
+        '</div>' +
+      '</div>';
+    dlg.appendChild(box);
+
+    var stage = $('.lb-stage', box), sheet = $('.lb-sheet', box), bar = $('.lb-bar', box),
+        mcap = $('.lb-mcap', box), pct = $('.lb-pct', box), hint = $('.lb-hint', box),
+        bOut = $('[data-z="out"]', box), bIn = $('[data-z="in"]', box), xBtn = $('.lb-x', dlg);
+    var MAX = 2;                       // renders are ~1x; past 2x it's blur
+    var W = 1, H = 1, s = 1, x = 0, y = 0, minS = 0.1, src = '';
+    var pts = new Map(), g = null, multi = false, lastTap = null, lastType = 'mouse';
+    var idleT = 0, animT = 0, hintT = 0, gs = 1;
+
+    // The rectangle the map is framed in: clear of the close button above
+    // and the bar below, so "fit" never tucks an edge under either.
+    function area() {
+      var vw = stage.clientWidth, vh = stage.clientHeight, pad = vw < 700 ? 12 : 32;
+      return { l: pad, t: xBtn.getBoundingClientRect().bottom + 8, r: vw - pad, b: vh - bar.offsetHeight - pad };
+    }
+    function fitScale(w, h, a) { return Math.min((a.r - a.l) / w, (a.b - a.t) / h); }
+    function clampS(v) { return Math.max(minS, Math.min(MAX, v)); }
+    // Smaller than the frame on an axis: centred on it. Larger: its edges can
+    // come in as far as the frame's and no further, so it can't be lost.
+    function clamp(a) {
+      var sw = W * s, sh = H * s, aw = a.r - a.l, ah = a.b - a.t;
+      x = sw <= aw ? a.l + (aw - sw) / 2 : Math.min(a.l, Math.max(a.r - sw, x));
+      y = sh <= ah ? a.t + (ah - sh) / 2 : Math.min(a.t, Math.max(a.b - sh, y));
+    }
+    function paint() {
+      sheet.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) scale(' + s + ')';
+      pct.textContent = Math.round(s * 100) + '%';
+      bOut.disabled = s <= minS * 1.001;
+      bIn.disabled = s >= MAX * 0.999;
+    }
+    function moving() {
+      sheet.classList.add('is-moving');
+      clearTimeout(idleT);
+      idleT = setTimeout(function () { sheet.classList.remove('is-moving'); }, 180);
+    }
+    // Buttons and keys glide; fingers, wheels and drags never do, or the map
+    // lags a beat behind the hand moving it.
+    function glide(on) {
+      sheet.classList.toggle('is-anim', on);
+      clearTimeout(animT);
+      if (on) animT = setTimeout(function () { sheet.classList.remove('is-anim'); }, 360);
+    }
+    function commit(animate) { clamp(area()); glide(!!animate); moving(); paint(); }
+    // Zoom to ns keeping the map point under (px, py) where it is.
+    function zoom(ns, px, py, animate) {
+      ns = clampS(ns);
+      x = px - (px - x) * ns / s;
+      y = py - (py - y) * ns / s;
+      s = ns;
+      commit(animate);
+    }
+    function frame(fx, fy, fw, fh, animate) {
+      var a = area(), rw = fw * W, rh = fh * H;
+      minS = Math.min(fitScale(W, H, a), MAX);
+      s = clampS(fitScale(rw, rh, a));
+      x = a.l + (a.r - a.l - rw * s) / 2 - fx * W * s;
+      y = a.t + (a.b - a.t - rh * s) / 2 - fy * H * s;
+      commit(animate);
+    }
+    function whole(animate) { frame(0, 0, 1, 1, animate); }
+    function centre() { var a = area(); return [(a.l + a.r) / 2, (a.t + a.b) / 2]; }
+    function zoomIn(px, py) { if (s >= MAX * 0.999) whole(true); else zoom(s * 2, px, py, true); }
+    function pan(dx, dy, animate) { x += dx; y += dy; commit(animate); }
+    function quiet() { clearTimeout(hintT); hint.classList.add('is-gone'); }
+
+    // ── pointer: one finger pans, two pinch, and lifting one of two carries
+    //    on as a pan from wherever the other finger is
+    function begin() {
+      var p = Array.from(pts.values());
+      if (p.length === 1) g = { x0: p[0].x, y0: p[0].y, sx: x, sy: y };
+      else {
+        var mx = (p[0].x + p[1].x) / 2, my = (p[0].y + p[1].y) / 2;
+        g = { pinch: true, s0: s, d0: Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y) || 1,
+              ux: (mx - x) / s, uy: (my - y) / s };
+      }
+    }
+    stage.addEventListener('pointerdown', function (e) {
+      if (e.button > 0) return;
+      lastType = e.pointerType;
+      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t: e.timeStamp });
+      if (pts.size > 1) multi = true;
+      begin();
+      stage.classList.add('is-grabbing');
+      glide(false); quiet();
+    });
+    stage.addEventListener('pointermove', function (e) {
+      var p = pts.get(e.pointerId);
+      if (!p || !g) return;
+      p.x = e.clientX; p.y = e.clientY;
+      var q = Array.from(pts.values());
+      if (g.pinch && q.length > 1) {
+        var mx = (q[0].x + q[1].x) / 2, my = (q[0].y + q[1].y) / 2;
+        s = clampS(g.s0 * Math.hypot(q[0].x - q[1].x, q[0].y - q[1].y) / g.d0);
+        x = mx - g.ux * s;
+        y = my - g.uy * s;
+      } else if (!g.pinch) {
+        x = g.sx + p.x - g.x0;
+        y = g.sy + p.y - g.y0;
+      }
+      commit(false);
+    });
+    function up(e) {
+      var p = pts.get(e.pointerId);
+      if (!p) return;
+      pts.delete(e.pointerId);
+      // A touch that barely moved, twice in quick succession, is a double tap.
+      var tap = e.type === 'pointerup' && e.pointerType === 'touch' && !multi &&
+                Math.hypot(e.clientX - p.x0, e.clientY - p.y0) < 10 && e.timeStamp - p.t < 300;
+      if (pts.size) begin();
+      else { g = null; multi = false; stage.classList.remove('is-grabbing'); }
+      if (!tap) return;
+      if (lastTap && e.timeStamp - lastTap.t < 320 &&
+          Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 30) {
+        zoomIn(e.clientX, e.clientY);
+        lastTap = null;
+      } else lastTap = { t: e.timeStamp, x: e.clientX, y: e.clientY };
+    }
+    stage.addEventListener('pointerup', up);
+    stage.addEventListener('pointercancel', up);
+    stage.addEventListener('dblclick', function (e) {
+      if (lastType === 'touch') return;   // handled as a double tap above
+      e.preventDefault();
+      if (e.shiftKey) zoom(s / 2, e.clientX, e.clientY, true);
+      else zoomIn(e.clientX, e.clientY);
+    });
+
+    // ── wheel: a trackpad pinch arrives as a wheel event with ctrlKey set, so
+    //    it and ⌘/Ctrl + wheel zoom; everything else is a scroll, and pans
+    stage.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      quiet(); glide(false);
+      var k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? stage.clientHeight : 1;
+      if (e.ctrlKey || e.metaKey) {
+        zoom(s * Math.exp(-Math.max(-40, Math.min(40, e.deltaY * k)) * 0.01), e.clientX, e.clientY);
+      } else pan(-e.deltaX * k, -e.deltaY * k);
+    }, { passive: false });
+    // Safari's trackpad pinch is a gesture event instead. On iOS the same
+    // pinch also arrives as two pointers, which already handle it.
+    stage.addEventListener('gesturestart', function (e) { e.preventDefault(); gs = s; quiet(); });
+    stage.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (pts.size) return;
+      var c = centre();
+      zoom(gs * e.scale, e.clientX || c[0], e.clientY || c[1]);
+    });
+    stage.addEventListener('gestureend', function (e) { e.preventDefault(); });
+
+    // ── buttons and keys, zooming about the middle of the frame
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-z]');
+      if (!b) return;
+      var c = centre(), z = b.getAttribute('data-z');
+      quiet();
+      if (z === 'in') zoom(s * 1.5, c[0], c[1], true);
+      else if (z === 'out') zoom(s / 1.5, c[0], c[1], true);
+      else whole(true);
+    });
+    dlg.addEventListener('keydown', function (e) {
+      if (!dlg.classList.contains('is-map') || e.altKey || e.ctrlKey || e.metaKey) return;
+      var c = centre(), step = e.shiftKey ? 240 : 80, k = e.key;
+      if (k === '+' || k === '=') zoom(s * 1.5, c[0], c[1], true);
+      else if (k === '-' || k === '_') zoom(s / 1.5, c[0], c[1], true);
+      else if (k === '0') whole(true);
+      else if (k === 'ArrowLeft') pan(step, 0, true);
+      else if (k === 'ArrowRight') pan(-step, 0, true);
+      else if (k === 'ArrowUp') pan(0, step, true);
+      else if (k === 'ArrowDown') pan(0, -step, true);
+      else return;
+      e.preventDefault();
+      quiet();
+    });
+
+    // A resize keeps the zoom and the point in the middle, within the new limits.
+    function onResize() {
+      var a = area();
+      minS = Math.min(fitScale(W, H, a), MAX);
+      s = clampS(s);
+      commit(false);
+    }
+
+    function open(im, capHtml) {
+      var list = im.getAttribute('data-map').trim().split(/\s+/),
+          size = (im.getAttribute('data-map-size') || '').split('x'),
+          v = (im.getAttribute('data-map-view') || '0 0 1 1').trim().split(/\s+/).map(Number);
+      W = +size[0] || 1; H = +size[1] || 1;
+      if (src !== im.getAttribute('data-map')) {
+        src = im.getAttribute('data-map');
+        sheet.innerHTML = '';
+        sheet.style.width = W + 'px';
+        sheet.style.height = H + 'px';
+        list.forEach(function (u) {
+          var t = new Image();
+          t.alt = ''; t.draggable = false; t.decoding = 'async';
+          t.width = W; t.height = Math.round(H / list.length);   // cut in equal bands
+          t.src = u;
+          sheet.appendChild(t);
+        });
+      }
+      stage.setAttribute('aria-label', im.alt || '');
+      mcap.innerHTML = capHtml || '';
+      mcap.hidden = !capHtml;
+      hint.classList.remove('is-gone');
+      clearTimeout(hintT);
+      hintT = setTimeout(quiet, 6000);
+      frame(v[0], v[1], v[2], v[3], false);
+      window.addEventListener('resize', onResize);
+    }
+    function close() {
+      window.removeEventListener('resize', onResize);
+      pts.clear(); g = null; multi = false;
+      stage.classList.remove('is-grabbing');
+    }
+    return { open: open, close: close };
   }
 
   /* ── GRID OVERLAY (press G) ────────────────────────────────────────────── */

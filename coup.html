@@ -97,9 +97,9 @@
 </header>
 
 <dl class="glance" data-reveal>
-  <div><dt>The problem</dt><dd>The rider app was built fast to get the fleet live, and left riders stuck at the moments that mattered. Behind it, field operations ran on WhatsApp and spreadsheets.</dd></div>
-  <div><dt>What I did</dt><dd>Talked to riders in three cities and rebuilt the ride around what they said was missing. Added one tap to record why rides were cancelled, piloted battery swaps before building anything, and designed the ops tools from ride-alongs.</dd></div>
-  <div><dt>The result</dt><dd>A rebuilt rider app in three cities, the first record of why rides were cancelled, and field work tracked in one system instead of group chats.</dd></div>
+  <div><dt>The problem</dt><dd>The rider app left people stuck when a ride went wrong. Field operations ran on WhatsApp and spreadsheets.</dd></div>
+  <div><dt>What I did</dt><dd>Mapped where rides failed and rebuilt the app around it. Put answers where riders got stuck, and designed field tools from ride-alongs.</dd></div>
+  <div><dt>The result</dt><dd>A rebuilt app in three cities, a record of why rides were cancelled, and field work out of group chats.</dd></div>
 </dl>
 
 <img fetchpriority="high" class="hero-img" src="img/coup-hero.jpeg" alt="Two riders on Coup’s red shared e-mopeds waiting at a Berlin intersection" width="700" height="448">
@@ -118,15 +118,23 @@
       <div>
         <h2>Rebuilt around the ride, <em>not reskinned.</em></h2>
         <p class="lede">Interviews in all three cities kept returning one word: confidence. Riders wanted to know they’d picked the right moped, what the app was doing, and what to do when something failed. So we rebuilt every step around one question: what now?</p>
-        <p class="prose">Bluetooth dropped and unlocks failed, and the old app left riders guessing. We mapped every moment of hesitation, then rebuilt each one around clear guidance, honest errors and the fastest route back to riding.</p>
       </div>
-      <img class="img is-cutout device" src="img/coup-scooter.png" width="840" height="840" alt="The Coup e-moped" loading="lazy">
+      <!-- The rebuilt ride beside the argument for it, as the pair Cooler Future
+           uses. The moped cutout that held this column was decoration: the
+           hero, these screens and the photos below all show the moped. The
+           old composite's third screen, the cancellation sheet, is chapter
+           04's own image, so it isn't shown twice. -->
+      <div class="phones-pair">
+        <div class="phone-col">
+          <img class="phone" src="img/coup-ride-route.png" alt="Map with a dotted walking route to the reserved scooter, four minutes away, while the app connects to it" loading="lazy" width="295" height="603">
+          <p class="cap">Walk to your scooter</p>
+        </div>
+        <div class="phone-col">
+          <img class="phone" src="img/coup-ride-unlock.png" alt="At the scooter: battery and range, an unlock button, and a free countdown to get ready before the ride starts" loading="lazy" width="296" height="603">
+          <p class="cap">Unlock and get ready</p>
+        </div>
+      </div>
     </div>
-
-    <!-- The chapter's actual work, so it runs at full width rather than under
-         the moped at a size where the three phones were 105px wide. -->
-    <img class="img device sp-l" src="img/coup-ride-flow.png" alt="Redesigned ride experience: route to scooter, reservation, unlock and cancellation" loading="lazy" width="1256" height="656">
-    <p class="cap">The rebuilt ride: route, reservation, unlock and cancel.</p>
 
     <div class="three sp-l">
       <img class="img" src="img/coup-moped-canal.jpeg" alt="A Coup e-moped parked by the canal in Berlin" loading="lazy" width="860" height="613">
@@ -136,10 +144,99 @@
   </div>
 </div>
 
-<!-- ═══ 02 · CANCELLATIONS ═════════════════════════════════ -->
+<!-- ═══ 02 · MAPPING THE RIDE ══════════════════════════════ -->
+<!-- Both images are crops of the working files, not redrawn, and both open
+     as maps (data-map, see mapView in swiss.js): the flowchart into sign-up
+     and booking whole, the error map into all of it, top to bottom. The page
+     shows the part each map opens on. Framed with .img, not .device: they're
+     white sheets, and without the hairline they bleed into the paper. -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">02</span>Cancellations</p>
+    <p class="lbl"><span class="lbl-n">02</span>Mapping the ride</p>
+    <div class="two is-wide is-top">
+      <h2>Every step mapped, <em>including the ones that fail.</em></h2>
+      <div>
+        <p class="lede">I flowcharted the whole rider app, errors included. Ending a ride ran through seven systems, from the app to the scooter. Mapping every call between them showed which failures had no error message at all.</p>
+      </div>
+    </div>
+    <img class="img sp-l" src="img/coup-ride-flowchart.png" alt="Flowchart of booking a ride, from reserving a scooter to the ride summary, with the scooter’s states and every error branch" loading="lazy" width="2512" height="716"
+         data-map="img/coup-flowchart-map.png" data-map-size="3370x2384" data-map-view="0 .495 1 .4027">
+    <p class="cap">Booking a ride, with every error in orange.</p>
+    <img class="img sp-l" src="img/coup-end-ride-errors.png" alt="Sequence diagram of ending a ride across the app, the backend and the scooter’s systems, with the existing error messages on the left and a new connection-failed message on the right" loading="lazy" width="2512" height="1536"
+         data-map="img/coup-end-ride-map-1.png img/coup-end-ride-map-2.png img/coup-end-ride-map-3.png" data-map-size="3000x9810" data-map-view=".1573 .0239 .8373 .1566">
+    <p class="cap">Ending a ride. Existing errors on the left, missing ones on the right.</p>
+  </section>
+</div>
+
+<!-- ═══ 03 · SUPPORT ════════════════════════════════════════ -->
+<!-- The fix, told the way it was decided, from the support deck: what was
+     rejected and what was built, where each answer went, then one answer up
+     close. Numbers: 205 calls a day at €4.72 is ~€353k a year. The five steps
+     sum to the 205 (unlock 13 = bluetooth; start 24 = unsure how + no helmet;
+     ride runs on 79 = long booking; end 48 = bluetooth + GPS; invoice 41 =
+     refund + invoice). Find-and-reserve produced no calls, so it has no tile.
+     After the error map on purpose: 48 a day were rides that wouldn't end. -->
+<div class="body">
+  <section class="section" data-reveal>
+    <p class="lbl"><span class="lbl-n">03</span>Support</p>
+    <div class="two is-wide is-top">
+      <h2>Every call cost €4.72. <em>So help arrives before the call.</em></h2>
+      <div>
+        <p class="lede">I asked for the raw call log: 205 calls a day, about €350k a year. Testing showed riders weren’t failing to find help. They weren’t looking. So the help had to come to them, at the step where each question comes up.</p>
+        <p class="prose">For the support team, it was their own log turned into answers, and any new failure had an obvious place to go.</p>
+      </div>
+    </div>
+
+    <div class="choice sp-l">
+      <div class="choice-col is-no">
+        <p class="choice-k"><span aria-hidden="true">✕</span>Rejected</p>
+        <h3 class="choice-t sp-0">Rewrite the help centre</h3>
+        <ul class="choice-l">
+          <li>Cheaper, and it looks like progress</li>
+          <li>Assumes riders go looking</li>
+          <li>Testing said they don’t</li>
+        </ul>
+      </div>
+      <div class="choice-col is-yes">
+        <p class="choice-k"><span aria-hidden="true">✓</span>Built</p>
+        <h3 class="choice-t sp-0">Help at the step where it’s needed</h3>
+        <ul class="choice-l">
+          <li>Arrives without being searched for</li>
+          <li>Ranked by what each call costs</li>
+          <li>Written with support and the hardware team</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flow five sp-l">
+      <div class="flow-step"><div class="flow-n">Unlock</div><div class="flow-t">13 a day</div><div class="flow-a">Pairing Bluetooth, step by step</div></div>
+      <div class="flow-step"><div class="flow-n">Start riding</div><div class="flow-t">24 a day</div><div class="flow-a">Kickstand up, brake, press go</div></div>
+      <div class="flow-step"><div class="flow-n">The ride runs on</div><div class="flow-t">79 a day</div><div class="flow-a">How to end it, and what it costs</div></div>
+      <div class="flow-step"><div class="flow-n">End the ride</div><div class="flow-t">48 a day</div><div class="flow-a">What to do about Bluetooth and GPS</div></div>
+      <div class="flow-step"><div class="flow-n">The invoice</div><div class="flow-t">41 a day</div><div class="flow-a">Refunds and receipts</div></div>
+    </div>
+    <p class="cap">Calls a day at each step of a ride, and the answer now shown there.</p>
+
+    <!-- One answer as the card it shipped as: its section, its step number,
+         the instruction, and who signed it off. -->
+    <div class="two is-wide is-top sp-l">
+      <div class="helpcard">
+          <p class="helpcard-k">Starting your Coup</p>
+          <p class="helpcard-b"><span class="helpcard-n">05</span><span>Ready? Then fold in the kickstand, squeeze one of the brakes and push the “go” button at the same time. Now slowly accelerate.</span></p>
+          <p class="helpcard-f">Shown at the start-riding step. Signed off by the hardware team.</p>
+      </div>
+      <div>
+        <p class="prose">Every answer is in the rider’s words, not the log’s, and in the order the hands do it: kickstand, brake, button.</p>
+        <p class="prose">Riders made 12 calls a day asking how to start, because nobody had written this down where they’d see it.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ 04 · CANCELLATIONS ═════════════════════════════════ -->
+<div class="body">
+  <section class="section" data-reveal>
+    <p class="lbl"><span class="lbl-n">04</span>Cancellations</p>
     <div class="two is-wide is-top">
       <div>
         <h2>One in eight rides was cancelled. Nobody knew <em>why.</em></h2>
@@ -153,10 +250,10 @@
   </section>
 </div>
 
-<!-- ═══ 03 · TESTING AN IDEA ═══════════════════════════════ -->
+<!-- ═══ 05 · TESTING AN IDEA ═══════════════════════════════ -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">03</span>Testing an idea</p>
+    <p class="lbl"><span class="lbl-n">05</span>Testing an idea</p>
     <div class="two is-wide is-top">
       <div>
         <h2>Test the expensive idea <em>before building it.</em></h2>
@@ -170,10 +267,10 @@
   </section>
 </div>
 
-<!-- ═══ 04 · FIELD OPERATIONS ══════════════════════════════ -->
+<!-- ═══ 06 · FIELD OPERATIONS ══════════════════════════════ -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">04</span>Field operations</p>
+    <p class="lbl"><span class="lbl-n">06</span>Field operations</p>
     <div class="two is-wide is-top">
       <h2>No brief. So we started <em>where the work happened.</em></h2>
       <div>
@@ -206,7 +303,7 @@
     <div class="two is-top sp-l">
       <div>
         <img class="img device" src="img/coup-scooter-status.png" alt="Dispatcher fleet status: a city map with every moped marked by battery level and coloured by status, maintained, available or assigned" loading="lazy" width="860" height="598">
-        <p class="cap">Fleet status: every moped on one map, by whether it’s available, assigned or in maintenance.</p>
+        <p class="cap">Fleet status: every moped on one map.</p>
       </div>
       <div>
         <img class="img device" src="img/coup-dispatcher-overview.png" alt="Dispatcher overview: bookability, average battery level and maintained scooters, above counts of open tickets by type" loading="lazy" width="860" height="598">
@@ -229,9 +326,9 @@
     </div>
   </section>
 
-  <!-- ═══ 05 · HOW WE MEASURED IT ══════════════════════════ -->
+  <!-- ═══ 07 · HOW WE MEASURED IT ══════════════════════════ -->
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">05</span>How we measured it</p>
+    <p class="lbl"><span class="lbl-n">07</span>How we measured it</p>
     <h2>Judged on the fleet, <em>not the screens.</em></h2>
     <div class="mgrid is-compact">
       <article class="mcard">
