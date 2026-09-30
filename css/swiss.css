@@ -1300,6 +1300,42 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
    column each day was a full-width row holding one short line, with the rest
    of the measure empty beside it. */
 .sprint{grid-template-columns:repeat(4,minmax(0,1fr))}
+/* Coup's support map: five steps of a ride, read left to right like the ride,
+   each with the calls it produced and the answer that now sits there. Grey
+   labels: five red ones in a row would be the accent spent five times in one
+   line. */
+.flow.five{grid-template-columns:repeat(5,minmax(0,1fr))}
+.flow.five .flow-n{color:var(--mute)}
+.flow-a{margin-top:.45rem;font-size:var(--t-small);line-height:1.45;color:var(--ink-2)}
+
+/* Rejected beside built, the way the decision was made: the option not taken
+   is the argument for the one that was. The rejected side is set back in
+   --mute rather than struck through, so it still reads; the built side takes
+   the ink rule. Neither takes the accent, which the headline above has spent. */
+.choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap)}
+.choice-col{border-top:1px solid var(--rule);padding-top:.9rem}
+.choice-col.is-yes{border-top-color:var(--ink)}
+.choice-k{display:flex;align-items:center;gap:.55rem;font-size:var(--t-lab);font-weight:700;
+  letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--mute)}
+.choice-col.is-yes .choice-k{color:var(--ink)}
+.choice-t{margin-top:.55rem;font-size:var(--t-h3);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.choice-col.is-no .choice-t{color:var(--mute)}
+.choice-l{list-style:none;margin:1rem 0 0;padding:0}
+.choice-l li{border-top:1px solid var(--rule-2);padding:.65rem 0;line-height:1.4}
+.choice-col.is-no .choice-l li{color:var(--ink-2)}
+
+/* One answer from the in-app help, set as the card it shipped as: a lighter
+   sheet on the page, so it reads as a thing that was made rather than as copy.
+   Not on an .artifact plate: that plate is --sheet too, and a card on it came
+   out darker than the ground it sat on. */
+.helpcard{background:var(--sheet);border:1px solid var(--rule);padding:clamp(1.3rem,2.6vw,2rem)}
+.helpcard-k{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;
+  color:var(--mute);padding-bottom:.75rem;border-bottom:1px solid var(--ink)}
+.helpcard-b{display:grid;grid-template-columns:auto 1fr;gap:.9rem;margin-top:1.1rem;
+  font-size:var(--t-h3);line-height:1.3;letter-spacing:-.015em}
+.helpcard-n{font-weight:700;color:var(--mute)}
+.helpcard-f{margin-top:1.2rem;padding-top:.8rem;border-top:1px solid var(--rule-2);
+  font-size:var(--t-small);color:var(--mute);line-height:1.45}
 /* Device screenshots. Without a width cap these render at natural pixel size —
    600px+ phone shots blown up to half the container. */
 .phone-col{display:flex;flex-direction:column}
@@ -1415,6 +1451,7 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
   .cli{grid-template-columns:repeat(3,1fr)}
   .f-grid{grid-template-columns:repeat(2,1fr);row-gap:2rem}
   .walk,.sprint{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow.five{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:clamp(1.6rem,3vw,2.2rem)}
 }
 /* The nav collapses here, not at 900px. Five links plus the theme switch were
    still nominally fitting between 900 and 1024, but only by closing the gaps to
@@ -1526,6 +1563,8 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
   .f-grid{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr}
   .walk,.sprint{grid-template-columns:1fr}
+  .choice{grid-template-columns:1fr;row-gap:1.8rem}
+  .flow.five{grid-template-columns:repeat(2,minmax(0,1fr))}
   .mgrid.is-compact{grid-template-columns:1fr}
   .phones-pair{grid-template-columns:1fr}
   /* One screen at a time. Two 150px renders side by side are a texture, not a
@@ -1649,6 +1688,71 @@ body.menu-on #totop,body.grid-on #totop,body.lb-on #totop,body:has(#lb[open]) #t
   .lb-img{max-height:none}
   .lb-fig{justify-content:flex-start;padding-top:3.4rem;padding-bottom:1rem}
 }
+/* ── Diagram map (swiss.js mapView) ──
+   A diagram with data-map opens as a map instead of a picture. On the page it
+   carries a cue, because "you can pan this" is not something a cursor says.
+   The cue is ink on paper like the close button, not the accent: it's a
+   control, and the accent is spent elsewhere in the viewport. */
+.zoom.is-map{position:relative}
+.map-cue{position:absolute;right:clamp(.5rem,1.2vw,.9rem);bottom:clamp(.5rem,1.2vw,.9rem);
+  display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .75rem;
+  background:var(--paper);color:var(--ink);border:1px solid var(--ink);
+  font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;line-height:1;
+  transition:background-color .25s ease,color .25s ease}
+.map-cue svg{width:13px;height:13px;flex:none}
+.zoom.is-map:hover .map-cue,.zoom.is-map:focus-visible .map-cue{background:var(--ink);color:var(--paper)}
+/* The map owns the whole viewport: no dialog padding, no dialog scroll. */
+#lb.is-map{padding:0;overflow:hidden}
+#lb.is-map .lb-fig{display:none}
+.lb-map{display:none}
+/* Opaque, where the picture lightbox is a 95% scrim: a map zoomed out to fit
+   leaves most of the screen empty, and the page ghosting through it read as
+   a second diagram behind the first. */
+#lb.is-map .lb-map{display:block;position:fixed;inset:0;background:var(--paper)}
+.lb-x{z-index:2}
+/* touch-action:none hands every finger to the script, or the browser would
+   pan the page and zoom the viewport instead of the map. */
+.lb-stage{position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;
+  user-select:none;-webkit-user-select:none}
+.lb-stage.is-grabbing{cursor:grabbing}
+/* White in both themes: these are white sheets, and the tiles are white
+   before they arrive, so the frame doesn't flash dark and then fill in. */
+.lb-sheet{position:absolute;left:0;top:0;transform-origin:0 0;background:#fff}
+.lb-sheet img{display:block;max-width:none;pointer-events:none;-webkit-user-drag:none}
+.lb-sheet.is-moving{will-change:transform}
+.lb-sheet.is-anim{transition:transform .32s var(--ez)}
+.lb-bar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;
+  justify-content:space-between;gap:1rem;padding:.75rem clamp(.75rem,2vw,1.4rem);
+  background:var(--paper);border-top:1px solid var(--rule)}
+.lb-mcap{margin:0;min-width:0;color:var(--mute);font-size:var(--t-small);line-height:1.4;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-ctl{display:flex;align-items:stretch;flex:none}
+.lb-btn{min-width:44px;min-height:44px;padding:0 .6rem;border:1px solid var(--ink);
+  background:var(--paper);color:var(--ink);font:inherit;font-size:1.2rem;line-height:1;cursor:pointer;
+  transition:background-color .25s ease,color .25s ease}
+.lb-btn:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+.lb-btn:disabled{cursor:default;color:var(--mute);border-color:var(--rule)}
+.lb-btn.lb-fit{margin-left:.5rem;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);
+  text-transform:uppercase}
+/* The readout sits between the two zoom buttons as one control, so it takes
+   their top and bottom rule rather than floating between them. */
+.lb-pct{display:flex;align-items:center;justify-content:center;min-width:4.4em;
+  border-block:1px solid var(--ink);font-size:var(--t-lab);font-weight:700;
+  letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.lb-hint{position:absolute;left:50%;top:clamp(.75rem,2vw,1.4rem);transform:translateX(-50%);
+  max-width:calc(100% - 8.5rem);margin:0;padding:.7rem .9rem;background:var(--ink);color:var(--paper);
+  font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;
+  line-height:1.35;text-align:center;pointer-events:none;transition:opacity .4s ease}
+.lb-hint.is-gone{opacity:0}
+@media (max-width:560px){
+  .lb-mcap{display:none}
+  .lb-bar{justify-content:center}
+  /* On a phone the flowchart thumbnail is 100px tall, and the worded cue
+     covered a third of it. The magnifier alone still says it. */
+  .map-cue{font-size:0;gap:0;padding:.5rem}
+  .map-cue svg{width:15px;height:15px}
+}
+@media print{.map-cue{display:none}}
 html.js #lb[open]{animation:lb-in .26s var(--ez)}
 @keyframes lb-in{from{opacity:0}to{opacity:1}}
 /* The dialog locks the page behind it; body overflow propagates to the
