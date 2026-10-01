@@ -375,7 +375,10 @@ body.menu-on{overflow:hidden}
 
 /* ── 8. HERO ─────────────────────────────────────────────────────────────── */
 .hero{padding-top:var(--bar);min-height:100svh;display:flex;flex-direction:column}
-/* The metadata strip. Four equal cells at desktop; a two-column grid on a
+/* The metadata strip. Only the 404 carries it now: the homepage is down to two
+   facts, and two facts do not need a table, so they sit on one .hero-tag line
+   above the headline instead.
+   Four equal cells at desktop; a two-column grid on a
    phone, where four cells in one row shrank each to about 80px and broke every
    value across three lines. --t-meta rather than --t-lab: this strip is read,
    not skimmed past like a heading label. */
@@ -449,6 +452,16 @@ body.menu-on{overflow:hidden}
 @supports (container-type:inline-size){
   #hero-h{font-size:min(var(--t-hero), 17.2cqw)}
 }
+/* What I am and where, on one line above the headline: the same eyebrow, title,
+   standfirst order every case study opens with. It replaced a four-cell strip
+   that ran the width of the page; once availability and years practising went,
+   two cells were a table with nothing in it. Ink for the role, mute for the
+   place, the pairing the strip used. Not the accent: the headline's full stop
+   already has it. */
+.hero-tag{font-size:var(--t-meta);letter-spacing:var(--tr-lab);text-transform:uppercase;
+  color:var(--mute);line-height:1.35;margin-bottom:clamp(1.2rem,2.4vw,2rem)}
+.hero-tag b{color:var(--ink);font-weight:700}
+.hero-tag .sep{margin:0 .6em}
 /* The name is the nav's job. It briefly sat here as well, which read as the
    same words twice on one screen. The margin carries the air that line used to
    provide, so the display type still has room under it. */
@@ -461,7 +474,10 @@ body.menu-on{overflow:hidden}
 .hero-act{display:flex;align-items:center;gap:1.1rem;margin-top:clamp(1.6rem,3vw,2.4rem)}
 .hero-act .cta-t{font-size:var(--t-lab);font-weight:700;text-transform:uppercase;letter-spacing:var(--tr-lab)}
 
-.hero-r{position:relative;display:flex;flex-direction:column;min-height:0}
+/* The portrait starts level with the tag line, so it takes the same top padding
+   as the text column. The hairline beside it still runs from the nav down. */
+.hero-r{position:relative;display:flex;flex-direction:column;min-height:0;
+  padding-top:min(clamp(1.4rem,2.8vw,2.6rem),4.4svh)}
 /* The rule sits in the gutter, and the portrait starts on the column line. It
    used to be a border on the cell with a gutter of padding after it, which put
    the image a gutter to the right of where the grid says column eight begins. */
@@ -1470,6 +1486,7 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
   .hero-l,.hero-r{grid-column:auto}
   .hero-l{padding-bottom:0}
   .hero-r::before{display:none}
+  .hero-r{padding-top:0}
   /* the ratio alone sizes the frame here. Paired with a viewport min-height it
      resolved to a 364px minimum width — wider than the content box on a 375px
      phone — and dragged the hero over the right margin. */
