@@ -458,8 +458,12 @@ body.menu-on{overflow:hidden}
    two cells were a table with nothing in it. Ink for the role, mute for the
    place, the pairing the strip used. Not the accent: the headline's full stop
    already has it. */
+/* The gap is measured against the display type, not the tag: about half the
+   headline's size at desktop. 32px under 110px type read as the tag crowding
+   the headline. Capped on svh like the rest of the hero, so a 720px laptop
+   still gets the call to action above the fold. */
 .hero-tag{font-size:var(--t-meta);letter-spacing:var(--tr-lab);text-transform:uppercase;
-  color:var(--mute);line-height:1.35;margin-bottom:clamp(1.2rem,2.4vw,2rem)}
+  color:var(--mute);line-height:1.35;margin-bottom:min(clamp(1.6rem,3.6vw,3.4rem),6svh)}
 .hero-tag b{color:var(--ink);font-weight:700}
 .hero-tag .sep{margin:0 .6em}
 /* The name is the nav's job. It briefly sat here as well, which read as the
