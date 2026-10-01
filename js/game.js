@@ -1455,10 +1455,34 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   // read as one ship in three paint jobs. Each hull now owns one axis
   // outright and pays for it on another:
   //
-  //             top speed   coast (1/e)   turn     phasers    hull
-  //   Defiant    ~450px/s      0.42s      227°/s   x1.22      3    the fast one
-  //   Nova       ~420px/s      0.43s      275°/s   x0.87      2    the nimble one
-  //   Sovereign  ~315px/s      0.72s      155°/s   x1.00      4    the heavy one
+  //             top speed   coast (1/e)   turn     phasers        hull
+  //   Defiant    ~450px/s      0.42s      227°/s   5.2 beams/s    3    the fast one
+  //   Nova       ~385px/s      0.43s      276°/s   6.9 beams/s    2    the nimble one
+  //   Sovereign  ~315px/s      0.72s      173°/s   8.4 beams/s    4    the heavy one
+  //
+  // Matched in Oct 2026: every hull is best at one row of the pick card,
+  // and the card adds up the same for all three. Each row is ranked best 10,
+  // worst 3, and the middle hull sits just past halfway between them, so it
+  // always shows 7. That makes one hull plate worth exactly four pips:
+  //
+  //               speed  turn  phasers   pips  plates
+  //   Defiant       10     7      3       20  +  3
+  //   Nova           7    10      7       24  +  2
+  //   Sovereign      3     3     10       16  +  4
+  //
+  // So a middle value is not free to move. Nudge the Defiant's top speed or
+  // the Sovereign's and the Nova's has to follow to stay halfway, and the
+  // same goes for turning (Defiant in the middle) and phasers (Nova in the
+  // middle). Check shipStats() after any change here.
+  //
+  // The card is the plan; survival is the test. Measured with a scripted
+  // pilot over 64-128 runs a hull, the three now survive 242, 262 and 249s
+  // on average, and the noise between two identical runs of the same hull
+  // is about 35s. The first build of this table had the Nova on 337s. Two
+  // things on that card did not show: a phaser beam that lands is worth
+  // more than a cone beam that goes wide, and the Nova pulled dilithium in
+  // from 1.8x the range. The Nova now has the same tractor as everyone, and
+  // the Sovereign's cone is tighter instead (see fanStep).
   //
   // The Defiant also has `grip`, and is the only hull that does. It was
   // given the most speed and the least control over it: at top speed a 90°
@@ -1472,9 +1496,8 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   // costs 194px and turning round 189px, a little under the Nova's, while
   // the Nova keeps the tightest turn and the fastest nose.
   //
-  // (The Sovereign's phaser figure looks ordinary, but it fires a three-beam
-  // cone from the first second, which is two and a half times the beams of
-  // either escort. On the pick card that is what the Phasers row counts.)
+  // (The Sovereign fires a three-beam cone from the first second, and the
+  // Phasers row counts every beam in it, so its 8.4 is a cone every 0.36s.)
   //
   // Thrust is set from those figures, not the other way round: thrust =
   // top speed per frame * (1 - drag) / drag. The enemies cruise at 1-4px a
@@ -1484,9 +1507,9 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   // which ship you picked, so a hull can be retuned here without hunting
   // through the flight code.
   var HULL_MODS = {
-    torp:   { thrust:1.965, rot:1.10, drag:0.961, cool:0.82, lives:3, magnet:1,  grip:0.05 },
-    spread: { thrust:0.80, rot:0.76, drag:0.977, cool:1.00, lives:4, magnet:1,   grip:0 },
-    mine:   { thrust:1.78, rot:1.34, drag:0.962, cool:1.15, lives:2, magnet:1.8, grip:0 }
+    torp:   { thrust:1.965, rot:1.10, drag:0.961, cool:0.82,  lives:3, magnet:1, grip:0.05 },
+    spread: { thrust:0.80,  rot:0.84, drag:0.977, cool:1.245, lives:4, magnet:1, grip:0 },
+    mine:   { thrust:1.633, rot:1.34, drag:0.962, cool:0.62,  lives:2, magnet:1, grip:0 }
   };
   // The unmodified ship. It is never flown — a run always has a hull by the
   // time anything moves — but every stat function reads through hullMods(),
@@ -1545,7 +1568,11 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   // A wider fan with every level: the extra barrels buy the screen in front of
   // you, not a tighter beam, so spread stays a crowd answer and a poor one
   // against a single large target.
-  function fanStep(l){ return 0.12 + 0.022 * l; }
+  // The cone opens at 0.09 rad between beams, not the 0.12 it once did. The
+  // Sovereign's rate of fire came down a fifth in the Oct 2026 matching, and
+  // a cone that wide put two of its three beams past anything it was aimed
+  // at: tightened, it survives as long as the other two hulls (see HULL_MODS).
+  function fanStep(l){ return 0.09 + 0.022 * l; }
   function bulletDamage(){ return 1 + up.dmg; }
   function bulletSpeed(){ return BULLET_SPEED * (1 + 0.12 * up.range); }
   function bulletLife(){  return BULLET_LIFE  * (1 + 0.15 * up.range); }
@@ -2390,6 +2417,13 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     if(hailEl) hailEl.classList.remove('on');
     closeLevel(true);
     syncHud();
+    // The summary was marked aria-hidden for good, and its one button never
+    // took focus, so a keyboard player had no way to it. Focus lands on Play
+    // again (preventScroll: the camera owns window.scrollY), and the panel
+    // arms like the others so a key already on its way down is not an order.
+    if(overEl) overEl.setAttribute('aria-hidden', 'false');
+    armPanel();
+    if(againEl) try { againEl.focus({ preventScroll:true }); } catch(err){ againEl.focus(); }
   }
 
   // wipe the run back to zero — clock, XP, upgrades, buffs, rocks and warbirds
@@ -2431,7 +2465,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   function restart(){
     if(!gameOver) return;
     gameOver = false;
-    if(overEl) overEl.classList.remove('on');
+    if(overEl){ overEl.classList.remove('on'); overEl.setAttribute('aria-hidden', 'true'); }
     resetRun();
     openPick();
     raf = requestAnimationFrame(loop);
@@ -3470,8 +3504,17 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     // The hull-breach panel is not dismissed by the keyboard. A run ends with
     // the helm keys held down, so "press any key" meant the key already under
     // the player's thumb started the next run before the summary had been
-    // read. Only the Play again button closes it now.
-    if(gameOver){ e.preventDefault(); return; }
+    // read. Only the Play again button closes it now — clicked, or reached
+    // with Tab and pressed with Enter. Neither of those is a flight key, so
+    // neither can be the key still held from the last second of the run.
+    if(gameOver){
+      e.preventDefault();
+      if(e.code === 'Tab' && againEl){
+        try { againEl.focus({ preventScroll:true }); } catch(err){ againEl.focus(); }
+      } else if((e.code === 'Enter' || e.code === 'NumpadEnter') && !e.repeat &&
+                panelArmed() && document.activeElement === againEl) restart();
+      return;
+    }
     if(hailOpen){
       // like the refit card this is a decision rather than a dialog, so only
       // the keys that answer it mean anything — nothing here can dismiss it.
@@ -7683,7 +7726,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     destroyed = [];
     gameOver = false;
     levelOpen = false; hailOpen = false;
-    if(overEl) overEl.classList.remove('on');
+    if(overEl){ overEl.classList.remove('on'); overEl.setAttribute('aria-hidden', 'true'); }
     if(levelEl) levelEl.classList.remove('on');
     if(pauseEl) pauseEl.classList.remove('on');
     if(hailEl) hailEl.classList.remove('on');
@@ -7734,7 +7777,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     document.removeEventListener('click', blockClicks, true);
     keys = {};
     gameOver = false;
-    if(overEl) overEl.classList.remove('on');
+    if(overEl){ overEl.classList.remove('on'); overEl.setAttribute('aria-hidden', 'true'); }
     if(levelEl) levelEl.classList.remove('on');
     if(pauseEl) pauseEl.classList.remove('on');
     if(hailEl) hailEl.classList.remove('on');
