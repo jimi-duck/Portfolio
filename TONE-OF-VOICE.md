@@ -1,152 +1,184 @@
-# Tone of Voice Guide — jciclitira.com Copy
+# Tone of voice: jciclitira.com
 
-Use this guide for every line of copy on the site. It applies to headlines, body copy, case studies, metadata, buttons, form labels and error messages.
+This guide covers every line on the site: headlines, body copy, case studies, the CV, metadata, buttons and form labels.
 
-## 1. The reader we are talking to
+## 1. The voice
 
-- Senior design, product and operations leaders.
-- They are busy, sceptical of marketing, and have seen a lot of polished nonsense.
-- They value clarity, evidence and confidence over enthusiasm.
-- They are not looking for a friend. They are looking for someone who can do the work.
+**An expert explaining their work to a busy colleague. Clear, short, factual.**
 
-## 2. The voice in one sentence
+Report the work. Don't review it. Say what I did and what changed, and let the reader decide whether it was good.
 
-**Confident, plain-spoken and precise — like a senior designer explaining what they did and why it mattered.**
+The homepage is the benchmark. If a line elsewhere sounds busier, cleverer or longer than the homepage, rewrite it.
 
-## 3. Core rules
+## 2. The reader
 
-### Be direct
-- Say what happened. Say what it did. Skip the wind-up.
-- One idea per sentence. If a sentence needs two commas, split it.
-- Avoid throat-clearing: "It is important to note that...", "In today's fast-paced world...", "We believe that..."
+- Hiring managers and product or design leads.
+- They skim. They give the whole site about five minutes.
+- They've read a lot of portfolios. Clever phrasing makes them trust you less, not more.
 
-### Be specific
-- Use concrete outcomes, not abstract claims.
-- Bad: "drove significant improvements in efficiency"
-- Good: "cut report time from three days to under an hour"
+## 3. Positioning
 
-### Be confident, not arrogant
-- State facts without hedging. Do not boast.
-- Bad: "I am uniquely positioned to deliver world-class solutions"
-- Good: "I have done this before. Here is how."
+I'm a product designer who works on the product: the problem, the service and the flows that make it work. UI is part of the job, not the headline.
 
-### Be British
-- UK spelling: realise, organise, centre, behaviour, sceptical, colour, programme, travelled.
-- Use contractions where a person would: "it's", "don't", "can't", "you're".
-- Prefer "and" to "&" in body copy. Use sentence case for headings unless it is a proper name.
+- **Title:** Product Designer. Real job titles (Senior, Lead) stay in role rows and on the CV.
+- **Looking for:** "product roles" where space is short (contact rows, tags, CV header). Where there's room (About, CV summary): "product design or product management roles". Never "PM".
+- **Lead with:** the problem, the service end to end, user flows, ops and field tools, what was tested, what was decided, who it was agreed with.
+- **Play down:** screens, visual polish, design systems. Mention UI only when it's the point, and mention it last.
+- **Show it, don't name it.** "Tested a paper version before any engineering" says more than "ran lean product discovery". Discipline names belong in lists and labels (CV skills, the homepage capline), not in sentences.
 
-### Be minimal
-- Cut words that do not earn their place.
-- If removing a word changes nothing, remove it.
-- Headlines should rarely exceed ten words.
+## 4. The standard
 
-## 4. Words and phrases never to use
+These lines are the model. Verb first, the scope stated, nothing added.
 
-These read as AI slop or corporate filler. Do not use them, even in quotes or metadata.
+> Reimagined the data capture workflow and its tooling with automation at the centre, from the first site visit to the highly regulated renovation plan.
 
-- seamless / seamlessly
-- actionable
-- empower / empowers
-- leverage
-- delight / delightful
-- elevate
-- unlock
-- harness
-- game-changing
-- cutting-edge
-- innovative (as a compliment)
-- synergy / synergies
-- holistic
-- journey (when describing a user)
-- scalable (unless you have just proved it)
-- robust
-- streamlined
-- transformative
-- impact (as a verb)
-- deep dive
-- moving the needle
-- low-hanging fruit
-- circle back
-- thought leadership
-- best-in-class
-- world-class
-- disruptive
-- AI-powered (unless the AI part is the specific point)
+> Led design from start to finish across the app and website, including the full KYC and account-opening flow.
 
-## 5. Phrases to avoid
+> Designed the product's foundations, including how records move between patients and doctors, and collaborated with Allianz on how patients manage their medical bills.
 
-- "not just... but..."
-- "more than just..."
-- "in an era of..."
-- "at the intersection of..."
-- "designed to..." (say what it does instead)
-- "allows users to" (use "lets people" or just the verb)
-- "enables organisations to" (say the outcome)
-- "with a focus on" (cut or restructure)
+> At Bosch's e-moped service, I found out why rides were failing, tested an expensive idea before paying for it, and gave the field team tools that kept 5,000 mopeds on the road.
 
-## 6. What to write instead
+## 5. Rules
 
-| Instead of | Write |
-|------------|-------|
-| actionable insights | clear next steps |
-| empowers patients | lets patients... |
-| seamlessly transformed | turned into |
-| caters to | built for |
-| mission-driven companies | companies working on things that matter |
-| extensive experience | experience doing X |
-| significantly reduced | cut by X% |
-| effectively delivered | delivered |
-| facilitated workshops | ran workshops |
-| utilised research | used research |
-| hard-earned insights | what we learned |
+### Start with the verb
+"Redesigned…", "Led…", "Found out…". Past tense for finished work. "I" for my work. "I helped" or "we" when a team did it.
 
-## 7. Headline rules
+### Facts, not commentary
+Say what happened and what changed. Cut any sentence that judges the work instead of describing it.
+- Cut: "That mattered commercially." "The technology worked. The ecosystem wasn't ready." "Patients coped far better with honest information than with false confidence."
 
-- One strong claim. No punctuation salad.
-- No questions unless the answer is the whole point.
-- Avoid adjectives that cannot be measured: "revolutionary", "groundbreaking", "beautiful".
-- Good: "A retrofit app that turns sceptics into customers"
-- Bad: "Revolutionising sustainable home retrofits with AI-driven innovation"
+### Give the scope
+What, for whom, from where to where. "From the first site visit to the renovation plan" tells a product lead the size of the job in one phrase.
 
-## 8. Body copy rules
+### One sentence, one job
+If a sentence needs more than two commas, split it or cut it. If removing a sentence loses nothing, remove it. Don't say the same thing in the headline, the lede and the caption.
 
-- Lead with the problem or the outcome, not the process.
-- Use short paragraphs. Two to four sentences is usually enough.
-- Bullet points should start with a verb and describe a result.
-- Numbers are better than adjectives. "Six weeks" beats "rapid".
+### Name the people
+Tradespeople, riders, patients, doctors, the ops team, Allianz. Not "users", "stakeholders" or "customers" when you can say who.
 
-## 9. Case study rules
+### Plain words
+Use the words you'd use explaining it to a smart friend. Explain a domain term once, in a few words: "the iSFP, the official renovation plan". After that, use it freely. Call one thing by one name: on Coup it's a moped, every time.
 
-- Context first. What was the situation?
-- Then what you did. Keep it plain.
-- Then the result. Be honest. "We learned" is as valid as "we improved".
-- Do not write "I was responsible for" when you can write "I".
-- Do not inflate team work into solo work.
+### Only true claims
+- Never invent a number, a result or a decision.
+- "Helped" for team work. "Could" for what wasn't proven.
+- If you're not sure what happened, ask. Wrong is worse than vague.
 
-## 10. CTA and form copy
+### No writing tricks
+They read as clever, not clear. Don't use:
+- **Headlines built on a contrast:** "Rebuilt around the ride, not reskinned." In body copy a plain "not" is fine when both halves are facts: "I started with physical products, not screens."
+- **Two halves built for drama:** "The funding existed. The data to claim it didn't." Two plain facts are fine: "One in eight rides was cancelled. Nobody knew why."
+- **Colon reveals:** "kept returning one word: confidence."
+- **Sayings and rhetorical questions:** "Nothing expensive got built until something cheap had shown what it needed to do." "What now?"
+- **Narrating with "So…":** "So we rebuilt every step…" Just say what you did.
+- **Quoting yourself.** The work makes the point.
 
-- CTAs should say what happens next.
-- Good: "Send message", "Read the case study", "Download CV".
-- Bad: "Let's connect", "Get started", "Unlock potential".
-- Form labels: clear and functional. "Your email", not "Your best email".
-- Error messages: explain and fix. "Enter an email address", not "Invalid input".
+## 6. Length
 
-## 11. Grammar and mechanics
+| Where | Limit |
+|---|---|
+| Hero headline | 5 words |
+| Hero intro | 2 sentences, 30 words |
+| Homepage work card | 1 sentence, 30 words |
+| Case-study tagline | 2 sentences, about 35 words |
+| Glance cell (Problem / What I did / Result) | 25 words |
+| Chapter headline | 10 words |
+| Chapter lede | 3 sentences, 50 words |
+| Body paragraph | 4 sentences |
+| CV bullet | 1 sentence, 25 words |
+| Caption | 1 sentence |
+| Meta description | 160 characters |
 
-- UK English spelling throughout.
-- Oxford comma: optional, but be consistent within a page.
-- Use en dashes for ranges (2022–2024), not hyphens.
-- Avoid decorative em dashes in marketing copy. Use a full stop or colon instead.
-- Numbers one to nine in words; 10 and above as figures, except in headlines where figures usually work better.
+A limit is a ceiling, not a target.
 
-## 12. The test before you finish
+## 7. Headlines
 
-Read the copy aloud. If you would not say it to a senior client in a meeting, rewrite it.
+- State a fact or what I did. Someone reading only the headlines should still get the story.
+- One claim. Sentence case. The red `<em>` sits on the closing phrase.
+- The homepage hero is the one place for a positioning line. It must be true of every case study.
 
-If a sentence could appear on a generic SaaS landing page, delete it.
+## 8. Before and after
 
-If a word feels like it came from a LinkedIn post about innovation, cut it.
+Every "after" here is live on the site.
 
-## 13. One-line reminder
+### Positioning
 
-**Say less. Be specific. Sound like a person who has done the work.**
+**CV summary**
+- Before: Product designer with 11 years in climate, mobility, health and fintech, now looking at product roles. The work I enjoy most is deciding which problem to solve, testing ideas before they get expensive, and agreeing with engineering what to build.
+- After: Product designer with 11 years in climate, mobility, health and fintech. I design the service and flows behind a product, test ideas early, and agree with engineering what to build. Looking for product design or product management roles.
+- Why: what I do first, what I want last. "The work I enjoy most" is about me; the reader wants the work.
+
+**About, last line**
+- Before: That's where I want my next role to be.
+- After: I'm looking for product design or product management roles.
+- Why: says what I'm looking for, instead of hinting at it.
+
+**Case-study tagline**
+- Before: A health record patients carry on their phone. It only worked if patients, doctors and Allianz all took part. As one of the first designers, I worked on all three sides.
+- After: As one of the first designers on a health record patients keep on their phone, I worked on all three sides it needed: patients, doctors and Allianz.
+- Why: one sentence, and it starts with my part.
+
+**CV bullet: structure first, UI last**
+- Before: Led iOS and Android UX/UI design, and restructured the platform's information architecture.
+- After: Restructured how the app's content was organised, and led design for iOS and Android.
+
+**CV bullet: plain words instead of jargon**
+- Before: Designed the core flow for requesting, storing and sharing records, and the portal doctors used to respond.
+- After: Designed how patients request, store and share records, and the portal doctors reply from.
+
+### Headlines
+
+| Before | After |
+|---|---|
+| Rebuilt around the ride, not reskinned. | Rebuilt the app around each step of a ride. |
+| Better to be honest than reassuring. | When doctors were slow, the app said so. |
+| Legally complex. It doesn't have to feel it. | Sign-up, cut to what the law required. |
+| Trust was the barrier. Understanding got past it. | Courses for new and experienced investors. |
+| The funding existed. The data to claim it didn't. | One visit had to capture everything. |
+| We put the form on a screen. Nothing changed. | The forms app was legible, but still slow. |
+
+### Ledes
+
+**Cut the commentary (Vivy)**
+- Before: At launch, many requests went unanswered because most doctors had never heard of Vivy. The technology worked. The ecosystem wasn't ready. So instead of a spinner, the status screen said what was pending, why it might be late, and what the patient could do meanwhile.
+- After: At launch, most doctors had never heard of Vivy, so many requests went unanswered. The status screen said what was pending, why it might be late, and what the patient could do meanwhile.
+
+**Cut the drama (Coup)**
+- Before: Interviews in all three cities kept returning one word: confidence. Riders wanted to know they'd picked the right moped, what the app was doing, and what to do when something failed. So we rebuilt every step around one question: what now?
+- After: In interviews across all three cities, riders wanted to know three things: that they'd picked the right moped, what the app was doing, and what to do when something failed. We rebuilt each step to answer them.
+
+**Turn the saying into the fact behind it (Enter)**
+- Before: Nothing expensive got built until something cheap had shown what it needed to do. So the first move was the same survey in Fastfield, an off-the-shelf forms tool, live within weeks.
+- After: We tried the cheapest fix first: the same survey in Fastfield, an off-the-shelf forms tool, live within weeks.
+
+## 9. Words to avoid
+
+They read as filler, marketing or AI. Don't use them anywhere, including metadata.
+
+**Marketing:** seamless, actionable, empower, leverage, delight, elevate, unlock (except a literal moped unlock), harness, game-changing, cutting-edge, innovative, synergy, holistic, scalable, robust, streamlined, transformative, impactful, best-in-class, world-class, disruptive, passionate, obsessed, solutions.
+
+**Product jargon:** stakeholders, pain points, learnings, north star, data-driven, user-centric, human-centred, zero to one, reframed, core flow, trust model, trust signals, product strategy (in sentences; fine as a CV label), deep dive, moving the needle, low-hanging fruit, circle back.
+
+**Phrases:** "not just… but…", "more than just…", "at the intersection of…", "in an era of…", "designed to…" (say what it does), "allows users to" (say "lets people"), "the real problem", "it turns out", "journey" for a user, "impact" as a verb, "AI-powered" unless the AI is the point.
+
+## 10. Mechanics
+
+- UK spelling: organise, centre, behaviour, programme.
+- Contractions where a person would use them: it's, don't, I'm.
+- "And", not "&", in sentences.
+- Numbers one to nine in words, 10 and above as figures. Figures are fine in headlines and stats.
+- En dashes for ranges (2019–2020). No em dashes: use a full stop or a colon.
+- Typographic apostrophes and quotes in HTML (’ “ ”).
+- Oxford comma optional, but consistent on a page.
+- Buttons say what happens: "Send message", "View case study". Form labels are plain: "Your name", "What's the role?".
+- The CV holds its text twice, once for screen and once for print. Change both, and check the print still fits one A4 page.
+
+## 11. Before you ship
+
+1. Does each line start with what I did or what happened?
+2. Is any sentence my opinion of the work? Replace it with the fact behind it, or cut it.
+3. Is it true, and would the team agree with the "I"?
+4. Is it under the length limit?
+5. Search the page for the words in section 9.
+
+**Say what you did. Say it once. Stop.**

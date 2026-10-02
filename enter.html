@@ -17,10 +17,10 @@
 <script>(function(){var r=document.documentElement;r.className+=' js';try{var t=localStorage.getItem('theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}r.setAttribute('data-theme',t);}catch(e){}if(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)r.className+=' coarse';setTimeout(function(){if(!r.dataset.swiss)r.className=r.className.replace(/\bjs\b/,'').replace(/\bintroing\b/,'');},4000);})();</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20fill%3D%27%23131311%27%2F%3E%3Ccircle%20cx%3D%2750%27%20cy%3D%2750%27%20r%3D%2726%27%20fill%3D%27%23e23a16%27%2F%3E%3C%2Fsvg%3E">
 <!-- /@head -->
-<meta name="description" content="How Enter got a whole house surveyed in one visit: a paper test before any engineering, then a field app, and AI findings shown on site that gave the renovation plan a head start.">
+<meta name="description" content="How Enter surveyed a whole house in one visit: tested on paper first, then a field app, and AI findings shown on site.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Enter · James Ciclitira">
-<meta property="og:description" content="How Enter got a whole house surveyed in one visit: a paper test before any engineering, then a field app, and AI findings shown on site that gave the renovation plan a head start.">
+<meta property="og:description" content="How Enter surveyed a whole house in one visit: tested on paper first, then a field app, and AI findings shown on site.">
 <meta property="og:image" content="https://www.jciclitira.com/Man_selecting_the_footprint.jpg">
 <meta property="og:url" content="https://www.jciclitira.com/enter.html">
 <link rel="canonical" href="https://www.jciclitira.com/enter.html">
@@ -100,9 +100,9 @@
 <!-- The whole case in one band. If this is all somebody reads, they leave
      with the problem, the work and the outcome. -->
 <dl class="glance" data-reveal>
-  <div><dt>The problem</dt><dd>Subsidies can cover up to 70% of a retrofit, but only with a plan built from a site survey. Enter’s surveys were cheaper but often incomplete, and homeowners waited weeks or months for answers.</dd></div>
-  <div><dt>What I did</dt><dd>Rode along on surveys. Tested each idea in pencil or a prototype before building it. Designed the data capture tool, which was then used to generate an AI report while still on site.</dd></div>
-  <div><dt>The result</dt><dd>Shorter visits, more complete data, and homeowners selected their retrofits in their own kitchen.</dd></div>
+  <div><dt>The problem</dt><dd>Subsidies cover up to 70% of a retrofit, but need a complete site survey. Enter’s were often incomplete, and answers took a week or more.</dd></div>
+  <div><dt>What I did</dt><dd>Rode along on surveys. Tested each idea on paper or in a prototype first. Designed the survey app behind the AI findings shown on site.</dd></div>
+  <div><dt>The result</dt><dd>Shorter visits, more complete data, and findings shown to the homeowner before anyone left.</dd></div>
 </dl>
 
 <!-- Hero photo: field worker in a garden selecting the building footprint on a map -->
@@ -111,7 +111,7 @@
 <div class="stats" data-reveal>
   <div class="stat"><div class="stat-n">25%</div><div class="stat-l">Less time per on-site survey,<br>enough for one more appointment a day</div></div>
   <div class="stat"><div class="stat-n">80 → 95%</div><div class="stat-l">Data completeness on surveys<br>reaching the energy model</div></div>
-  <div class="stat"><div class="stat-n">1 visit</div><div class="stat-l">Survey, findings and the homeowner’s<br>choice of measures, before anyone leaves</div></div>
+  <div class="stat"><div class="stat-n">1 visit</div><div class="stat-l">Survey done and findings shown,<br>before anyone leaves</div></div>
 </div>
 
 <!-- ═══ 01 · THE PROBLEM ══════════════════════════════════ -->
@@ -122,10 +122,10 @@
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">01</span>The problem</p>
     <div class="two is-wide is-top">
-      <h2>The funding existed. The data to claim it <em>didn’t.</em></h2>
+      <h2>One visit had to <em>capture everything.</em></h2>
       <div>
-        <p class="lede">Every retrofit subsidy needs an iSFP, an official renovation roadmap an architect draws up from a survey of the house. Enter split that job in two: a tradesperson captures the building in one visit, and the architect builds the model and the plan from their data, back in the office.</p>
-        <p class="prose">That only works if one visit captures everything, well enough to build on. And the person on site is usually a <span lang="de">Handwerker</span>: a tradesperson who knows buildings inside out, has never opened a modelling tool, and has far less training than the architect.</p>
+        <p class="lede">Every retrofit subsidy needs an iSFP, the official renovation plan an architect draws up from a survey of the house. Enter split that job in two: a tradesperson surveys the house in one visit, and the architect builds the model and the plan from that data, back in the office.</p>
+        <p class="prose">The person on site is usually a <span lang="de">Handwerker</span>: a tradesperson who knows buildings inside out, but has never opened a modelling tool and has far less training than the architect.</p>
       </div>
     </div>
   </section>
@@ -180,8 +180,8 @@
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">03</span>The first attempt</p>
     <div class="two is-wide is-top">
-      <h2>We put the form on a screen. <em>Nothing changed.</em></h2>
-      <p class="lede">Nothing expensive got built until something cheap had shown what it needed to do. So the first move was the same survey in Fastfield, an off-the-shelf forms tool, live within weeks. Typed and legible, but still a list of fields. Every window took a row of dropdowns for floor, wall, orientation and size, and by the 40th, people were rushing and rounding.</p>
+      <h2>The forms app was legible, <em>but still slow.</em></h2>
+      <p class="lede">We tried the cheapest fix first: the same survey in Fastfield, an off-the-shelf forms tool, live within weeks. Every window still took a row of dropdowns for floor, wall, orientation and size. By the 40th, people were rushing and rounding.</p>
     </div>
 
     <div class="pbox is-claim">
@@ -195,10 +195,10 @@
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">04</span>Paper prototype</p>
     <div class="two is-wide is-top">
-      <h2>Paper first. Then <em>the engineering.</em></h2>
+      <h2>Tested on paper <em>before any engineering.</em></h2>
       <div>
         <p class="lede">The real tool meant months of engineering, so I tested the idea for the price of an afternoon: a dimensioned floor plan from official building records, marked up in pencil on the tablet already in the van.</p>
-        <p class="prose">A riskier idea rode along with it. Instead of describing every window, define three or four window types once, then mark where each one sits. Each round went to the field first, then to the modelling team, to see whether they could build from what came back.</p>
+        <p class="prose">Alongside it, I tried a riskier idea: define three or four window types once, then mark where each window sits, instead of describing every one. Each round went to the field first, then to the modelling team, to see whether they could build from what came back.</p>
       </div>
     </div>
 
@@ -212,7 +212,7 @@
       </div>
       <div>
         <img class="photo is-doc" src="img/enter-poc-tablet.jpg" alt="A field worker marking up the prototype floor plan on a tablet inside an unfinished house" loading="lazy" width="1306" height="816">
-        <p class="cap">Marked up in the Files app on a tablet they already carried. Nothing was built to run this test.</p>
+        <p class="cap">Marked up in the Files app, on a tablet they already carried.</p>
 
         <div class="cards is-stack sp-l">
           <div class="icard">
@@ -223,12 +223,12 @@
           <div class="icard">
             <div class="icard-icon"></div>
             <div class="icard-t">The window types won</div>
-            <p class="icard-d">The idea I trusted least did the most. The slowest part of the survey nearly disappeared.</p>
+            <p class="icard-d">The slowest part of the survey nearly disappeared.</p>
           </div>
           <div class="icard">
             <div class="icard-icon"></div>
             <div class="icard-t">Completeness didn’t</div>
-            <p class="icard-d">Paper can invite a complete answer. It can’t enforce one, and that was the case for building.</p>
+            <p class="icard-d">Paper can’t force a complete answer. That was the case for building the app.</p>
           </div>
         </div>
       </div>
@@ -242,10 +242,10 @@
     <p class="lbl"><span class="lbl-n">05</span>The survey app</p>
     <div class="two is-wide is-top">
       <div>
-        <h2>A survey that follows the house, <em>not the form.</em></h2>
-        <p class="lede">Nobody surveys a house in order. You go down to the boiler, up to the loft, then back to the room someone was asleep in. So the survey became four tabs you can leave and come back to.</p>
+        <h2>A survey you can do <em>in any order.</em></h2>
+        <p class="lede">Nobody surveys a house in order. You go down to the boiler, up to the loft, then back to the room someone was asleep in. The survey became four tabs you can leave and come back to.</p>
         <p class="prose">Almost nothing is free text. Heat sources, wall build-ups and glazing are presets, so the app carries the modelling knowledge and the person on site brings what they can see and measure. Before I designed a screen, engineering, the AI team and I agreed what a survey had to produce, down to what counts as a window. The same data fed the energy model, the homeowner’s report and the iSFP.</p>
-        <p class="prose">Before any of it was built, I tested a clickable prototype with 24 field workers across 13&nbsp;states. Too few, and too spread out, to survey. So the tests ran as training sessions with the operations team: I watched people work, and changed the design between sessions.</p>
+        <p class="prose">Before any of it was built, I tested a clickable prototype with 24 field workers across 13&nbsp;states. The tests ran as training sessions with the operations team. I watched people work and changed the design between sessions.</p>
       </div>
       <!-- Illustrative, not documentary: this frame is generated, unlike the
            field photography elsewhere on the page. The caption describes the
@@ -298,7 +298,7 @@
   <div class="warm-band-inner">
     <p class="lbl"><span class="lbl-n">06</span>The floor plan</p>
     <div class="two is-wide is-top">
-      <h2>Windows go on the plan, <em>not in a form.</em></h2>
+      <h2>Windows go straight <em>onto the floor plan.</em></h2>
       <div>
         <p class="lede">Find the house on a map, trace the heated part of it, and the floor plan exists. Then drag each window onto its wall, add its size and pick its type. Position comes from where you put it, not from a dropdown.</p>
         <p class="prose">Official records had a plan for 90% of houses. For new builds and extensions the records hadn’t caught up with, six rough shapes and one tap keep the survey moving.</p>
@@ -388,7 +388,7 @@
     <div class="sp-l">
       <p class="walk-n">01 · On site</p>
       <h3 class="walk-t sp-0">Skip a question, <em>but say why.</em></h3>
-      <p class="prose sp-s">The subsidy needs every critical field filled, so critical fields block the submit. But real houses have locked basements, and owners who don’t know when the windows went in. Force an answer and you get a guess that looks like a measurement. So the tradesperson can swipe to “<span lang="de">Antwort nicht möglich</span>”, which doesn’t clear the field. It asks why, from a fixed list.</p>
+      <p class="prose sp-s">The subsidy needs every critical field filled. But real houses have locked basements, and owners who don’t know when the windows went in. Force an answer and you get a guess that looks like a measurement. Instead, the tradesperson can swipe to “<span lang="de">Antwort nicht möglich</span>” and pick a reason from a fixed list.</p>
     </div>
 
     <div class="appshots n3 is-tablet sp-m">
@@ -413,7 +413,7 @@
         <figcaption class="appshot-c">
           <div class="flow-n">Step 03</div>
           <div class="flow-t">Say why</div>
-          <div class="flow-d">A reason from a list, not a text box.</div>
+          <div class="flow-d">Five fixed reasons to choose from.</div>
         </figcaption>
       </figure>
     </div>
@@ -458,7 +458,7 @@
       <h2>The homeowner sees the findings <em>before anyone leaves.</em></h2>
       <div>
         <p class="lede">The moment the survey was sent, AI returned quick findings on the same tablet: where the house stands, what it could reach, and what each measure costs and saves. The tradesperson presented them there and then, instead of the homeowner waiting a week for the iSFP.</p>
-        <p class="prose">The same findings gave the architect a head start on the iSFP, the long, detailed plan written in the office afterwards. That mattered commercially. Enter earned its money arranging the retrofit work, and results that arrived days later on a follow-up call converted poorly. I designed the report from scratch, for a tradesperson rather than an architect to present.</p>
+        <p class="prose">The same findings gave the architect a head start on the iSFP, the detailed plan written in the office afterwards. Enter earned its money arranging the retrofit work, and results that arrived days later on a follow-up call converted poorly. I designed the report from scratch, for a tradesperson rather than an architect to present.</p>
       </div>
     </div>
 
@@ -468,7 +468,7 @@
         <div class="walk-text">
           <p class="walk-n">01 · Future outlook</p>
           <h3 class="walk-t">The cost of doing nothing</h3>
-          <p class="walk-d">Energy prices keep moving. See what doing nothing could cost over time, before comparing it with renovation.</p>
+          <p class="walk-d">What doing nothing could cost over time, as energy prices move.</p>
         </div>
       </div>
       <div class="walk-row">
@@ -476,15 +476,15 @@
         <div class="walk-text">
           <p class="walk-n">02 · Assessment and potential</p>
           <h3 class="walk-t">From today’s house to its potential</h3>
-          <p class="walk-d">See where the house stands today, what could improve, and what that could mean for energy costs, value and efficiency.</p>
+          <p class="walk-d">Where the house stands today, and what the measures could do for its energy costs, value and efficiency.</p>
         </div>
       </div>
       <div class="walk-row">
         <div class="walk-media"><img src="Enter-report-3.png" alt="Report screen listing all available retrofit measures with rankings" loading="lazy" width="680" height="884"></div>
         <div class="walk-text">
           <p class="walk-n">03 · Renovation roadmap</p>
-          <h3 class="walk-t">Build the right renovation plan</h3>
-          <p class="walk-d">Compare measures, combine them into a plan, and see how costs, savings, subsidies and payback change together.</p>
+          <h3 class="walk-t">Every measure, ranked</h3>
+          <p class="walk-d">Compare measures, and see how costs, savings, subsidies and payback change when they’re combined.</p>
         </div>
       </div>
       <div class="walk-row">
@@ -492,7 +492,7 @@
         <div class="walk-text">
           <p class="walk-n">04 · Measure detail</p>
           <h3 class="walk-t">Know what each measure changes</h3>
-          <p class="walk-d">See the cost, savings, subsidy and payback of each measure. Everything you need to decide what happens next.</p>
+          <p class="walk-d">The cost, savings, subsidy and payback of a single measure.</p>
         </div>
       </div>
     </div>
@@ -505,7 +505,7 @@
 <div class="body">
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">10</span>How we measured it</p>
-    <h2>Less time in the house. More of the house <em>in the data.</em></h2>
+    <h2>Shorter visits, <em>more complete data.</em></h2>
     <div class="mgrid is-compact">
       <article class="mcard">
         <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="9.5" cy="5.2" rx="6" ry="2.4"/><path d="M3.5 5.2v5.6c0 1.33 2.69 2.4 6 2.4"/><path d="M3.5 10.8v5.6c0 1.33 2.69 2.4 6 2.4h.4"/><path d="M15.5 5.2v3"/><path d="M13.4 17.6l2 2 4-4.4"/></svg></span>
