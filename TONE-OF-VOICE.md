@@ -21,7 +21,7 @@ The homepage is the benchmark. If a line elsewhere sounds busier, cleverer or lo
 I'm a product designer who works on the product: the problem, the service and the flows that make it work. UI is part of the job, not the headline.
 
 - **Title:** Product Designer. Real job titles (Senior, Lead) stay in role rows and on the CV.
-- **Looking for:** "product roles" where space is short (contact rows, tags, CV header). Where there's room (About, CV summary): "product design or product management roles". Never "PM".
+- **Looking for:** "product roles", including the CV. Only the homepage About spells it out: "product design or product management roles". Never "PM".
 - **Lead with:** the problem, the service end to end, user flows, ops and field tools, what was tested, what was decided, who it was agreed with.
 - **Play down:** screens, visual polish, design systems. Mention UI only when it's the point, and mention it last.
 - **Show it, don't name it.** "Tested a paper version before any engineering" says more than "ran lean product discovery". Discipline names belong in lists and labels (CV skills, the homepage capline), not in sentences.
@@ -105,8 +105,8 @@ Every "after" here is live on the site.
 
 **CV summary**
 - Before: Product designer with 11 years in climate, mobility, health and fintech, now looking at product roles. The work I enjoy most is deciding which problem to solve, testing ideas before they get expensive, and agreeing with engineering what to build.
-- After: Product designer with 11 years in climate, mobility, health and fintech. I design the service and flows behind a product, test ideas early, and agree with engineering what to build. Looking for product design or product management roles.
-- Why: what I do first, what I want last. "The work I enjoy most" is about me; the reader wants the work.
+- After: Product designer in climate, mobility, health and fintech since 2015. I design both sides of a service: the customer product, and the ops tools and workflows behind it. I test ideas early and agree with engineering what to build. Looking for product roles.
+- Why: what I do first, what I want last. "The work I enjoy most" is about me; the reader wants the work. "With 11 years" reads clunky; "since 2015" says the same thing. "Both sides of a service" carries the ops tools without making them the whole pitch.
 
 **About, last line**
 - Before: That's where I want my next role to be.
