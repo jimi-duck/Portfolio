@@ -318,16 +318,6 @@
     if (link) link.addEventListener('click', toTopNow);
   }
 
-  /* ── PRINT (résumé only) ───────────────────────────────────────────────── */
-  /* The last inline handler on the site. Bound here rather than written into
-     the markup so that every behaviour on the page is in one file, and so a
-     Content-Security-Policy without unsafe-inline would not quietly break the
-     one button that produces the PDF. */
-  function printButton() {
-    var btn = $('.print-btn');
-    if (btn) btn.addEventListener('click', function () { window.print(); });
-  }
-
   /* ── IMAGE LIGHTBOX ────────────────────────────────────────────────────── */
   /* The app screens are the evidence the page is built on, and at 300px in a
      four-up row they are a texture rather than a screenshot. Every figure and
@@ -835,7 +825,7 @@
   /* ── BOOT ──────────────────────────────────────────────────────────────── */
   function boot() {
     document.documentElement.dataset.swiss = '1';
-    theme(); nav(); gridOverlay(); lightbox(); footerTop(); printButton();
+    theme(); nav(); gridOverlay(); lightbox(); footerTop();
     progress(); launcherFade(); toTop(); launcher(); game();
     scrollLoop();
     intro(reveals);

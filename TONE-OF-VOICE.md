@@ -21,7 +21,7 @@ The homepage is the benchmark. If a line elsewhere sounds busier, cleverer or lo
 I'm a product designer who works on the product: the problem, the service and the flows that make it work. UI is part of the job, not the headline.
 
 - **Title:** Product Designer. Real job titles (Senior, Lead) stay in role rows and on the CV.
-- **Looking for:** "product roles", including the CV. Only the homepage About spells it out: "product design or product management roles". Never "PM".
+- **Looking for:** "product roles" in short slots (contact row, site CV header). The PDF CV doesn't announce it; the work says it. Only the homepage About spells it out: "product design or product management roles". Never "PM".
 - **Lead with:** the problem, the service end to end, user flows, ops and field tools, what was tested, what was decided, who it was agreed with.
 - **Play down:** screens, visual polish, design systems. Mention UI only when it's the point, and mention it last.
 - **Show it, don't name it.** "Tested a paper version before any engineering" says more than "ran lean product discovery". Discipline names belong in lists and labels (CV skills, the homepage capline), not in sentences.
@@ -59,6 +59,9 @@ Tradespeople, riders, patients, doctors, the ops team, Allianz. Not "users", "st
 ### Plain words
 Use the words you'd use explaining it to a smart friend. Explain a domain term once, in a few words: "the iSFP, the official renovation plan". After that, use it freely. Call one thing by one name: on Coup it's a moped, every time.
 
+### CV and homepage: what, not how
+Say what I worked on and what it changed, in one or two lines: the scope, then the impact. "Rebuilt the on-site data capture workflow around AI-readable data, cutting survey time by 25%." Process detail (paper tests, call logs, ride-alongs, sprint days) belongs in the case studies. The CV's job is to make someone want to read them.
+
 ### Only true claims
 - Never invent a number, a result or a decision.
 - "Helped" for team work. "Could" for what wasn't proven.
@@ -85,7 +88,7 @@ They read as clever, not clear. Don't use:
 | Chapter headline | 10 words |
 | Chapter lede | 3 sentences, 50 words |
 | Body paragraph | 4 sentences |
-| CV bullet | 1 sentence, 25 words |
+| CV bullet | 1 sentence, about 25 words (two lines on the PDF) |
 | Caption | 1 sentence |
 | Meta description | 160 characters |
 
@@ -104,9 +107,9 @@ Every "after" here is live on the site.
 ### Positioning
 
 **CV summary**
-- Before: Product designer with 11 years in climate, mobility, health and fintech, now looking at product roles. The work I enjoy most is deciding which problem to solve, testing ideas before they get expensive, and agreeing with engineering what to build.
-- After: Product designer in climate, mobility, health and fintech since 2015. I design both sides of a service: the customer product, and the ops tools and workflows behind it. I test ideas early and agree with engineering what to build. Looking for product roles.
-- Why: what I do first, what I want last. "The work I enjoy most" is about me; the reader wants the work. "With 11 years" reads clunky; "since 2015" says the same thing. "Both sides of a service" carries the ops tools without making them the whole pitch.
+- Before: Senior Product Designer focused on complex products, services and customer journeys. Bridging customer needs, operational reality and digital touchpoints to create simple, useful experiences.
+- After: Senior Product Designer working where software meets hardware and real-world services. From consumer products to operational tools, I focus on making complex workflows usable.
+- Why: one through-line (software meeting the physical world and operational complexity) that holds for Coup, Enter, Vivy and the industrial design degree. No "journeys" or "touchpoints", and no "looking for" line. The site CV starts "Product designer", because its header already says "Senior Product Designer".
 
 **About, last line**
 - Before: That's where I want my next role to be.
@@ -122,9 +125,10 @@ Every "after" here is live on the site.
 - Before: Led iOS and Android UX/UI design, and restructured the platform's information architecture.
 - After: Restructured how the app's content was organised, and led design for iOS and Android.
 
-**CV bullet: plain words instead of jargon**
-- Before: Designed the core flow for requesting, storing and sharing records, and the portal doctors used to respond.
-- After: Designed how patients request, store and share records, and the portal doctors reply from.
+**CV bullet: what and what it changed, not how**
+- Before: Rode along on surveys, tested a paper version in real visits before any engineering, then shipped the app. Surveys took 25% less time, and complete data rose from 80% to 95%.
+- After: Rebuilt the on-site data capture workflow around AI-readable data, cutting survey time by 25% and increasing data completeness from 80% to 95%.
+- Why: the scope and the result in one line. How it was done is the case study's job.
 
 ### Headlines
 

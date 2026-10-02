@@ -6,7 +6,8 @@ Personal product design portfolio for James Ciclitira. A set of static, hand-cod
 
 ```
 index.html           Homepage
-cv.html              Résumé (screen sheet + a single-page A4 print sheet)
+cv.html              Résumé (screen sheet + a single-page A4 print sheet;
+                     "Download CV" serves CV/James_Ciclitira_Lebenslauf.pdf)
 404.html             Not found
 lab.html             Experiments — side projects, one of which is the game.
                      Footer-linked, noindexed, deliberately absent from
