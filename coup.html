@@ -116,8 +116,8 @@
     <p class="lbl"><span class="lbl-n">01</span>The rider app</p>
     <div class="two is-wide is-top">
       <div>
-        <h2>Rebuilt around the ride, <em>not reskinned.</em></h2>
-        <p class="lede">Interviews in all three cities kept returning one word: confidence. Riders wanted to know they’d picked the right moped, what the app was doing, and what to do when something failed. So we rebuilt every step around one question: what now?</p>
+        <h2>Rebuilt the app around <em>each step of a ride.</em></h2>
+        <p class="lede">In interviews across all three cities, riders wanted to know three things: that they’d picked the right moped, what the app was doing, and what to do when something failed. We rebuilt each step to answer them.</p>
       </div>
       <!-- The rebuilt ride beside the argument for it, as the pair Cooler Future
            uses. The moped cutout that held this column was decoration: the
@@ -126,11 +126,11 @@
            04's own image, so it isn't shown twice. -->
       <div class="phones-pair">
         <div class="phone-col">
-          <img class="phone" src="img/coup-ride-route.png" alt="Map with a dotted walking route to the reserved scooter, four minutes away, while the app connects to it" loading="lazy" width="295" height="603">
-          <p class="cap">Walk to your scooter</p>
+          <img class="phone" src="img/coup-ride-route.png" alt="Map with a dotted walking route to the reserved moped, four minutes away, while the app connects to it" loading="lazy" width="295" height="603">
+          <p class="cap">Walk to your moped</p>
         </div>
         <div class="phone-col">
-          <img class="phone" src="img/coup-ride-unlock.png" alt="At the scooter: battery and range, an unlock button, and a free countdown to get ready before the ride starts" loading="lazy" width="296" height="603">
+          <img class="phone" src="img/coup-ride-unlock.png" alt="At the moped: battery and range, an unlock button, and a free countdown to get ready before the ride starts" loading="lazy" width="296" height="603">
           <p class="cap">Unlock and get ready</p>
         </div>
       </div>
@@ -139,7 +139,7 @@
     <div class="three sp-l">
       <img class="img" src="img/coup-moped-canal.jpeg" alt="A Coup e-moped parked by the canal in Berlin" loading="lazy" width="860" height="613">
       <img class="img" src="img/coup-fleet-street.jpeg" alt="The Coup fleet lined up on a Berlin street" loading="lazy" width="860" height="613">
-      <img class="img" src="img/coup-fleet-potsdamer-platz.jpeg" alt="Riders collecting Coup scooters at Potsdamer Platz" loading="lazy" width="860" height="613">
+      <img class="img" src="img/coup-fleet-potsdamer-platz.jpeg" alt="Riders collecting Coup mopeds at Potsdamer Platz" loading="lazy" width="860" height="613">
     </div>
   </div>
 </div>
@@ -156,13 +156,13 @@
     <div class="two is-wide is-top">
       <h2>Every step mapped, <em>including the ones that fail.</em></h2>
       <div>
-        <p class="lede">I flowcharted the whole rider app, errors included. Ending a ride ran through seven systems, from the app to the scooter. Mapping every call between them showed which failures had no error message at all.</p>
+        <p class="lede">I flowcharted the whole rider app, errors included. Ending a ride ran through seven systems, from the app to the moped. Mapping every call between them showed which failures had no error message at all.</p>
       </div>
     </div>
-    <img class="img sp-l" src="img/coup-ride-flowchart.png" alt="Flowchart of booking a ride, from reserving a scooter to the ride summary, with the scooter’s states and every error branch" loading="lazy" width="2512" height="716"
+    <img class="img sp-l" src="img/coup-ride-flowchart.png" alt="Flowchart of booking a ride, from reserving a moped to the ride summary, with the moped’s states and every error branch" loading="lazy" width="2512" height="716"
          data-map="img/coup-flowchart-map.png" data-map-size="3370x2384" data-map-view="0 .495 1 .4027">
     <p class="cap">Booking a ride, with every error in orange.</p>
-    <img class="img sp-l" src="img/coup-end-ride-errors.png" alt="Sequence diagram of ending a ride across the app, the backend and the scooter’s systems, with the existing error messages on the left and a new connection-failed message on the right" loading="lazy" width="2512" height="1536"
+    <img class="img sp-l" src="img/coup-end-ride-errors.png" alt="Sequence diagram of ending a ride across the app, the backend and the moped’s systems, with the existing error messages on the left and a new connection-failed message on the right" loading="lazy" width="2512" height="1536"
          data-map="img/coup-end-ride-map-1.png img/coup-end-ride-map-2.png img/coup-end-ride-map-3.png" data-map-size="3000x9810" data-map-view=".1573 .0239 .8373 .1566">
     <p class="cap">Ending a ride. Existing errors on the left, missing ones on the right.</p>
   </section>
@@ -180,10 +180,10 @@
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">03</span>Support</p>
     <div class="two is-wide is-top">
-      <h2>Every call cost €4.72. <em>So help arrives before the call.</em></h2>
+      <h2>Every call cost €4.72, <em>so help moved into the app.</em></h2>
       <div>
-        <p class="lede">I asked for the raw call log: 205 calls a day, about €350k a year. Testing showed riders weren’t failing to find help. They weren’t looking. So the help had to come to them, at the step where each question comes up.</p>
-        <p class="prose">For the support team, it was their own log turned into answers, and any new failure had an obvious place to go.</p>
+        <p class="lede">I asked for the raw call log: 205 calls a day, about €350k a year. Testing showed riders weren’t looking for help at all, so it had to appear at the step where each question comes up.</p>
+        <p class="prose">The support team’s own log became the answers, and any new failure had an obvious place to go.</p>
       </div>
     </div>
 
@@ -192,7 +192,7 @@
         <p class="choice-k"><span aria-hidden="true">✕</span>Rejected</p>
         <h3 class="choice-t sp-0">Rewrite the help centre</h3>
         <ul class="choice-l">
-          <li>Cheaper, and it looks like progress</li>
+          <li>The cheaper option</li>
           <li>Assumes riders go looking</li>
           <li>Testing said they don’t</li>
         </ul>
@@ -240,11 +240,11 @@
     <div class="two is-wide is-top">
       <div>
         <h2>One in eight rides was cancelled. Nobody knew <em>why.</em></h2>
-        <p class="lede">Damaged moped, flat battery, missing helmet? Without a reason, every fix was a guess. We added one step to cancelling: a short list of reasons, one tap, done. For the first time, ops had a timestamped record of why rides failed.</p>
+        <p class="lede">Without a reason, nobody could tell a damaged moped from a flat battery or a missing helmet. We added one tap to cancelling: a reason from a short list. For the first time, ops had a timestamped record of why rides failed.</p>
       </div>
       <div>
         <img class="img device device-1up" src="img/coup-cancellation.png" alt="Cancellation flow with structured reason prompt" loading="lazy" width="840" height="1434">
-        <p class="cap is-center">A structured reason, asked at a moment riders were already in.</p>
+        <p class="cap is-center">One tap, inside the cancel flow riders already used.</p>
       </div>
     </div>
   </section>
@@ -256,12 +256,12 @@
     <p class="lbl"><span class="lbl-n">05</span>Testing an idea</p>
     <div class="two is-wide is-top">
       <div>
-        <h2>Test the expensive idea <em>before building it.</em></h2>
-        <p class="lede">Could riders swap flat batteries themselves, for ride credit? Proving it properly meant charging infrastructure that didn’t exist. So we ran a small in-app pilot and watched what riders actually did: enough for the business to decide without building anything.</p>
+        <h2>Tested an expensive idea <em>before building it.</em></h2>
+        <p class="lede">We wanted to know if riders would swap flat batteries themselves, for ride credit. Building it properly meant charging infrastructure that didn’t exist, so we ran a small in-app pilot and watched what riders did. It gave the business enough to decide without building anything.</p>
       </div>
       <div>
         <img class="img device" src="img/coup-battery-swap.png" alt="Community battery swap pilot" loading="lazy" width="1294" height="676">
-        <p class="cap">Community battery swap pilot: testing intent before infrastructure.</p>
+        <p class="cap">The battery swap pilot, run in the app.</p>
       </div>
     </div>
   </section>
@@ -272,9 +272,9 @@
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">06</span>Field operations</p>
     <div class="two is-wide is-top">
-      <h2>No brief. So we started <em>where the work happened.</em></h2>
+      <h2>No brief, so we started <em>in the field.</em></h2>
       <div>
-        <p class="lede">Jobs arrived through group chats, repairs were logged if at all, and dispatchers had no live view of the fleet. There was no brief, so we started by riding along with field workers and sitting with dispatchers. Two needs came out of it, and two products.</p>
+        <p class="lede">Jobs arrived through group chats, repairs were logged if at all, and dispatchers had no live view of the fleet. We rode along with field workers and sat with dispatchers. Two needs came out of it, and two products.</p>
         <p class="prose">The field app had to work in rain, traffic and winter, often one-handed and in gloves. Every control is large, obvious and hard to mistake.</p>
       </div>
     </div>
@@ -306,7 +306,7 @@
         <p class="cap">Fleet status: every moped on one map.</p>
       </div>
       <div>
-        <img class="img device" src="img/coup-dispatcher-overview.png" alt="Dispatcher overview: bookability, average battery level and maintained scooters, above counts of open tickets by type" loading="lazy" width="860" height="598">
+        <img class="img device" src="img/coup-dispatcher-overview.png" alt="Dispatcher overview: bookability, average battery level and maintained mopeds, above counts of open tickets by type" loading="lazy" width="860" height="598">
         <p class="cap">The overview: bookability, battery and open tickets across the fleet.</p>
       </div>
     </div>
@@ -321,7 +321,7 @@
       </div>
       <div>
         <img class="img device" src="img/coup-maintenance-report.png" alt="Maintenance report screen" loading="lazy" width="1288" height="672">
-        <p class="cap">Maintenance report: consistent outcomes, building the ops picture over time.</p>
+        <p class="cap">Maintenance report: guided steps, and a record of every repair.</p>
       </div>
     </div>
   </section>
@@ -329,11 +329,11 @@
   <!-- ═══ 07 · HOW WE MEASURED IT ══════════════════════════ -->
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">07</span>How we measured it</p>
-    <h2>Judged on the fleet, <em>not the screens.</em></h2>
+    <h2>Judged on <em>how the fleet ran.</em></h2>
     <div class="mgrid is-compact">
       <article class="mcard">
         <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.4" cy="17.6" r="3.1"/><circle cx="18.6" cy="17.6" r="3.1"/><path d="M8.5 17.6h7"/><path d="M5.4 14.5V9.8h4.9l3.4 4.7"/><path d="M10.3 9.8h3.9"/><path d="M17.4 6.2h4"/><path d="M19.4 4.2v4"/></svg></span>
-        <p><strong>Scooter downtime</strong>Time a moped spends off the road.</p>
+        <p><strong>Moped downtime</strong>Time a moped spends off the road.</p>
       </article>
       <article class="mcard">
         <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.6 4.2H6.4v16.4h11.2V4.2h-2.2"/><path d="M9.2 2.6h5.6v3H9.2z"/><path d="M12.9 9.2l-2.6 4h3.4l-2.6 4"/></svg></span>
@@ -345,7 +345,7 @@
       </article>
       <article class="mcard">
         <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 20.2V13l3.3-5.4h7.1l3.3 5.4v7.2"/><circle cx="7.1" cy="20.2" r="1.6"/><circle cx="14" cy="20.2" r="1.6"/><path d="M3.4 15.4h13.7"/><path d="M19.4 4.6v6.2"/><path d="M16.8 7.2l2.6-2.6 2.6 2.6"/></svg></span>
-        <p><strong>Rides per scooter</strong>Trips from each vehicle, each day it’s on the street.</p>
+        <p><strong>Rides per moped</strong>Trips from each vehicle, each day it’s on the street.</p>
       </article>
     </div>
   </section>
