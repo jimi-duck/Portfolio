@@ -31,7 +31,7 @@
   transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ez)}
 .contact-line a:hover{color:var(--red)}
 .contact-line a:hover::after{transform:scaleX(1);transform-origin:left}
-.print-btn{margin-top:1rem;background:none;border:1px solid var(--ink);border-radius:0;
+.print-btn{display:inline-block;margin-top:1rem;background:none;border:1px solid var(--ink);border-radius:0;color:inherit;text-decoration:none;
   padding:.6rem 1.15rem;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;
   cursor:pointer;transition:background .35s var(--ez),color .35s var(--ez)}
 .print-btn:hover{background:var(--ink);color:var(--paper)}
