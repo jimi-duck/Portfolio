@@ -1,0 +1,14 @@
+// Cloudflare Workers Builds, for preview links only. Production is GitHub
+// Pages (see CNAME); this Worker serves the same files as they are, with no
+// build step, so every pull request gets a preview of the site.
+// `wrangler preview` needs a `previews` block; empty is fine.
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "portfolio",
+  "compatibility_date": "2026-10-01",
+  "previews": {},
+  "assets": {
+    "directory": ".",
+    "not_found_handling": "404-page"
+  }
+}
