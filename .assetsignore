@@ -1,0 +1,11 @@
+# Files in the repo that are not part of the site. Wrangler reads this when it
+# uploads the repo root as the preview Worker's static assets.
+.git
+.github
+.wrangler
+node_modules
+wrangler.jsonc
+.assetsignore
+*.md
+build.js
+partials

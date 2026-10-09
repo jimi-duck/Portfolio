@@ -23,11 +23,11 @@
      if it ever becomes a page worth being found cold. One without the other is
      half a decision. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Things I build with AI to see what happens: a game hidden in this site, a seasonal produce calendar in React, and an iOS app for German fuel prices.">
+<meta name="description" content="Things I build with AI to see what happens: Wayward, a space survival game for the browser, a seasonal produce calendar in React, and an iOS app for German fuel prices.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AI experiments · James Ciclitira">
-<meta property="og:description" content="Things I build with AI to see what happens: a game hidden in this site, a seasonal produce calendar in React, and an iOS app for German fuel prices.">
-<meta property="og:image" content="https://www.jciclitira.com/img/asteroid-blaster.jpg">
+<meta property="og:description" content="Things I build with AI to see what happens: Wayward, a space survival game for the browser, a seasonal produce calendar in React, and an iOS app for German fuel prices.">
+<meta property="og:image" content="https://www.jciclitira.com/img/wayward-hero.jpg">
 <meta property="og:url" content="https://www.jciclitira.com/lab.html">
 <!-- Self-referencing, like every other page. It does nothing while the robots
      line above is there — a noindexed page is not a canonical candidate — and
@@ -103,30 +103,26 @@
 
 <div class="body">
 
-  <!-- ═══ 01 · ASTEROID BLASTER · CANVAS ══════════════ -->
-  <!-- First because it is the one project here that runs on the page you are
-       reading. The control at the end is a <button> rather than an <a href="#">,
-       because it opens the game over this page rather than going anywhere. The
-       board it opens is stamped in at the bottom of the file from
-       partials/game.html. -->
+  <!-- ═══ 01 · WAYWARD · THREE.JS ═══════════════════════ -->
+  <!-- First because it is the one still being built. It lives in its own repo
+       and deploys on its own, so this entry links out rather than opening
+       anything over the page. -->
   <section class="section" data-reveal>
-    <p class="lbl">01 · Asteroid Blaster · Canvas</p>
-    <h2>Resistance is <em>futile.</em></h2>
+    <p class="lbl">01 · Wayward · Three.js</p>
+    <h2>A stolen ship, and a system<br>that <em>wants it back.</em></h2>
 
-    <div class="pbox is-brief"><p>When someone’s done reading, I want something here they can play instead, so the last thing they do isn’t more scrolling.</p></div>
+    <p class="prose sp-s">A cyberpunk space survival game in 3D, for desktop and phone browsers. You are a contract miner who found the wrong file and stole the wrong ship: the Wayward, an ore hauler the Continuance wants back, with you in it.</p>
 
-    <p class="prose sp-s">A survivor-style roguelite over whatever page you launched it from. The phasers fire automatically, so the helm is the only control, and each time the dilithium rail fills you choose one of three upgrades.</p>
+    <p class="prose">Story mode is a journey across about a dozen star systems, with the police fleet hunting you the whole way. Every jump costs Cyrite and days of food, and people call on the way: traders, miners asking for help, raiders. Each call pauses the game and asks what you’ll spend, who you’ll trust, or whether to fight. Arcade is the endless run: mine, fight, refit.</p>
 
-    <p class="prose">It needed a test rig to balance. Every warbird kill used to drop a hull point, which put the net rate at 0.00 lives a minute, so no run could ever end. Playing it never felt wrong, but the numbers were.</p>
+    <p class="prose">A scripted pilot plays whole journeys and writes a balance report, so a change shows up in the numbers before I play it.</p>
 
-    <p class="sp-s"><button type="button" id="play-game" class="tlink lbl" style="color:var(--red-ink)">Play it here →</button></p>
+    <p class="sp-s"><a class="tlink lbl" href="https://wayward.jimi-duck.workers.dev/" target="_blank" rel="noopener" style="color:var(--red-ink)">Play it ↗</a></p>
 
-    <img class="img sp-m" src="img/asteroid-blaster.jpg" alt="The game running over this page: a cyan starship firing a fan of phasers among faceted purple rocks, with Klingon, Romulan and Cardassian ships closing in and a Borg cube’s green cutting beam across the field" loading="lazy" width="1600" height="1000">
-    <p class="cap">Refit 7, four factions on screen. This page is still underneath</p>
-    <img class="img sp-m" src="img/asteroid-blaster-refit.jpg" alt="The Field Refit panel: three upgrade cards reading Photon Torpedo Bay, Navigational Deflector and Phaser Array, each with an illustration and its figures" loading="lazy" width="1600" height="1000">
-    <p class="cap">Fill the dilithium rail, pick one of three</p>
-    <img class="img sp-m" src="img/asteroid-blaster-summary.jpg" alt="The Hull Breach summary: a score of 7072, four stat tiles compared against the previous best, and a line chart of this run against the best one" loading="lazy" width="1600" height="1000">
-    <p class="cap">Every run ends on the one before it</p>
+    <img class="img sp-m" src="img/wayward-hero.jpg" alt="The Wayward, a long yellow and black ore hauler with a glowing engine, passing through an asteroid field beside a lit orbital station" loading="lazy" width="1200" height="630">
+    <p class="cap">The Wayward, an Obedience-class ore hauler</p>
+    <img class="img sp-m" src="img/wayward-title.jpg" alt="The Wayward start screen: the game’s logo over the ship, a choice between Arcade and Story Mode, and three survival settings named Drifter, Prospector and Raider" loading="lazy" width="1280" height="720">
+    <p class="cap">The start screen. Arcade or story mode, in English or German</p>
   </section>
 
   <!-- ═══ 02 · ERNTEREIF · REACT ══════════════════════════ -->
@@ -278,210 +274,6 @@
   </div>
 </footer>
 <!-- /@footer -->
-
-<!-- ═══ ASTEROID BLASTER ══════════════════════════════════════════════════════
-     The same board the homepage opens, and the reason section 03 can say "play
-     it here" and mean it. No corner launcher on this page: the entry above is
-     already telling you the game exists, so a second control that has to be
-     discovered would be answering a question nobody is left asking.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<!-- @game -->
-<!-- ═══ ASTEROID BLASTER · THE BOARD ═════════════════════════════════════════
-     Stamped into index.html, where the corner launcher opens it, and lab.html,
-     where the Experiments entry for it does. Ninety lines of markup kept in two
-     places by hand is the drift build.js exists to stop, and a board that has
-     drifted does not fail loudly: game.js reads every id below with
-     getElementById and simply skips whatever it cannot find.
-
-     It ships hidden and swiss.js un-hides it once css/game.css has loaded,
-     because every rule that positions and hides the pieces lives in that
-     stylesheet. Leave the stage open and a deferred stylesheet means a canvas,
-     a HUD and two dialogs laid out in normal flow at the bottom of the page.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<div id="astro-stage" hidden>
-<div id="astroDim" aria-hidden="true"></div>
-<canvas id="astroCanvas" aria-hidden="true"></canvas>
-<!-- Viewscreen frame: four corner brackets and a hairline, drawn entirely in
-     CSS. Deliberately not a box — the rocks have always come in across the
-     edge and they still have to be able to. -->
-<div id="astroFrame" aria-hidden="true"></div>
-<!-- XP rail: the whole width of the screen, because progress to the next
-     upgrade is the number the run is actually steered by -->
-<div id="astroXp" aria-hidden="true">
-  <div id="astroXpFill"></div>
-  <!-- Both caps are a quiet word and a loud figure, the same pairing the
-       bottom rail uses, because a cap that sets "REFIT" and "5" at one weight
-       makes the eye read the word it already knows before the number it came
-       for. The word is the thing that never changes; the figure is the only
-       part worth a glance. -->
-  <div id="astroXpText">
-    <b><span class="xp-k">Refit</span><span class="xp-n" id="astroLevelVal">1</span></b>
-    <span class="xp-v"><i class="px-gem" aria-hidden="true"></i><span class="xp-n" id="astroXpVal">0</span><span class="xp-k" id="astroXpNeed">/ 4</span></span>
-  </div>
-</div>
-<!-- Warbird chrome. The hull bar only exists while a capital ship is alive, and
-     the warning only while one is decloaking — neither is part of the standing
-     HUD. Both strings are overwritten by JS from the warbird roster. -->
-<div id="astroBoss" aria-hidden="true">
-  <div id="astroBossName">I.K.S. Vor’cha</div>
-  <div id="astroBossBar"><div id="astroBossFill"></div></div>
-</div>
-<div id="astroWarn" aria-hidden="true">Warbird approaching</div>
-<div id="astroTipWrap" aria-hidden="true"><div id="astroTip" class="g-pill"><span>↑ impulse</span><span>←→ helm</span><span>phasers fire automatically</span><span>near misses charge overcharge</span><span>space to release</span></div></div>
-<button id="astroExit" class="g-pill">← Leave the bridge</button>
-<!-- The bottom rail. Three groups, each one a block of its own rather than five
-     readouts strung across the screen: what I am flying, what I can do next,
-     what I am scoring. The blocks exist because the rail has to stay readable
-     over whatever the field puts behind it — a lit rock, a nebula, a ghosted
-     case-study headline — and a dark ground costs less contrast than the glow
-     it would otherwise take to win that fight. -->
-<div id="astroHud" aria-hidden="true">
-  <div class="hud-grp" id="astroShip">
-    <div id="astroScore"><span class="hud-k">Stardate</span><span class="hud-n" id="astroScoreVal">0</span></div>
-    <div id="astroLives"><i class="px-hull on"></i><i class="px-hull on"></i><i class="px-hull on"></i><i class="px-hull"></i><i class="px-hull"></i></div>
-  </div>
-  <!-- Outside the ship block on purpose: the chips come and go with a drop,
-       and a panel that grows and shrinks under the score is a score that
-       moves. They carry their own pills and need no ground of their own. -->
-  <div id="astroBuffs">
-    <span id="astroShieldBuff">Shields 0s</span>
-    <span id="astroRapidBuff">Phasers 0s</span>
-  </div>
-  <!-- The overcharge gauge. It was labelled CORE, and then VENT, and neither
-       worked: CORE is a resource you have to work out the use of, and VENT is
-       an order that does not say what it is venting. OVERCHARGE says both
-       halves at once — the thing fills up, and what it does when full is let
-       go of what it filled up with. The label swaps to OVERCHARGE READY when
-       it does. It sits in the bottom rail with the hull plates and the timed
-       drops because all three answer the same question: what have I got in
-       hand right now. -->
-  <div class="hud-grp" id="astroCore">
-    <span class="ac-l hud-k" id="astroCoreLabel">Overcharge</span>
-    <span class="ac-bar"><i id="astroCoreFill"></i></span>
-    <span class="ac-k">Space</span>
-  </div>
-  <div class="hud-grp" id="astroChain"><span class="hud-k">Chain</span><span class="hud-n" id="astroChainVal">&times;1.00</span></div>
-</div>
-<!-- Hull breach — the run summary. Everything inside #astroTiles and
-     #astroChart is written by JS at the moment of death and is empty here on
-     purpose: the tiles need last run's figures to compare against and the
-     curve needs the run that just happened, neither of which exists until
-     there is one. What IS authored here is the furniture — the emblem, the
-     headings, the legend — because none of it ever changes. -->
-<div id="astroOver" aria-hidden="true"><div id="astroOverCard">
-  <div class="ao-top">
-    <div class="ao-id">
-      <svg class="ao-mark" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="10.4"/>
-        <path d="M12 3.2c2.3 4.4 4.3 10.1 5.6 17.4-1.7-1.5-3.6-2.3-5.6-2.3s-3.9.8-5.6 2.3C7.7 13.3 9.7 7.6 12 3.2z"/>
-      </svg>
-      <div class="ao-idt">
-        <div class="ao-t">Hull breach</div>
-        <div class="ao-cap">Stardate</div>
-        <div class="ao-s"><span id="astroFinal">0</span></div>
-        <div class="ao-m" id="astroFinalSub">0s adrift · refit 1</div>
-      </div>
-    </div>
-    <div class="ao-tiles" id="astroTiles"></div>
-  </div>
-  <div class="ao-chart">
-    <div class="ao-ch">
-      <span class="ao-ct">Run performance</span>
-      <span class="ao-key"><i class="k-run"></i>This run<i class="k-best"></i>Previous best</span>
-    </div>
-    <div id="astroChart"></div>
-  </div>
-  <!-- The only way out of this panel. It used to close on any key or any tap,
-       which meant a player still holding the helm keys at the moment the hull
-       broke started the next run without seeing the one that just ended. The
-       run summary is worth reading, so closing it is now a deliberate press on
-       a real button. -->
-  <button type="button" class="ao-again" id="astroAgain">Play again</button>
-</div></div>
-<!-- Level up — opens the instant the XP rail fills, and the cards inside it are
-     rolled fresh in JS every time, so nothing here is authored by hand. It is
-     not aria-hidden: the cards are the one part of the game you actually pick. -->
-<div id="astroLevel"><div id="astroLevelCard">
-  <div class="al-head">
-    <!-- The same delta the hull-breach panel wears. It is here to give a
-         header that is a thousand pixels wide something to start at: the
-         title is set hard right against the frame the way LCARS sets titles,
-         and without a mark on the left the band reads as one line adrift in a
-         lot of nothing. -->
-    <svg class="al-mark" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="10.4"/>
-      <path d="M12 3.2c2.3 4.4 4.3 10.1 5.6 17.4-1.7-1.5-3.6-2.3-5.6-2.3s-3.9.8-5.6 2.3C7.7 13.3 9.7 7.6 12 3.2z"/>
-    </svg>
-    <div class="al-ttl">
-      <div class="al-t" id="astroLevelKind">Field refit</div>
-      <div class="al-s" id="astroLevelSub">Refit <b>2</b> · choose one upgrade</div>
-    </div>
-  </div>
-  <!-- One block per card, sitting directly over the columns below, and the lit
-       one is the card you are on. Written by JS so a draft of two cards gets
-       two blocks; empty here on purpose. -->
-  <div class="al-bar" id="astroLevelBar" aria-hidden="true"></div>
-  <div class="al-grid" id="astroLevelGrid"></div>
-  <div class="al-h" id="astroLevelHint">Choose an upgrade · <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></div>
-</div></div>
-<!-- Engagement hail — the one decision in the run that is not an upgrade. It
-     opens between the inbound warning and the capital ship actually arriving,
-     and it halts the field the same way a refit card does. Like the refit card
-     it is not aria-hidden: it is a choice, not chrome. The ship's name and the
-     two figures are written by JS; everything else here is fixed copy. -->
-<div id="astroHail"><div id="astroHailCard">
-  <svg class="ah-mark" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="10.4"/>
-      <path d="M12 3.2c2.3 4.4 4.3 10.1 5.6 17.4-1.7-1.5-3.6-2.3-5.6-2.3s-3.9.8-5.6 2.3C7.7 13.3 9.7 7.6 12 3.2z"/>
-  </svg>
-  <div class="ah-t">Red alert</div>
-  <div class="ah-s"><b id="astroHailName">I.K.S. Vor’cha</b> · on intercept course</div>
-  <div class="ah-grid">
-    <button type="button" class="ah-opt is-fight" id="astroHailFight">
-      <span class="ah-l"><em>Engage</em><b>Press 1</b></span>
-      <span class="ah-n">Stand and fight</span>
-      <span class="ah-w" id="astroHailThreat">She’ll fight back, and her escorts attack together.</span>
-      <span class="ah-d">
-        <span id="astroHailBounty">+1800 stardate</span>
-        <span>Battle salvage · one upgrade</span>
-        <span id="astroHailLoot">+2 hull · dilithium · a power-up</span>
-      </span>
-    </button>
-    <button type="button" class="ah-opt is-flee" id="astroHailFlee">
-      <span class="ah-l"><em>Evade</em><b>Press 2</b></span>
-      <span class="ah-n">Break away</span>
-      <span class="ah-w" id="astroHailWhy">You get clear, but you can’t break away twice running.</span>
-      <span class="ah-d" id="astroHailFleeD">
-        <span>No bounty · no refit</span>
-        <span>Next contact in 37s</span>
-        <span>Evasive burn · 2.6s</span>
-      </span>
-    </button>
-  </div>
-  <div class="ah-h" id="astroHailHint">Give the order, or press <kbd>1</kbd> <kbd>2</kbd></div>
-</div></div>
-<!-- All stop. Built as a one-line version of the refit panel — the same
-     notched cyan frame, the delta holding the left end and the title set hard
-     right — because it is the same console saying something smaller. -->
-<div id="astroPause" aria-hidden="true"><div id="astroPauseCard">
-  <svg class="al-mark" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="10.4"/>
-      <path d="M12 3.2c2.3 4.4 4.3 10.1 5.6 17.4-1.7-1.5-3.6-2.3-5.6-2.3s-3.9.8-5.6 2.3C7.7 13.3 9.7 7.6 12 3.2z"/>
-  </svg>
-  <div class="ap-ttl">
-    <div class="ap-t">All stop</div>
-    <div class="ap-h">Click or press any key to resume</div>
-  </div>
-</div></div>
-<!-- Helm, and the one button in the game. Phasers and torpedoes fire
-     themselves, so the stick comes to wherever the thumb lands and the only
-     thing left to press releases the overcharge. -->
-<div id="astroTouch" aria-hidden="true">
-  <div id="astroStick"><div id="astroKnob"></div></div>
-  <button type="button" id="astroRelease">Release</button>
-</div>
-</div><!-- /#astro-stage -->
-<!-- /@game -->
 
 <script src="js/swiss.js"></script>
 <!-- @analytics -->

@@ -25,8 +25,8 @@
    --check is the one to run before you commit, or in CI. It never writes.
 
    TO ADD A PAGE: add it to PAGES below, and put the six chrome marker pairs in
-   it. The @game pair is optional and only the two pages that open the game
-   carry it.
+   it. The @game pair is optional and only the page that opens the game
+   (the homepage) carries it.
    TO CHANGE THE NAV OR FOOTER: edit partials/, then run this.
    ═══════════════════════════════════════════════════════════════════════════ */
 'use strict';
@@ -99,7 +99,7 @@ const BLOCKS = {
 
 /* Blocks only some pages carry. The six above are the shared chrome and every
    page wants all of them, so a page missing one of those markers is a mistake
-   and stamp() says so. The game board is not chrome: it belongs to the two
+   and stamp() says so. The game board is not chrome: it belongs to the
    pages that can open it, and everywhere else its absence is the right answer
    rather than an error. */
 const OPTIONAL = new Set(['game']);

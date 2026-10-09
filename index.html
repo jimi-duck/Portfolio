@@ -407,18 +407,17 @@
 
 <!-- ═══ ASTEROID BLASTER ══════════════════════════════════════════════════════
      The corner launcher is a homepage thing and stays one: the game is
-     something you come across, not something you are sent to. lab.html reaches
-     the same board through a named link in its own copy instead.
+     something you come across, not something you are sent to.
 
-     The board itself is shared with that page and so lives in
-     partials/game.html — see the comment at the top of it.
+     The board itself lives in partials/game.html — see the comment at the
+     top of it.
      ═══════════════════════════════════════════════════════════════════════ -->
 <button id="game-launch" type="button" aria-label="Play a hidden game"><img src="pacman.gif" width="32" height="32" alt="" aria-hidden="true" loading="lazy"><span class="gl-t">Play</span></button>
 <!-- @game -->
 <!-- ═══ ASTEROID BLASTER · THE BOARD ═════════════════════════════════════════
-     Stamped into index.html, where the corner launcher opens it, and lab.html,
-     where the Experiments entry for it does. Ninety lines of markup kept in two
-     places by hand is the drift build.js exists to stop, and a board that has
+     Stamped into index.html, where the corner launcher opens it. It is a partial
+     so another page can carry it again without copying ninety lines by hand,
+     which is the drift build.js exists to stop, and a board that has
      drifted does not fail loudly: game.js reads every id below with
      getElementById and simply skips whatever it cannot find.
 
