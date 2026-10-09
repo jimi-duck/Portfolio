@@ -9,7 +9,7 @@ index.html           Homepage
 cv.html              Résumé (screen sheet + a single-page A4 print sheet;
                      "Download CV" serves CV/James_Ciclitira_Lebenslauf.pdf)
 404.html             Not found
-lab.html             Experiments — side projects, one of which is the game.
+lab.html             Experiments — side projects, Wayward first (the game lives in its own repo).
                      Footer-linked, noindexed, deliberately absent from
                      sitemap.xml
 
@@ -19,7 +19,7 @@ cooler-future.html   Case study — Cooler Future
 vivy.html            Case study — Vivy
 
 partials/            The shared chrome — nav, site menu, footer, head boilerplate,
-                     plus the game board, which only two pages carry
+                     plus the game board, which only the homepage carries
 build.js             Stamps partials/ into every page. See "The chrome" below
 
 css/swiss.css        The whole design system — every page loads this
@@ -156,14 +156,12 @@ the footer), and the game opens from the homepage's corner launcher or by
 pressing **B**. The launcher collapses to its sprite until you approach it and
 stands down entirely over the footer, where it otherwise covered "Back to top".
 
-`lab.html` carries the same board and lists the game as its third project, so
-there it opens from a named button (`#play-game`) in that entry rather than
-from a launcher. Being told a game exists and then having to find the control
-for it is a worse page, so that page has no launcher and the homepage keeps no
-named link. Both controls run through the same loader in `swiss.js`, which
-binds whichever of the two the page has.
+`lab.html` used to carry the same board and open it from a named button
+(`#play-game`). It now leads with Wayward, which is built and deployed from its
+own repo, so the homepage is the only page with the board. The loader in
+`swiss.js` still binds `#play-game` if a page ever brings it back.
 
-The game's 52KB (gzipped) of CSS and JavaScript is not on either page's
+The game's 52KB (gzipped) of CSS and JavaScript is not on the homepage's
 critical path: the page ships a control and an empty `#astro-stage`, and the
 first press fetches the pair. The stage is `hidden` until `css/game.css` has
 loaded, because every rule that positions and hides the board lives in that
@@ -190,7 +188,7 @@ and GitHub Pages serves it as it is. There is no template language and nothing
 at runtime. Running it twice changes nothing.
 
 One region is optional. `@game` is the board itself, and it is stamped only
-into the two pages that carry the marker pair — the homepage and `lab.html`.
+into the pages that carry the marker pair, which today is just the homepage.
 Every other region is chrome that all nine pages want, so a page missing one of
 those markers is a mistake and the build says so.
 
