@@ -114,7 +114,7 @@ Every "after" here is live on the site.
 
 **About, last line**
 - Before: That's where I want my next role to be.
-- After: I'm looking for senior product design roles, especially on products where software meets operations, hardware or regulation.
+- After: I'm looking for product roles, especially on products where software meets operations, hardware or regulation.
 - Why: says what I'm looking for, instead of hinting at it, and names one role the whole portfolio is evidence for. (An earlier version said "product design or product management roles".)
 
 **Case-study tagline**
