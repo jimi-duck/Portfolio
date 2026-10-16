@@ -421,8 +421,8 @@ body.menu-on{overflow:hidden}
    the step jumps while the column does not: at 1441px the type goes to 8.4rem while the
    column stays at 734px, and the line wraps itself in two.
    Short hand-set lines are what let the display type run big, so the headline is set
-   three lines deep and the longest is "systems behind them." at about 9.5 ems. That clears
-   the column at up to about 10.5cqw; 9.8 keeps a margin for the fallback face, which
+   three lines deep and the longest is "Designing products" at about 8.5 ems. That clears
+   the column at up to about 11.7cqw; 11 keeps a margin for the fallback face, which
    sets wider than Heros. --t-hero caps it on narrow screens.
    The fallback is for engines without container queries, where cq units resolve against
    the viewport and would oversize the headline badly.
@@ -430,7 +430,7 @@ body.menu-on{overflow:hidden}
    undiminished step. */
 #hero-h{font-size:calc(var(--t-hero) * .6)}
 @supports (container-type:inline-size){
-  #hero-h{font-size:min(var(--t-hero), 9.8cqw)}
+  #hero-h{font-size:min(var(--t-hero), 11cqw)}
 }
 /* What I am and where, on one line above the headline: the same eyebrow, title,
    standfirst order every case study opens with. It replaced a four-cell strip
