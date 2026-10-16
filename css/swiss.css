@@ -957,11 +957,7 @@ h2+.lede{margin-top:0}
 .stat::before{content:'';position:absolute;top:0;bottom:0;left:calc(var(--gap) / -2);
   width:1px;background:var(--rule-2)}
 .stat:first-child::before{display:none}
-/* The figures are the result, so they run at two to three times the weight of
-   the line under them: a skimmer should read "25%" before anything else on the
-   screen below the title. */
-.stat-n{font-size:clamp(3rem,6.2vw,5.6rem);font-weight:700;letter-spacing:-.055em;line-height:.88;
-  white-space:nowrap}
+.stat-n{font-size:clamp(2rem,4.4vw,3.6rem);font-weight:700;letter-spacing:-.045em;line-height:.9}
 .stat-l{margin-top:.7rem;font-size:var(--t-small);color:var(--ink-2);line-height:1.45}
 
 .body{padding-left:var(--pad);padding-right:var(--pad)}
@@ -1172,12 +1168,12 @@ h2 em,h3 em,.bh-t em,.next-title em,.pq em{font-style:normal;color:var(--red)}
    lines here rather than the six short ones they were breaking into, which is
    the difference between a statement and a narrow grey column of type. */
 .pbox.is-claim p{
-  max-width:32ch;
+  max-width:46ch;
   border-top:2px solid var(--red);padding-top:clamp(.95rem,2vw,1.5rem);
   /* The floor of the clamp matters more than the ceiling: on a phone the
      headline itself is only 1.85rem, so a statement that scaled all the way
      down landed on the card titles and the distinction collapsed. */
-  font-size:clamp(1.6rem,3.3vw,3.1rem);font-weight:700;line-height:1.1;
+  font-size:clamp(1.5rem,2.55vw,2.35rem);font-weight:700;line-height:1.18;
   letter-spacing:-.028em;color:var(--ink);
   /* Display type, so it balances like the headlines do. Left to normal
      wrapping both sentences set 94% / 99% / 35% and ended on a stub. */
@@ -1788,68 +1784,6 @@ html.theme-anim,html.theme-anim *{
   transition:background-color .38s ease,color .38s ease,border-color .38s ease,fill .38s ease !important;
 }
 
-/* ── 20b. SECOND PASS: SYSTEMS, MOMENTS, CONTRIBUTION ────────────────────── */
-/* Every case on this site is the same kind of job: a product that only works
-   because something outside the screen works too. These components make that
-   visible the same way on every page, so the four cases read as four examples
-   of one capability rather than four industries.
-
-     .sys       a system diagram: what the product connects, in order. Nodes
-                marked .is-mine are the parts I designed, flagged with the
-                accent rule, so ownership is legible without a sentence.
-     h2.moment  one finding promoted to the size of the page title. Once per
-                case study at most, or it stops being a moment.
-     .meta-item.is-scope   the "My contribution" row in the hero.
-
-   Built in HTML rather than drawn as images so they reflow on a phone, take
-   the dark band's tokens for free, and stay readable to a screen reader as an
-   ordered list. */
-/* Zero-specificity margin, so the spacing utilities (.sp-l) still apply. */
-:where(.sys){margin:0}
-.sys{list-style:none;padding:0;display:grid;--sys-gap:clamp(1.6rem,2.4vw,2.4rem);
-  grid-template-columns:repeat(var(--n,5),minmax(0,1fr));column-gap:var(--sys-gap);
-  counter-reset:sys}
-.sys>li{position:relative;padding:.9rem 0 0;border-top:1px solid var(--rule);
-  counter-increment:sys;min-width:0}
-/* The arrow sits in the gap between two nodes, level with their rules, so the
-   row reads as one line running left to right rather than as a row of cards. */
-.sys>li:not(:last-child)::after{content:'→';position:absolute;top:-.74em;
-  right:calc(var(--sys-gap) * -1);width:var(--sys-gap);text-align:center;color:var(--mute);
-  font-size:var(--t-body);line-height:1.4}
-.sys-k{display:block;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);
-  text-transform:uppercase;color:var(--mute);font-variant-numeric:tabular-nums}
-.sys-k::before{content:counter(sys,decimal-leading-zero) ' · '}
-.sys-t{display:block;margin-top:.45rem;font-size:clamp(1rem,1.3vw,1.24rem);font-weight:700;
-  letter-spacing:-.015em;line-height:1.15;color:var(--ink)}
-.sys-d{display:block;margin-top:.4rem;font-size:var(--t-small);line-height:1.45;color:var(--ink-2)}
-/* What I designed: the node's rule turns ink-heavy and red, and its key says so. */
-.sys>li.is-mine{border-top:2px solid var(--red)}
-.sys>li.is-mine .sys-k{color:var(--red-ink)}
-.sys-legend{margin-top:1.1rem;display:flex;align-items:center;gap:.6rem;
-  font-size:var(--t-small);color:var(--mute)}
-.sys-legend::before{content:'';width:1.6rem;height:2px;background:var(--red);flex:none}
-/* Vertical: the same list down a column, for a loop told beside its screens. */
-.sys.is-vert{grid-template-columns:minmax(0,1fr)}
-.sys.is-vert>li{padding:.6rem 0 1.25rem 0}
-.sys.is-vert .sys-t{margin-top:.3rem}
-.sys.is-vert .sys-d{margin-top:.2rem}
-.sys.is-vert>li:not(:last-child)::after{content:'↓';right:auto;left:0;top:auto;bottom:.1rem;
-  width:auto;text-align:left}
-.sys.is-vert>li:last-child{padding-bottom:0}
-
-/* A statement that is the whole case in one figure. The number runs at the
-   size of the case title; the sentence under it at headline size, so the
-   two read as one claim. It is an h2, so the chapter keeps its heading. */
-.section h2.moment,.dark-band h2.moment,.warm-band h2.moment{max-width:none;margin-bottom:var(--space-block)}
-.moment-n{display:block;font-size:var(--t-mega);font-weight:700;letter-spacing:-.05em;line-height:.9;
-  color:var(--red)}
-.moment-t{display:block;margin-top:clamp(.8rem,1.6vw,1.3rem);max-width:18em;text-wrap:balance}
-
-/* The case-study close: what I'd look at next. A headline and a lede, like any
-   chapter, but no number, because it is not part of what happened. */
-.section.is-next>.lbl{border-top-color:var(--red)}
-
-
 /* With the tag line gone, the standfirst is the only line under the headline,
    so it carries the identity at a size that can hold the column. */
 .hero-l .hero-sub{max-width:36ch;font-size:clamp(1.1rem,1.5vw,1.4rem);line-height:1.35;
@@ -1869,16 +1803,6 @@ html.theme-anim,html.theme-anim *{
 .mail-cta:hover .cta-t{color:var(--red)}
 
 
-@media (max-width:1080px){
-  .sys{grid-template-columns:repeat(min(var(--n,5),4),minmax(0,1fr));row-gap:1.6rem}
-}
-@media (max-width:700px){
-  .sys{grid-template-columns:minmax(0,1fr);row-gap:0}
-  .sys>li{padding:.75rem 0 1.5rem 0}
-  .sys>li:not(:last-child)::after{content:'↓';right:auto;left:0;top:auto;bottom:.1rem;
-    width:auto;text-align:left}
-  .sys>li:last-child{padding-bottom:0}
-}
 
 /* ── 21. MOTION PREFERENCES / PRINT ──────────────────────────────────────── */
 @media (prefers-reduced-motion:reduce){

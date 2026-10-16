@@ -86,14 +86,13 @@
 <header class="cs-hero" data-reveal>
   <div>
     <a href="index.html" class="back">← All work</a>
-    <p class="eyebrow">Climate tech · Field operations · AI · 6&nbsp;min&nbsp;read</p>
+    <p class="eyebrow">Climate tech · Field operations · 6&nbsp;min&nbsp;read</p>
     <h1 class="cs-title"><em>Enter</em></h1>
     <p class="cs-tagline">I designed the field survey Enter uses to turn a house visit into an energy model, a homeowner report and a renovation plan. The hard part was capturing reliable data in whatever order the tradesperson worked.</p>
   </div>
   <div class="meta-grid">
     <div class="meta-item"><label>Role</label><p>Senior Product Designer</p></div>
     <div class="meta-item"><label>Years</label><p>2024–2026</p></div>
-    <div class="meta-item is-scope"><label>My contribution</label><p>Field research · Workflow and data definition · Paper and clickable prototypes · Field testing · Survey app · AI estimate and override · Customer report</p></div>
     <div class="meta-item"><label>Shipped</label><p>Survey app · Customer report</p></div>
   </div>
 </header>
@@ -129,19 +128,6 @@
         <p class="prose">The person on site is usually a <span lang="de">Handwerker</span>: a tradesperson who knows buildings inside out, but has never opened a modelling tool.</p>
       </div>
     </div>
-
-    <!-- The chain the survey feeds. Everything after step two was to be
-         automated, which is why the survey carried the whole case. -->
-    <ol class="sys sp-l" style="--n:7" aria-label="From house visit to retrofit">
-      <li><span class="sys-k">On site</span><span class="sys-t">House visit</span><span class="sys-d">A tradesperson, about two hours.</span></li>
-      <li class="is-mine"><span class="sys-k">On site</span><span class="sys-t">Survey app</span><span class="sys-d">Structured data, not handwriting.</span></li>
-      <li><span class="sys-k">Automated</span><span class="sys-t">Energy model</span><span class="sys-d">Built from the survey data.</span></li>
-      <li><span class="sys-k">Automated</span><span class="sys-t">AI insights</span><span class="sys-d">Where the house stands, and what it could reach.</span></li>
-      <li class="is-mine"><span class="sys-k">On site</span><span class="sys-t">Homeowner report</span><span class="sys-d">Shown before anyone leaves.</span></li>
-      <li><span class="sys-k">Office</span><span class="sys-t">Architect’s iSFP</span><span class="sys-d">The plan the subsidy needs.</span></li>
-      <li><span class="sys-k">Sold</span><span class="sys-t">Retrofit work</span><span class="sys-d">Arranged by Enter with third parties.</span></li>
-    </ol>
-    <p class="sys-legend">The parts I designed</p>
   </section>
 </div>
 
@@ -217,13 +203,6 @@
       </div>
     </div>
 
-    <!-- Rough work at full size. The experiment gets the same scale as the
-         product it led to in the next chapter, so the two read as a pair. -->
-    <div class="sp-l">
-      <img class="photo is-doc" src="img/enter-poc-tablet.jpg" alt="A field worker marking up the prototype floor plan on a tablet inside an unfinished house" loading="lazy" width="1306" height="816">
-      <p class="cap">Before writing the app: the prototype sheet, marked up in the Files app on a tablet already in the van.</p>
-    </div>
-
     <div class="two is-wide is-top sp-l">
       <div>
         <a href="img/enter-2d-footprint-prototype.pdf" target="_blank" rel="noopener" aria-label="Open the full prototype sheet as a PDF">
@@ -233,7 +212,10 @@
         <p class="sp-s"><a class="tlink lbl" href="img/enter-2d-footprint-prototype.pdf" target="_blank" rel="noopener" style="color:var(--red-ink)">Open the prototype sheet (PDF) ↗</a></p>
       </div>
       <div>
-        <div class="cards is-stack">
+        <img class="photo is-doc" src="img/enter-poc-tablet.jpg" alt="A field worker marking up the prototype floor plan on a tablet inside an unfinished house" loading="lazy" width="1306" height="816">
+        <p class="cap">Marked up in the Files app, on a tablet they already carried.</p>
+
+        <div class="cards is-stack sp-l">
           <div class="icard">
             <div class="icard-icon"></div>
             <div class="icard-t">The footprint held</div>
@@ -367,18 +349,9 @@
     </div>
 
     <div class="two is-wide is-top sp-l">
-      <!-- The loop, before the screens that implement it. The screens show one
-           step; this shows why that step exists. -->
       <div>
-        <ol class="sys is-vert" aria-label="How an estimate becomes a confirmed value">
-          <li><span class="sys-k">Survey</span><span class="sys-t">Field data</span><span class="sys-d">Build-up, materials and age, as presets.</span></li>
-          <li><span class="sys-k">AI</span><span class="sys-t">Estimate</span><span class="sys-d">A U-value, updating as details go in.</span></li>
-          <li class="is-mine"><span class="sys-k">Professional</span><span class="sys-t">Check or override</span><span class="sys-d">The person looking at the wall decides.</span></li>
-          <li><span class="sys-k">Model</span><span class="sys-t">Confirmed value</span><span class="sys-d">What the energy model uses.</span></li>
-          <li class="is-mine"><span class="sys-k">Log</span><span class="sys-t">Override log</span><span class="sys-d">Big differences flagged, every override kept.</span></li>
-          <li><span class="sys-k">Team</span><span class="sys-t">What the AI gets wrong</span><span class="sys-d">A ranked list, from the overrides that repeat.</span></li>
-        </ol>
-        <p class="sys-legend">The parts I designed</p>
+        <img class="photo" src="img/enter-measuring-window.jpg" alt="An Enter field worker measuring a window with a laser distance meter during a survey" loading="lazy" width="1200" height="1054">
+        <p class="cap">The person on site sees what the model can’t.</p>
       </div>
       <div class="appshots n2">
         <figure class="appshot">
@@ -551,17 +524,6 @@
         <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.2 10.4 12 3.6l8.8 6.8"/><path d="M5.4 12v8.4h13.2V12"/><path d="M8.2 16.6l1.9-1.7 1.9 1.5 1.9-1.5 1.9 1.7"/><path d="M12 16.4v2"/></svg></span>
         <p><strong>Retrofit sales</strong>Homeowners who went ahead with the measures.</p>
       </article>
-    </div>
-  </section>
-</div>
-
-<!-- ═══ WHAT I’D DO NEXT ═══════════════════════════════════ -->
-<div class="body">
-  <section class="section is-next" data-reveal>
-    <p class="lbl">What I’d do next</p>
-    <div class="two is-wide is-top">
-      <h2>Use the override log <em>to fix the model.</em></h2>
-      <p class="lede">The next thing I’d look at is whether the override log points to systematic weaknesses in the estimate, and which of them cost the most accuracy to leave alone.</p>
     </div>
   </section>
 </div>

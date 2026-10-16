@@ -124,8 +124,7 @@ rather than the pages.
 They also share one structure, written for a reader with five minutes:
 
 - **Hero**: title, a tagline that says what I designed and what made it hard,
-  and Role · Years · My contribution · Shipped. "My contribution" lists the
-  parts of the work that were mine, so nobody has to infer it from the prose.
+  and Role · Years · Shipped.
 - **`glance`**: the problem, what I did, the result. One sentence or two each.
   Somebody who reads nothing else should still leave with the whole case.
 - **Numbered chapters** (`<span class="lbl-n">01</span>` in the label). Each has
@@ -140,23 +139,6 @@ They also share one structure, written for a reader with five minutes:
   sentences.
 
 Adding a chapter means adding a headline and a lede, not another paragraph.
-
-Three components carry the through-line (section 20b of `swiss.css`):
-
-- **`.sys`**, the system diagram: an `<ol>` of nodes, each with a key
-  (`.sys-k`), a title and a line. It runs left to right and drops to a column
-  on a phone; `.is-vert` keeps it a column everywhere (Enter's estimate loop).
-  Set `style="--n:7"` to the node count. Nodes that are mine take `.is-mine`
-  and the red rule, with a `.sys-legend` under the list; where every node is
-  mine (Cooler Future) leave the class off, or the accent stops meaning anything.
-  Enter, Coup and Cooler Future carry one each; Vivy has a three-part row
-  instead (`.flow.three`, "Three things I designed").
-- **`h2.moment`**: one finding at the size of the case title, the figure in
-  red and the sentence under it at headline size. Coup's "1 in 8" is the only
-  one; more than one per page and it stops being a moment.
-- **`.section.is-next`**: "What I’d do next", an unnumbered closing chapter
-  with a headline and a lede, before the next-project card. Enter and Coup
-  have one.
 
 Image size follows the story, not the slot. The screens that carry a chapter
 run large (Coup's ride flow at the full measure); scene-setting ones sit beside
