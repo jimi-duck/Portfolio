@@ -21,7 +21,8 @@ The homepage is the benchmark. If a line elsewhere sounds busier, cleverer or lo
 I'm a product designer who works on the product: the problem, the service and the flows that make it work. UI is part of the job, not the headline.
 
 - **Title:** Product Designer. Real job titles (Senior, Lead) stay in role rows and on the CV.
-- **Looking for:** "product roles" in short slots (contact row, site CV header). The PDF CV doesn't announce it; the work says it. Only the homepage About spells it out: "product design or product management roles". Never "PM".
+- **Looking for:** "Senior product design roles" in short slots (the contact row). The PDF CV doesn't announce it; the work says it. Only the homepage About spells it out: "senior product design roles, especially on products where software meets operations, hardware or regulation". Product management stays off the portfolio; it belongs on a separate CV if needed. Never "PM".
+- **The through-line:** every case is the same capability shown in a different industry: a product that only works because something outside the screen works too. The homepage hero says it ("I design products for systems that don't fit neatly inside a screen"), and each case study shows it with a system diagram that marks the parts I designed.
 - **Lead with:** the problem, the service end to end, user flows, ops and field tools, what was tested, what was decided, who it was agreed with.
 - **Play down:** screens, visual polish, design systems. Mention UI only when it's the point, and mention it last.
 - **Show it, don't name it.** "Tested a paper version before any engineering" says more than "ran lean product discovery". Discipline names belong in lists and labels (CV skills, the homepage capline), not in sentences.
@@ -113,8 +114,8 @@ Every "after" here is live on the site.
 
 **About, last line**
 - Before: That's where I want my next role to be.
-- After: I'm looking for product design or product management roles.
-- Why: says what I'm looking for, instead of hinting at it.
+- After: I'm looking for senior product design roles, especially on products where software meets operations, hardware or regulation.
+- Why: says what I'm looking for, instead of hinting at it, and names one role the whole portfolio is evidence for. (An earlier version said "product design or product management roles".)
 
 **Case-study tagline**
 - Before: A health record patients carry on their phone. It only worked if patients, doctors and Allianz all took part. As one of the first designers, I worked on all three sides.

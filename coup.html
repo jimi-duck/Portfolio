@@ -19,7 +19,7 @@
 <!-- /@head -->
 <meta name="description" content="Bosch’s e-moped service in three cities: finding out why rides failed, testing an expensive idea before paying for it, and the tools behind 5,000 mopeds.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Coup Mobility · James Ciclitira">
+<meta property="og:title" content="Coup: designing the service behind 5,000 shared e-mopeds">
 <meta property="og:description" content="Bosch’s e-moped service in three cities: finding out why rides failed, testing an expensive idea before paying for it, and the tools behind 5,000 mopeds.">
 <meta property="og:image" content="https://www.jciclitira.com/img/coup-hero.jpeg">
 <meta property="og:url" content="https://www.jciclitira.com/coup.html">
@@ -85,13 +85,14 @@
 <header class="cs-hero" data-reveal>
   <div>
     <a href="index.html" class="back">← All work</a>
-    <p class="eyebrow">Urban mobility · Consumer and field ops · 3&nbsp;min&nbsp;read</p>
+    <p class="eyebrow">Urban mobility · Consumer and field ops · 4&nbsp;min&nbsp;read</p>
     <h1 class="cs-title">Coup<br><em>Mobility</em></h1>
-    <p class="cs-tagline">At Bosch’s e-moped service, I found out why rides were failing, tested an expensive idea before paying for it, and gave the field team tools that kept 5,000 mopeds on the road.</p>
+    <p class="cs-tagline">I designed the service behind Bosch’s 5,000 shared e-mopeds: the rider app, the dispatcher dashboard and the field worker app. I found out why rides failed, and tested an expensive idea before paying for it.</p>
   </div>
   <div class="meta-grid">
     <div class="meta-item"><label>Role</label><p>Senior Product Designer</p></div>
     <div class="meta-item"><label>Years</label><p>2019–2020</p></div>
+    <div class="meta-item is-scope"><label>My contribution</label><p>Interviews and ride-alongs · Service and error mapping · Rider app · In-app help · Pilot design · Dispatcher and field tools</p></div>
     <div class="meta-item"><label>Shipped</label><p>Rider app · Dispatcher dashboard · Field worker app</p></div>
   </div>
 </header>
@@ -110,10 +111,33 @@
   <div class="stat"><div class="stat-n">Zero</div><div class="stat-l">Tools built for the field team<br>before this project</div></div>
 </div>
 
-<!-- ═══ 01 · THE RIDER APP — DARK BAND ═════════════════════ -->
+<!-- ═══ 01 · THE SERVICE ═══════════════════════════════════ -->
+<!-- The system before any screen. A ride runs through the rider, the app,
+     the moped and the backend; when it breaks, dispatchers and field workers
+     fix it on the street. The three products are where I worked. -->
+<div class="body">
+  <section class="section" data-reveal>
+    <p class="lbl"><span class="lbl-n">01</span>The service</p>
+    <div class="two is-wide is-top">
+      <h2>One service, run through <em>three products.</em></h2>
+      <p class="lede">A ride touches the rider, the app, the moped and the backend. When any of them fails, a dispatcher and a field worker have to put it right on the street. I designed the three products that connect them.</p>
+    </div>
+    <ol class="sys sp-l" style="--n:6" aria-label="How a ride and its repairs connect">
+      <li><span class="sys-k">Rider</span><span class="sys-t">Finds a moped</span><span class="sys-d">Berlin, Paris or Madrid.</span></li>
+      <li class="is-mine"><span class="sys-k">Product</span><span class="sys-t">Rider app</span><span class="sys-d">Reserve, unlock, ride, end, pay.</span></li>
+      <li><span class="sys-k">Hardware</span><span class="sys-t">The moped</span><span class="sys-d">Battery, location and ride state, sent back.</span></li>
+      <li><span class="sys-k">Data</span><span class="sys-t">Fleet backend</span><span class="sys-d">Every moped’s status, live.</span></li>
+      <li class="is-mine"><span class="sys-k">Product</span><span class="sys-t">Dispatcher dashboard</span><span class="sys-d">Sees the fleet, assigns the jobs.</span></li>
+      <li class="is-mine"><span class="sys-k">Product</span><span class="sys-t">Field worker app</span><span class="sys-d">Swaps batteries and fixes mopeds, and logs it.</span></li>
+    </ol>
+    <p class="sys-legend">The parts I designed</p>
+  </section>
+</div>
+
+<!-- ═══ 02 · THE RIDER APP — DARK BAND ═════════════════════ -->
 <div class="dark-band" data-reveal>
   <div class="dark-band-inner">
-    <p class="lbl"><span class="lbl-n">01</span>The rider app</p>
+    <p class="lbl"><span class="lbl-n">02</span>The rider app</p>
     <div class="two is-wide is-top">
       <div>
         <h2>Rebuilt the app around <em>each step of a ride.</em></h2>
@@ -144,7 +168,7 @@
   </div>
 </div>
 
-<!-- ═══ 02 · MAPPING THE RIDE ══════════════════════════════ -->
+<!-- ═══ 03 · MAPPING THE RIDE ══════════════════════════════ -->
 <!-- Both images are crops of the working files, not redrawn, and both open
      as maps (data-map, see mapView in swiss.js): the flowchart into sign-up
      and booking whole, the error map into all of it, top to bottom. The page
@@ -152,7 +176,7 @@
      white sheets, and without the hairline they bleed into the paper. -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">02</span>Mapping the ride</p>
+    <p class="lbl"><span class="lbl-n">03</span>Mapping the ride</p>
     <div class="two is-wide is-top">
       <h2>Every step mapped, <em>including the ones that fail.</em></h2>
       <div>
@@ -168,7 +192,7 @@
   </section>
 </div>
 
-<!-- ═══ 03 · SUPPORT ════════════════════════════════════════ -->
+<!-- ═══ 04 · SUPPORT ════════════════════════════════════════ -->
 <!-- The fix, told the way it was decided, from the support deck: what was
      rejected and what was built, where each answer went, then one answer up
      close. Numbers: 205 calls a day at €4.72 is ~€353k a year. The five steps
@@ -178,7 +202,7 @@
      After the error map on purpose: 48 a day were rides that wouldn't end. -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">03</span>Support</p>
+    <p class="lbl"><span class="lbl-n">04</span>Support</p>
     <div class="two is-wide is-top">
       <h2>Every call cost €4.72, <em>so help moved into the app.</em></h2>
       <div>
@@ -233,13 +257,15 @@
   </section>
 </div>
 
-<!-- ═══ 04 · CANCELLATIONS ═════════════════════════════════ -->
+<!-- ═══ 05 · CANCELLATIONS ═════════════════════════════════ -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">04</span>Cancellations</p>
+    <p class="lbl"><span class="lbl-n">05</span>Cancellations</p>
+    <!-- The turning point of the case, at the size of the title: the figure,
+         then the cancel screen that answered it, straight after. -->
+    <h2 class="moment"><span class="moment-n">1 in 8</span><span class="moment-t">rides were cancelled before the engine started. Nobody knew <em>why.</em></span></h2>
     <div class="two is-wide is-top">
       <div>
-        <h2>One in eight rides was cancelled. Nobody knew <em>why.</em></h2>
         <p class="lede">Without a reason, nobody could tell a damaged moped from a flat battery or a missing helmet. We added one tap to cancelling: a reason from a short list. For the first time, ops had a timestamped record of why rides failed.</p>
       </div>
       <div>
@@ -250,10 +276,10 @@
   </section>
 </div>
 
-<!-- ═══ 05 · TESTING AN IDEA ═══════════════════════════════ -->
+<!-- ═══ 06 · TESTING AN IDEA ═══════════════════════════════ -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">05</span>Testing an idea</p>
+    <p class="lbl"><span class="lbl-n">06</span>Testing an idea</p>
     <div class="two is-wide is-top">
       <div>
         <h2>Tested an expensive idea <em>before building it.</em></h2>
@@ -267,10 +293,10 @@
   </section>
 </div>
 
-<!-- ═══ 06 · FIELD OPERATIONS ══════════════════════════════ -->
+<!-- ═══ 07 · FIELD OPERATIONS ══════════════════════════════ -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">06</span>Field operations</p>
+    <p class="lbl"><span class="lbl-n">07</span>Field operations</p>
     <div class="two is-wide is-top">
       <h2>No brief, so we started <em>in the field.</em></h2>
       <div>
@@ -300,17 +326,11 @@
     <!-- The screens follow the three cards above: the dispatcher's view of the
          fleet, the tickets they send out, then the field app that receives
          them. Dispatcher on a laptop, field worker on a phone. -->
-    <div class="two is-top sp-l">
-      <div>
-        <img class="img device" src="img/coup-scooter-status.png" alt="Dispatcher fleet status: a city map with every moped marked by battery level and coloured by status, maintained, available or assigned" loading="lazy" width="860" height="598">
-        <p class="cap">Fleet status: every moped on one map.</p>
-      </div>
-      <div>
-        <img class="img device" src="img/coup-dispatcher-overview.png" alt="Dispatcher overview: bookability, average battery level and maintained mopeds, above counts of open tickets by type" loading="lazy" width="860" height="598">
-        <p class="cap">The overview: bookability, battery and open tickets across the fleet.</p>
-      </div>
+    <div class="sp-l">
+      <img class="img device device-wide" src="img/coup-scooter-status.png" alt="Dispatcher fleet status: a city map with every moped marked by battery level and coloured by status, maintained, available or assigned" loading="lazy" width="860" height="598">
+      <p class="cap is-center">Fleet status: every moped on one map, coloured by what it needs.</p>
     </div>
-    <div class="sp-m">
+    <div class="sp-l">
       <img class="img device device-wide" src="img/coup-tickets.png" alt="Dispatcher ticket queue with battery swaps queued, in progress and completed" loading="lazy" width="1600" height="1113">
       <p class="cap is-center">The dispatcher’s ticket queue: every task categorised, assigned and tracked.</p>
     </div>
@@ -326,9 +346,9 @@
     </div>
   </section>
 
-  <!-- ═══ 07 · HOW WE MEASURED IT ══════════════════════════ -->
+  <!-- ═══ 08 · HOW WE MEASURED IT ══════════════════════════ -->
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">07</span>How we measured it</p>
+    <p class="lbl"><span class="lbl-n">08</span>How we measured it</p>
     <h2>Judged on <em>how the fleet ran.</em></h2>
     <div class="mgrid is-compact">
       <article class="mcard">
@@ -347,6 +367,17 @@
         <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 20.2V13l3.3-5.4h7.1l3.3 5.4v7.2"/><circle cx="7.1" cy="20.2" r="1.6"/><circle cx="14" cy="20.2" r="1.6"/><path d="M3.4 15.4h13.7"/><path d="M19.4 4.6v6.2"/><path d="M16.8 7.2l2.6-2.6 2.6 2.6"/></svg></span>
         <p><strong>Rides per moped</strong>Trips from each vehicle, each day it’s on the street.</p>
       </article>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ WHAT I’D DO NEXT ═══════════════════════════════════ -->
+<div class="body">
+  <section class="section is-next" data-reveal>
+    <p class="lbl">What I’d do next</p>
+    <div class="two is-wide is-top">
+      <h2>Check what the cancellation reasons <em>changed.</em></h2>
+      <p class="lede">The next step would be finding out whether the recorded cancellation reasons reduced repeat failures across the fleet, and which reasons ops could act on fastest.</p>
     </div>
   </section>
 </div>
