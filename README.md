@@ -201,10 +201,10 @@ those markers is a mistake and the build says so.
 
 Four values differ between pages and are set in the `PAGES` table at the top of
 `build.js`: `home` (a nav link is `#work` on the homepage and `index.html#work`
-everywhere else), `intro` and `curtain` (only the homepage has the intro
-curtain, and the boot script has to know before first paint), `keys` (the grid
-hint appears once, in the homepage footer) and `reveal` (only the homepage
-footer fades in).
+everywhere else), `intro` and `curtain` (empty everywhere since the homepage's
+loading curtain was removed in October 2026; the hero now paints with the page),
+`keys` (the grid hint appears once, in the homepage footer) and `reveal` (empty
+everywhere: the footer no longer fades in, so it is never an empty black bar).
 
 Those last three are the lesson of this arrangement: a shared region is only
 shared to the extent that every page really does want the same thing. The

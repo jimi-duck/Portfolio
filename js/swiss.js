@@ -28,44 +28,6 @@
     });
   }
 
-  /* ── INTRO CURTAIN ─────────────────────────────────────────────────────── */
-  function intro(done) {
-    var el = $('#intro');
-    if (!el || reduced) {
-      if (el) el.classList.add('done');
-      document.documentElement.classList.remove("introing");
-      done();
-      return;
-    }
-    var seen = false;
-    try { seen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
-    if (seen) {
-      el.classList.add('done');
-      document.documentElement.classList.remove("introing");
-      done();
-      return;
-    }
-    try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
-
-    var ct = $('.ct', el);
-    requestAnimationFrame(function () { el.classList.add('lift'); });
-
-    var t0 = performance.now(), DUR = 900;
-    (function tick(t) {
-      var p = Math.min(1, (t - t0) / DUR);
-      var eased = 1 - Math.pow(1 - p, 3);
-      if (ct) ct.textContent = String(Math.round(eased * 100)).padStart(3, '0');
-      if (p < 1) requestAnimationFrame(tick);
-      else {
-        $$('.col', el).forEach(function (c, i) { c.style.transitionDelay = (i * 0.06) + 's'; });
-        el.classList.add('go');
-        document.documentElement.classList.remove("introing");
-        done();
-        setTimeout(function () { el.classList.add('done'); }, 1500);
-      }
-    })(t0);
-  }
-
   /* The custom cursor lived here. It was removed: replacing the system pointer
      means owning its legibility over every ground the page has — paper, the ink
      band, the footer, a greyscale portrait — and it took `cursor:none` off the
@@ -831,12 +793,10 @@
     theme(); nav(); gridOverlay(); lightbox(); footerTop();
     progress(); launcherFade(); toTop(); launcher(); game();
     scrollLoop();
-    intro(reveals);
+    reveals();
     addEventListener('load', function () { revealOnScreen(false); });
-    // failsafe: never let the curtain trap the page, and never leave content hidden
+    // failsafe: never leave content hidden
     setTimeout(function () {
-      var el = $('#intro');
-      if (el && !el.classList.contains('done')) { el.classList.add('go'); document.documentElement.classList.remove('introing'); }
       reveals();
       revealOnScreen(true);
     }, 3500);

@@ -75,7 +75,7 @@ const CURTAIN = `
           every link in it broken. The 404's own links outside the markers
           are written root-absolute by hand for the same reason. */
 const PAGES = {
-  'index.html':          { home: '',           intro: ' introing', keys: GRID_HINT, reveal: ' data-reveal', curtain: CURTAIN, root: '' },
+  'index.html':          { home: '',           intro: '',          keys: GRID_HINT, reveal: '', curtain: '', root: '' },
   'about.html':          { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },
   'lab.html':            { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },
   'cv.html':             { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },
