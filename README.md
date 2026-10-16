@@ -85,9 +85,10 @@ rules, one accent. All of it lives in `css/swiss.css`.
   scale, position and the numbered system; a figure that matters gets its own
   column in a hairlined definition list (`.wmeta` on the work cards). The one
   surviving `<strong>` is structural, not emphasis: `.mcard strong` is the
-  card's heading and renders as a block at `--t-h3`. The homepage work
-  cards carry no bold run any more: each is a full-width image, the project
-  name, one sentence (`.wproj-lead`) and a line of metadata (`.wproj-meta`).
+  card's heading and renders as a block at `--t-h3`. Each homepage work card
+  is a full-width image, the project name, the company line (`.wproj-co`),
+  what I did with its verb phrase in bold (`.wproj-d`) and a Role / Years /
+  Shipped row (`.wmeta`).
 - **Semantics** — one `<h1>` per page, every section label (`.lab`, `.sec-lbl`)
   is a real `<h2>`, and every page has a skip link and a `<main id="main">`.
   The mobile menu is closed with `visibility:hidden`, not clip-path alone —
