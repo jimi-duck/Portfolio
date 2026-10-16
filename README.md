@@ -85,9 +85,9 @@ rules, one accent. All of it lives in `css/swiss.css`.
   scale, position and the numbered system; a figure that matters gets its own
   column in a hairlined definition list (`.wmeta` on the work cards). The one
   surviving `<strong>` is structural, not emphasis: `.mcard strong` is the
-  card's heading and renders as a block at `--t-h3`. The single exception is
-  the homepage work cards, where `.wproj-d strong` sets the opening verb phrase
-  (what I did) in bold so the card can be skimmed in two lines.
+  card's heading and renders as a block at `--t-h3`. The homepage work
+  cards carry no bold run any more: each is a full-width image, the project
+  name, one sentence (`.wproj-lead`) and a line of metadata (`.wproj-meta`).
 - **Semantics** — one `<h1>` per page, every section label (`.lab`, `.sec-lbl`)
   is a real `<h2>`, and every page has a skip link and a `<main id="main">`.
   The mobile menu is closed with `visibility:hidden`, not clip-path alone —
@@ -170,6 +170,10 @@ card carries you to the following one — Enter → Coup → Cooler Future → V
 which ends on a card back to the portfolio. Every case study is reachable from
 the homepage index, so keep the two in step if you add another.
 
+The homepage runs: hero (headline and one line), the work, a quiet
+"Selected experience" logo strip, About, Contact. Nothing goes between the hero
+and the work. The four "How I work" lines live on `about.html`.
+
 Two easter eggs: **G** overlays the 12-column grid on any page (hinted once in
 the footer), and the game opens from the homepage's corner launcher or by
 pressing **B**. The launcher collapses to its sprite until you approach it and
@@ -206,7 +210,7 @@ complete, readable, working HTML — open one from the filesystem and it renders
 and GitHub Pages serves it as it is. There is no template language and nothing
 at runtime. Running it twice changes nothing.
 
-One region is optional. `@game` is the board itself, and it is stamped only
+One region is optional. `@game` is the board itself (wrapped in a `<template>`, so its text is not part of the page until `swiss.js` clones it in on the first press), and it is stamped only
 into the pages that carry the marker pair, which today is just the homepage.
 Every other region is chrome that all nine pages want, so a page missing one of
 those markers is a mistake and the build says so.

@@ -752,6 +752,9 @@
     // game.js measures anything, so it is awaited rather than fired and
     // forgotten. The script is only appended once the CSS has landed.
     function load() {
+      // The board ships inert inside a <template>; it joins the page here.
+      var tpl = $('#astro-tpl');
+      if (tpl && !$('#astro-stage')) document.body.appendChild(tpl.content.cloneNode(true));
       var stage = $('#astro-stage');
       return new Promise(function (resolve, reject) {
         var css = document.createElement('link');

@@ -10,6 +10,9 @@
      stylesheet. Leave the stage open and a deferred stylesheet means a canvas,
      a HUD and two dialogs laid out in normal flow at the bottom of the page.
      ═══════════════════════════════════════════════════════════════════════ -->
+<!-- Inside a <template>, so none of the board's words are part of the page
+     until somebody asks for the game: swiss.js clones it in on the first press. -->
+<template id="astro-tpl">
 <div id="astro-stage" hidden>
 <div id="astroDim" aria-hidden="true"></div>
 <canvas id="astroCanvas" aria-hidden="true"></canvas>
@@ -193,3 +196,4 @@
   <button type="button" id="astroRelease">Release</button>
 </div>
 </div><!-- /#astro-stage -->
+</template>

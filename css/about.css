@@ -379,3 +379,9 @@
      arrives rather than travels. */
   .pl{transition:none}
 }
+
+/* How I work: four lines, quieter than the story above them. */
+.ab-how{margin-top:clamp(1.8rem,3.4vw,2.6rem);border-top:1px solid var(--rule);padding-top:1rem}
+.ab-how-h{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--mute)}
+.ab-how ul{list-style:none;margin:.7rem 0 0;padding:0}
+.ab-how li{font-size:var(--t-body);line-height:1.6;color:var(--ink)}
