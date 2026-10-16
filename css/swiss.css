@@ -438,19 +438,16 @@ body.menu-on{overflow:hidden}
    the step jumps while the column does not: at 1441px the type goes to 8.4rem while the
    column stays at 734px, and the line wraps itself in two.
    Short hand-set lines are what let the display type run big, so the headline is set
-   three lines deep and the longest is "made usable." at 5.53 ems. That clears the column
-   at up to 18.1cqw; 17.2 keeps a margin for the fallback face, which sets wider than
-   Heros. --t-hero caps it, and on most widths the cap is what wins — the headline runs
-   at the undiminished step, which is the mass the hero is drawn around. The cap does not
-   win everywhere: at 1441px the full step needs 743px against a 734px column, and at
-   1201px it clears by 2px. Those two are why the column-relative size stays.
+   three lines deep and the longest is "Product strategy," at about 8.4 ems. That clears
+   the column at up to about 11.9cqw; 11.2 keeps a margin for the fallback face, which
+   sets wider than Heros. --t-hero caps it on narrow screens.
    The fallback is for engines without container queries, where cq units resolve against
    the viewport and would oversize the headline badly.
    Scoped to the id, so the 404 hero — short lines, full page width — keeps the
    undiminished step. */
-#hero-h{font-size:calc(var(--t-hero) * .95)}
+#hero-h{font-size:calc(var(--t-hero) * .6)}
 @supports (container-type:inline-size){
-  #hero-h{font-size:min(var(--t-hero), 17.2cqw)}
+  #hero-h{font-size:min(var(--t-hero), 11.2cqw)}
 }
 /* What I am and where, on one line above the headline: the same eyebrow, title,
    standfirst order every case study opens with. It replaced a four-cell strip
@@ -1887,7 +1884,7 @@ html.theme-anim,html.theme-anim *{
 #clients-h{display:block}
 /* With the tag line gone, the standfirst is the only line under the headline,
    so it carries the identity at a size that can hold the column. */
-.hero-l .hero-sub{max-width:32ch;font-size:clamp(1.15rem,1.75vw,1.6rem);line-height:1.35;
+.hero-l .hero-sub{max-width:36ch;font-size:clamp(1.1rem,1.5vw,1.4rem);line-height:1.35;
   letter-spacing:-.015em;color:var(--ink-2)}
 .work-list>.wproj:first-child{margin-top:clamp(2rem,4vw,3.4rem)}
 
