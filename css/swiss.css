@@ -727,9 +727,7 @@ body.menu-on{overflow:hidden}
    button is pressed again. */
 .fmsg{font-size:var(--t-body);line-height:1.45;color:var(--ink);
   border-left:2px solid var(--ink);padding:.7rem 0 .7rem 1rem;background:var(--sheet)}
-.fmsg::before{content:'\2713\00a0\00a0';font-weight:700}
 .fmsg.err{border-left-color:var(--red);color:var(--ink)}
-.fmsg.err::before{content:'!\00a0\00a0';color:var(--red)}
 
 /* ── 16. FOOTER ──────────────────────────────────────────────────────────── */
 /* Same inversion as .dark-band — the footer stands on the same ground. */
@@ -1797,8 +1795,20 @@ html.theme-anim,html.theme-anim *{
 /* Contact: email and LinkedIn on the left, the form beside them. */
 .contact-l{margin-top:clamp(1.2rem,2.4vw,1.8rem);font-size:var(--t-mid);line-height:1.3;letter-spacing:-.02em;color:var(--ink);max-width:26ch;text-wrap:balance}
 .contact-m{margin-top:.6rem;font-size:var(--t-small);color:var(--mute)}
-.contact-links{display:flex;flex-wrap:wrap;column-gap:clamp(1.2rem,2.4vw,2.2rem);margin-top:clamp(1.6rem,3vw,2.4rem)}
-.contact-links .mail-cta{margin-top:0;margin-bottom:.8rem}
+/* A real grid, so the circles line up in columns whatever the length of each
+   address. On a phone the links become a plain list, one per row between rules,
+   with the circle dropped: four arrows down the edge of a narrow screen read as
+   clutter, and the rule already says where one link ends. */
+.contact-links{display:grid;grid-template-columns:repeat(2,max-content);column-gap:clamp(1.6rem,3vw,2.6rem);row-gap:.9rem;margin-top:clamp(1.6rem,3vw,2.4rem)}
+.contact-links .mail-cta{margin:0}
+@media (max-width:600px){
+  .contact-links{grid-template-columns:1fr;row-gap:0}
+  .contact-links .mail-cta{display:flex;padding:.85rem 0;border-top:1px solid var(--rule)}
+  .contact-links .mail-cta .circ{display:none}
+  .contact-links .mail-cta>span:last-child{display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:1rem}
+  .contact-links .cta-t{font-size:var(--t-body)}
+  .contact-links .cta-a{margin-top:0;text-align:right;overflow-wrap:anywhere}
+}
 .form-alt{border-top:1px solid var(--rule);padding-top:1.1rem}
 .form-alt-h{margin:0 0 1.6rem;font-size:var(--t-small);letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
 
