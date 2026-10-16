@@ -20,8 +20,8 @@ The homepage is the benchmark. If a line elsewhere sounds busier, cleverer or lo
 
 I'm a product designer who works on the product: the problem, the service and the flows that make it work. UI is part of the job, not the headline.
 
-- **Title:** Product Designer. Real job titles (Senior, Lead) stay in role rows and on the CV.
-- **Looking for:** product roles, in the homepage About and Contact: "I’m looking for product roles, especially where software meets operations, hardware or regulation." The PDF CV doesn't announce it; the work says it. Never "PM".
+- **Title:** Product Designer (sentence case in the hero tag: "Product designer · Berlin"). Real job titles (Senior, Lead) stay in role rows and on the CV.
+- **Looking for:** product roles, once, in the homepage Contact: "I’m looking for product roles, especially in operations, hardware or regulated industries." Use "where software meets…" once per page at most; on the homepage it lives in About The PDF CV doesn't announce it; the work says it. Never "PM".
 - **The through-line:** every case is the same capability shown in a different industry: a product that only works because something outside the screen works too. The homepage doesn't spell this out: the hero headline is "Product strategy, design and delivery." with two sentences under it ("Software often gets complicated when it meets the real world. I work on the digital products that connect services, systems and operations."), and the work does the rest.
 - **Lead with:** the problem, the service end to end, user flows, ops and field tools, what was tested, what was decided, who it was agreed with.
 - **Play down:** screens, visual polish, design systems. Mention UI only when it's the point, and mention it last.
