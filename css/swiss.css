@@ -1889,11 +1889,8 @@ html.theme-anim,html.theme-anim *{
 .capline.is-pair>div{grid-column:span 6}
 /* With the tag line gone, the standfirst is the only line under the headline,
    so it carries the identity at a size that can hold the column. */
-.hero-role{margin-top:min(clamp(1.8rem,3.6vw,3rem),5.2svh);font-size:clamp(1.15rem,1.75vw,1.6rem);
-  font-weight:700;letter-spacing:-.015em;line-height:1.2;color:var(--ink)}
 .hero-l .hero-sub{max-width:32ch;font-size:clamp(1.15rem,1.75vw,1.6rem);line-height:1.35;
   letter-spacing:-.015em;color:var(--ink-2)}
-.hero-role+.hero-sub{margin-top:.35rem}
 .work-list>.wproj:first-child{margin-top:clamp(2rem,4vw,3.4rem)}
 
 /* Contact: email and LinkedIn are the actions; the form is folded away. */
