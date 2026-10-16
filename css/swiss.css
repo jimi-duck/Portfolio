@@ -531,17 +531,15 @@ body.menu-on{overflow:hidden}
    hover; that is the row's one piece of life. */
 .cli{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--gap);align-items:stretch;
   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-  --cli-h:clamp(12px,1.15vw,15px)}
-/* Credibility, not content: the row is a quiet line between the ways of
-   working and the work, at about two thirds of the size it used to be. */
+  --cli-h:clamp(15px,1.55vw,20px)}
 .cli-c{display:grid;place-items:center;position:relative;overflow:hidden;
-  padding:clamp(1rem,2vw,1.6rem) .6rem}
+  padding:clamp(1.6rem,3.2vw,2.7rem) .6rem}
 /* Optical sizing, not max-height. Four of these marks ship on a 261x77 artboard
    with the logo floated inside it, so a single `height` renders Bosch at half
    the presence of Enter, which is cropped tight. --k is measured ink area: the
    box height each file needs for its drawn area to match the others. */
 .cli-c img{height:calc(var(--cli-h) * var(--k,1));width:auto;max-width:100%;object-fit:contain;
-  filter:brightness(0);opacity:.42;position:relative;z-index:1;
+  filter:brightness(0);opacity:.62;position:relative;z-index:1;
   transition:opacity .4s var(--ez),filter .4s var(--ez)}
 .cli-c:nth-child(1){--k:1}      /* Enter — tight crop */
 .cli-c:nth-child(2){--k:1.96}   /* Bosch — most padding on the artboard */
@@ -550,7 +548,7 @@ body.menu-on{overflow:hidden}
                                    so pure area sizing leaves the wordmark short */
 .cli-c:nth-child(5){--k:1.37}   /* YunoJuno */
 .cli-c:nth-child(6){--k:1.07}   /* Quidco — tight crop */
-[data-theme="dark"] .cli-c img{filter:brightness(0) invert(1);opacity:.5}
+[data-theme="dark"] .cli-c img{filter:brightness(0) invert(1);opacity:.62}
 .cli-c::before{content:'';position:absolute;inset:0;background:var(--ink);
   transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ez2)}
 .cli-c:hover::before{transform:scaleY(1);transform-origin:top}
@@ -1867,6 +1865,7 @@ html.theme-anim,html.theme-anim *{
   margin-top:clamp(1.2rem,2.4vw,2rem);align-items:start}
 .wproj .wproj-t{grid-column:1 / 5}
 .wproj-copy{grid-column:5 / 13;display:flex;flex-direction:column;align-items:flex-start}
+.wproj-copy .wproj-co{margin-top:0;margin-bottom:.9rem;color:var(--ink-2)}
 .wproj-lead{font-size:clamp(1.35rem,2.4vw,2.2rem);font-weight:700;letter-spacing:-.028em;line-height:1.12;
   color:var(--ink);max-width:28ch;text-wrap:balance}
 .wproj-sub{margin-top:.8rem;font-size:var(--t-body);line-height:1.5;color:var(--ink-2);max-width:52ch}
@@ -1886,26 +1885,18 @@ html.theme-anim,html.theme-anim *{
 
 /* The experience strip sits after the work, quiet. */
 #clients-h{display:block}
-.capline.is-pair>div{grid-column:span 6}
 /* With the tag line gone, the standfirst is the only line under the headline,
    so it carries the identity at a size that can hold the column. */
 .hero-l .hero-sub{max-width:32ch;font-size:clamp(1.15rem,1.75vw,1.6rem);line-height:1.35;
   letter-spacing:-.015em;color:var(--ink-2)}
 .work-list>.wproj:first-child{margin-top:clamp(2rem,4vw,3.4rem)}
 
-/* Contact: email and LinkedIn are the actions; the form is folded away. */
+/* Contact: email and LinkedIn on the left, the form beside them. */
 .contact-l{margin-top:clamp(1.2rem,2.4vw,1.8rem);font-size:var(--t-body);line-height:1.5;color:var(--ink-2);max-width:40ch}
 .contact-m{margin-top:.6rem;font-size:var(--t-small);color:var(--mute)}
 .contact-links{display:flex;flex-wrap:wrap;gap:clamp(1.2rem,3vw,2.6rem)}
-.form-alt{border-top:1px solid var(--rule)}
-.form-alt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:.6rem;
-  padding:1rem 0;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);
-  text-transform:uppercase;color:var(--mute)}
-.form-alt summary::-webkit-details-marker{display:none}
-.form-alt summary::before{content:'+';font-size:1rem;line-height:1;width:1rem}
-.form-alt[open] summary::before{content:'−'}
-.form-alt summary:hover{color:var(--red)}
-.form-alt .form{padding-top:.6rem}
+.form-alt{border-top:1px solid var(--rule);padding-top:1.1rem}
+.form-alt-h{margin:0 0 1.6rem;font-size:var(--t-small);letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
 
 /* Contact: the email is the primary action, the form the alternative. */
 .mail-cta{display:inline-flex;align-items:center;gap:1.1rem;margin-top:clamp(1.6rem,3vw,2.4rem)}

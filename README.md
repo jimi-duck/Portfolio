@@ -170,9 +170,10 @@ card carries you to the following one — Enter → Coup → Cooler Future → V
 which ends on a card back to the portfolio. Every case study is reachable from
 the homepage index, so keep the two in step if you add another.
 
-The homepage runs: hero (headline and one line), the work, a quiet
-"Selected experience" logo strip, About, Contact. Nothing goes between the hero
-and the work. The four "How I work" lines live on `about.html`.
+The homepage runs: hero (headline and one line), the Product / Design / Domains
+line, the "Clients & employers" logos, the work, About, Contact. Each work card
+opens with one plain line on what the company does, so readers know the project
+before clicking in. The four "How I work" lines live on `about.html`.
 
 Two easter eggs: **G** overlays the 12-column grid on any page (hinted once in
 the footer), and the game opens from the homepage's corner launcher or by
