@@ -1850,37 +1850,10 @@ html.theme-anim,html.theme-anim *{
 .section.is-next>.lbl{border-top-color:var(--red)}
 
 
-/* ── Homepage, third pass: the work is the page ──────────────────────────── */
-/* Each project is a picture at the full measure, then the name beside one
-   sentence, then a line of metadata. The old seven/five split put a paragraph
-   and a three-cell table next to every image; now the visitor looks, then
-   reads one line, then looks again. These override the 12a slab rules. */
-.wproj .wproj-fig{aspect-ratio:16/9;margin-top:clamp(1.2rem,2.4vw,2rem)}
-.wproj .wproj-fig.is-art{aspect-ratio:16/9}
-.wproj:first-child .wproj-fig img{object-position:center 38%}
-.wproj .wproj-txt{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);
-  margin-top:clamp(1.2rem,2.4vw,2rem);align-items:start}
-.wproj .wproj-t{grid-column:1 / 5}
-.wproj-copy{grid-column:5 / 13;display:flex;flex-direction:column;align-items:flex-start}
-.wproj-copy .wproj-co{margin-top:0}
-.wproj .wproj-cta{margin-top:clamp(1rem,2vw,1.6rem)}
-/* The oldest project, at about two thirds of the scale: picture on the left,
-   name and line beside it, stacked. */
-.wproj.is-small{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap)}
-.wproj.is-small .wproj-hd{grid-column:1 / -1}
-.wproj.is-small .wproj-fig{grid-column:1 / 8;grid-row:2;aspect-ratio:3/2}
-.wproj.is-small .wproj-txt{grid-column:8 / 13;grid-row:2;display:flex;flex-direction:column}
-.wproj.is-small .wproj-t{font-size:clamp(1.8rem,3.4vw,3rem)}
-.wproj.is-small .wproj-copy{margin-top:1rem}
-.wproj.is-small .wproj-txt{margin-top:clamp(1.2rem,2.4vw,2rem)}
-
-/* The experience strip sits after the work, quiet. */
-#clients-h{display:block}
 /* With the tag line gone, the standfirst is the only line under the headline,
    so it carries the identity at a size that can hold the column. */
 .hero-l .hero-sub{max-width:36ch;font-size:clamp(1.1rem,1.5vw,1.4rem);line-height:1.35;
   letter-spacing:-.015em;color:var(--ink-2)}
-.work-list>.wproj:first-child{margin-top:clamp(2rem,4vw,3.4rem)}
 
 /* Contact: email and LinkedIn on the left, the form beside them. */
 .contact-l{margin-top:clamp(1.2rem,2.4vw,1.8rem);font-size:var(--t-body);line-height:1.5;color:var(--ink-2);max-width:40ch}
@@ -1898,12 +1871,6 @@ html.theme-anim,html.theme-anim *{
 
 @media (max-width:1080px){
   .sys{grid-template-columns:repeat(min(var(--n,5),4),minmax(0,1fr));row-gap:1.6rem}
-}
-@media (max-width:900px){
-  .wproj .wproj-txt{grid-template-columns:1fr;gap:.9rem}
-  .wproj .wproj-t,.wproj-copy{grid-column:auto}
-  .wproj.is-small{display:block}
-  .wproj.is-small .wproj-fig{aspect-ratio:16/10}
 }
 @media (max-width:700px){
   .sys{grid-template-columns:minmax(0,1fr);row-gap:0}

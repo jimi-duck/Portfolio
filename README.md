@@ -86,7 +86,7 @@ rules, one accent. All of it lives in `css/swiss.css`.
   column in a hairlined definition list (`.wmeta` on the work cards). The one
   surviving `<strong>` is structural, not emphasis: `.mcard strong` is the
   card's heading and renders as a block at `--t-h3`. Each homepage work card
-  is a full-width image, the project name, the company line (`.wproj-co`),
+  is an image beside the text (alternating sides), the project name, the company line (`.wproj-co`),
   what I did with its verb phrase in bold (`.wproj-d`) and a Role / Years /
   Shipped row (`.wmeta`).
 - **Semantics** — one `<h1>` per page, every section label (`.lab`, `.sec-lbl`)
