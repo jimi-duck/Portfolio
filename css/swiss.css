@@ -1886,6 +1886,7 @@ html.theme-anim,html.theme-anim *{
 
 /* The experience strip sits after the work, quiet. */
 #clients-h{display:block}
+.capline.is-pair>div{grid-column:span 6}
 /* With the tag line gone, the standfirst is the only line under the headline,
    so it carries the identity at a size that can hold the column. */
 .hero-l .hero-sub{max-width:30ch;font-size:clamp(1.15rem,1.75vw,1.6rem);line-height:1.35;
