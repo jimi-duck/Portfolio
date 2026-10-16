@@ -85,9 +85,10 @@ rules, one accent. All of it lives in `css/swiss.css`.
   scale, position and the numbered system; a figure that matters gets its own
   column in a hairlined definition list (`.wmeta` on the work cards). The one
   surviving `<strong>` is structural, not emphasis: `.mcard strong` is the
-  card's heading and renders as a block at `--t-h3`. The single exception is
-  the homepage work cards, where `.wproj-d strong` sets the opening verb phrase
-  (what I did) in bold so the card can be skimmed in two lines.
+  card's heading and renders as a block at `--t-h3`. Each homepage work card
+  is an image beside the text (alternating sides), the project name, the company line (`.wproj-co`),
+  what I did with its verb phrase in bold (`.wproj-d`) and a Role / Years /
+  Shipped row (`.wmeta`).
 - **Semantics** — one `<h1>` per page, every section label (`.lab`, `.sec-lbl`)
   is a real `<h2>`, and every page has a skip link and a `<main id="main">`.
   The mobile menu is closed with `visibility:hidden`, not clip-path alone —
@@ -122,7 +123,8 @@ rather than the pages.
 
 They also share one structure, written for a reader with five minutes:
 
-- **Hero**: title, a one-sentence tagline, and Role · Years · Shipped.
+- **Hero**: title, a tagline that says what I designed and what made it hard,
+  and Role · Years · Shipped.
 - **`glance`**: the problem, what I did, the result. One sentence or two each.
   Somebody who reads nothing else should still leave with the whole case.
 - **Numbered chapters** (`<span class="lbl-n">01</span>` in the label). Each has
@@ -150,6 +152,11 @@ They also form one chain: the homepage links all four, and each page's `.next`
 card carries you to the following one — Enter → Coup → Cooler Future → Vivy,
 which ends on a card back to the portfolio. Every case study is reachable from
 the homepage index, so keep the two in step if you add another.
+
+The homepage runs: hero (headline and one line), the Product / Design / Domains
+line, the "Clients & employers" logos, the work, About, Contact. Each work card
+opens with one plain line on what the company does, so readers know the project
+before clicking in. The four "How I work" lines live on `about.html`.
 
 Two easter eggs: **G** overlays the 12-column grid on any page (hinted once in
 the footer), and the game opens from the homepage's corner launcher or by
@@ -187,17 +194,17 @@ complete, readable, working HTML — open one from the filesystem and it renders
 and GitHub Pages serves it as it is. There is no template language and nothing
 at runtime. Running it twice changes nothing.
 
-One region is optional. `@game` is the board itself, and it is stamped only
+One region is optional. `@game` is the board itself (wrapped in a `<template>`, so its text is not part of the page until `swiss.js` clones it in on the first press), and it is stamped only
 into the pages that carry the marker pair, which today is just the homepage.
 Every other region is chrome that all nine pages want, so a page missing one of
 those markers is a mistake and the build says so.
 
 Four values differ between pages and are set in the `PAGES` table at the top of
 `build.js`: `home` (a nav link is `#work` on the homepage and `index.html#work`
-everywhere else), `intro` and `curtain` (only the homepage has the intro
-curtain, and the boot script has to know before first paint), `keys` (the grid
-hint appears once, in the homepage footer) and `reveal` (only the homepage
-footer fades in).
+everywhere else), `intro` and `curtain` (empty everywhere since the homepage's
+loading curtain was removed in October 2026; the hero now paints with the page),
+`keys` (the grid hint appears once, in the homepage footer) and `reveal` (empty
+everywhere: the footer no longer fades in, so it is never an empty black bar).
 
 Those last three are the lesson of this arrangement: a shared region is only
 shared to the extent that every page really does want the same thing. The

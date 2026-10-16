@@ -39,7 +39,7 @@ const PARTIALS = path.join(ROOT, 'partials');
 
 /* The grid overlay is hinted once, on the homepage, and nowhere else — finding
    it on every page of the site would stop it being something you find. */
-const GRID_HINT = '\n      <span class="f-keys">Press <kbd>G</kbd> for the grid</span>';
+const GRID_HINT = '\n      <span class="f-keys"><kbd>G</kbd> Grid</span>';
 
 /* The intro curtain, which only the homepage has. It lives here rather than in
    chrome.html because the shared region runs from the skip link to the grid
@@ -75,7 +75,7 @@ const CURTAIN = `
           every link in it broken. The 404's own links outside the markers
           are written root-absolute by hand for the same reason. */
 const PAGES = {
-  'index.html':          { home: '',           intro: ' introing', keys: GRID_HINT, reveal: ' data-reveal', curtain: CURTAIN, root: '' },
+  'index.html':          { home: '',           intro: '',          keys: '', reveal: '', curtain: '', root: '' },
   'about.html':          { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },
   'lab.html':            { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },
   'cv.html':             { home: 'index.html', intro: '',          keys: '',        reveal: '', curtain: '', root: '' },

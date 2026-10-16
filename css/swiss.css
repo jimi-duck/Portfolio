@@ -27,7 +27,7 @@
   /* 6.4:1 on paper, 7.3:1 on the dark ground. The old #68665f measured 4.9:1 —
      technically AA, but with no headroom at the small end of the scale where
      this tone does most of its work. */
-  --mute:#57554f;
+  --mute:#4b4944;
   /* Hairlines are alpha, not a solid tint, so they sit correctly on paper, on
      --sheet and on --warm without three separate tokens. --rule is the
      structural divider; --rule-2 is the secondary one inside a component. */
@@ -66,14 +66,18 @@
   --t-h1:clamp(2.4rem,6.6vw,6.2rem);
   --t-h2:clamp(1.85rem,4.1vw,3.5rem);
   --t-h3:clamp(1.2rem,1.9vw,1.7rem);
+  /* The in-between size: one step between the display headings (56–86px) and
+     body copy, for the project one-liners and the line that opens a homepage
+     section. Without it the page went from shouting straight to whispering. */
+  --t-mid:clamp(1.3rem,2.1vw,1.875rem);
   --t-body:clamp(1rem,1.15vw,1.125rem);
   --t-small:clamp(.9rem,.95vw,.95rem);
-  --t-lab:clamp(.78rem,.85vw,.8rem);
+  --t-lab:clamp(.8125rem,.9vw,.84rem);
   /* The metadata strip and the counters (section index, case-study number)
      sit one step above the label size. They were the smallest type on the
      page and the first thing to become unreadable on a phone. Word labels
      (.ctab .k) stay at --t-lab: they read as words. */
-  --t-meta:clamp(.84rem,1vw,.9rem);
+  --t-meta:clamp(.86rem,1vw,.9rem);
   /* One tracking value for every uppercase micro-label on the site. The old
      system ran four (.14/.16/.17/.19em) at four different sizes; a single
      token is both calmer and the one knob to turn if it wants to be wider. */
@@ -254,33 +258,18 @@ a:hover>.circ svg,button:hover>.circ svg,.circ:hover svg{transform:translateX(3p
 :where(button).tlink{background:none;border:0;padding-inline:0;font:inherit;
   letter-spacing:inherit;color:inherit;text-align:inherit;cursor:pointer}
 
-/* ── 6. INTRO CURTAIN ────────────────────────────────────────────────────── */
-#intro{position:fixed;inset:0;z-index:99999;display:none;pointer-events:none}
-html.js #intro{display:flex}
-#intro .col{flex:1;background:var(--paper);transform:translateY(0);
-  transition:transform 1s var(--ez2)}
-#intro.go .col{transform:translateY(-101%)}
-#intro.done{display:none}
-#intro .brand{
-  position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:space-between;
-  padding:var(--pad);z-index:2;overflow:hidden;
-  /* The wordmark lands where the nav logo lands, which past 1664px is the edge
-     of the measure rather than the edge of the window. */
-  max-width:var(--frame);margin-inline:auto;
-}
-#intro .brand span{
-  display:block;font-size:clamp(1.1rem,2.4vw,2rem);font-weight:700;letter-spacing:-.03em;
-  transform:translateY(105%);transition:transform .9s var(--ez) .12s;
-}
-#intro .brand .ct{font-variant-numeric:tabular-nums;font-size:clamp(1.1rem,2.4vw,2rem);font-weight:700;letter-spacing:-.02em;transform:translateY(105%);transition:transform .9s var(--ez) .2s}
-#intro.lift .brand span,#intro.lift .brand .ct{transform:none}
-#intro.go .brand{opacity:0;transition:opacity .35s ease}
-#intro.done{display:none !important}
-html.introing,html.introing body{overflow:hidden}
+/* ── 6. FIRST SCREEN ─────────────────────────────────────────────────────── */
+/* The homepage used to open behind a five-column curtain and a 0–100 counter,
+   about two seconds before the headline could be read. A visitor who gave it
+   five seconds could leave having seen a half-lifted curtain. The hero now
+   paints with the page; the text column makes one short rise on top, and it
+   is a transform only, so the words are legible from the first frame. */
+@keyframes hero-in{from{transform:translateY(12px)}to{transform:none}}
+.hero-l{animation:hero-in .5s var(--ez) both}
 
 /* ── 7. NAV ──────────────────────────────────────────────────────────────── */
-/* Accent budget: the page allows one orange per viewport, and in the work
-   section that one is the case-study number. The progress bar, the CTA arrows
+/* Accent budget: red is kept for the full stops in the headlines and a few
+   labels; the case-study numbers are ink. The progress bar, the CTA arrows
    and the cursor are present in every viewport, so none of them spend it —
    five simultaneous oranges is no accent at all. */
 /* The reading progress bar. Two changes from the plain scroll indicator this
@@ -288,7 +277,7 @@ html.introing,html.introing body{overflow:hidden}
    eighth of the way through" rather than as a stray rule, and the fill is a
    scaleX on --p rather than an animated width, which the JS sets from the
    article's own extent — see progress() in swiss.js. */
-#prog{position:fixed;top:0;left:0;right:0;height:2px;background:var(--rule-2);
+#prog{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;
   z-index:99988;pointer-events:none}
 #prog::before{content:"";position:absolute;inset:0;background:var(--ink);
   transform:scaleX(var(--p,0));transform-origin:0 50%}
@@ -312,28 +301,18 @@ nav:not(#menu){
 .nav-links a:hover::after,.nav-links a.on::after{transform:scaleX(1);transform-origin:left}
 .nav-links .num{color:var(--mute);font-weight:400;margin-right:.4em}
 
-/* Theme switch — two square cells, the active one filled. Sharp corners, and
-   both destinations visible so it reads as a state, not a mystery button. */
-.tt{
-  display:grid;grid-template-columns:1fr 1fr;place-items:center;
-  width:58px;height:28px;padding:0;flex:none;position:relative;
-  border:1px solid var(--ink);background:none;cursor:pointer;
-  transition:border-color .3s var(--ez);
-}
-.tt-knob{
-  position:absolute;top:0;left:0;width:50%;height:100%;background:var(--ink);
-  transition:transform .45s var(--ez2);
-}
-[data-theme="dark"] .tt-knob{transform:translateX(100%)}
-.tt-ic{width:14px;height:14px;position:relative;z-index:1;transition:color .35s var(--ez),opacity .35s var(--ez)}
-/* whichever icon sits on the filled cell flips to paper */
-.tt-sun{color:var(--paper)}
-.tt-moon{color:var(--ink);opacity:.45}
-[data-theme="dark"] .tt-sun{color:var(--ink);opacity:.45}
-[data-theme="dark"] .tt-moon{color:var(--paper);opacity:1}
-.tt:hover{border-color:var(--red)}
-.tt:hover .tt-moon{opacity:.75}
-[data-theme="dark"] .tt:hover .tt-sun{opacity:.75}
+/* Theme switch: one icon, showing the mode you would switch to. It used to be
+   a two-cell switch with a solid black knob, which was the heaviest object in
+   the bar for the least important control in it. */
+.tt{display:grid;place-items:center;width:40px;height:40px;padding:0;flex:none;
+  border:0;background:none;cursor:pointer;color:var(--ink)}
+.tt-knob{display:none}
+.tt-ic{width:18px;height:18px;transition:color .3s var(--ez),transform .45s var(--ez)}
+.tt-sun{display:none}
+[data-theme="dark"] .tt-sun{display:block}
+[data-theme="dark"] .tt-moon{display:none}
+.tt:hover{color:var(--red)}
+.tt:hover .tt-ic{transform:rotate(-14deg)}
 
 /* Compact menu control. A bare two-line burger is a guess; this one carries the
    word, so it is a labelled control at a 44px touch target rather than an icon
@@ -374,7 +353,11 @@ body.menu-on{overflow:hidden}
 #menu .foot a{font-size:var(--t-lab);letter-spacing:var(--tr-lab);text-transform:uppercase;border:0;padding:0}
 
 /* ── 8. HERO ─────────────────────────────────────────────────────────────── */
-.hero{padding-top:var(--bar);min-height:100svh;display:flex;flex-direction:column}
+/* Sized by its content rather than the viewport. At 100svh the portrait
+   stretched to fill the screen and the text column left a large empty block
+   under the call to action, which read as something that failed to load. A
+   4:5 portrait is about as tall as the text column at every desktop width. */
+.hero{padding-top:var(--bar);display:flex;flex-direction:column}
 /* The metadata strip. Only the 404 carries it now: the homepage is down to two
    facts, and two facts do not need a table, so they sit on one .hero-tag line
    above the headline instead.
@@ -438,19 +421,16 @@ body.menu-on{overflow:hidden}
    the step jumps while the column does not: at 1441px the type goes to 8.4rem while the
    column stays at 734px, and the line wraps itself in two.
    Short hand-set lines are what let the display type run big, so the headline is set
-   three lines deep and the longest is "made usable." at 5.53 ems. That clears the column
-   at up to 18.1cqw; 17.2 keeps a margin for the fallback face, which sets wider than
-   Heros. --t-hero caps it, and on most widths the cap is what wins — the headline runs
-   at the undiminished step, which is the mass the hero is drawn around. The cap does not
-   win everywhere: at 1441px the full step needs 743px against a 734px column, and at
-   1201px it clears by 2px. Those two are why the column-relative size stays.
+   three lines deep and the longest is "the messy world," at about 7.3 ems. That clears
+   the column at up to about 13.6cqw; 12.6 keeps a margin for the fallback face, which
+   sets wider than Heros. --t-hero caps it on narrow screens.
    The fallback is for engines without container queries, where cq units resolve against
    the viewport and would oversize the headline badly.
    Scoped to the id, so the 404 hero — short lines, full page width — keeps the
    undiminished step. */
-#hero-h{font-size:calc(var(--t-hero) * .95)}
+#hero-h{font-size:calc(var(--t-hero) * .6)}
 @supports (container-type:inline-size){
-  #hero-h{font-size:min(var(--t-hero), 17.2cqw)}
+  #hero-h{font-size:min(var(--t-hero), 12.6cqw)}
 }
 /* What I am and where, on one line above the headline: the same eyebrow, title,
    standfirst order every case study opens with. It replaced a four-cell strip
@@ -491,8 +471,8 @@ body.menu-on{overflow:hidden}
    reliably clip a child in that combination to an overflow:hidden ancestor, so
    the image painted over the skill band underneath. contain:paint states the
    clip as a guarantee rather than leaving it to overflow's side effects. */
-.hero-fig{position:relative;flex:1;min-height:46svh;overflow:hidden;contain:paint;
-  background:var(--sheet)}
+.hero-fig{position:relative;aspect-ratio:4/5;max-height:calc(100svh - var(--bar) - 3rem);
+  overflow:hidden;contain:paint;background:var(--sheet)}
 .hero-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;
   filter:grayscale(100%) contrast(1.08);transform:scale(1.06)}
 [data-theme="dark"] .hero-fig img{filter:grayscale(100%) contrast(1.02) brightness(.86)}
@@ -565,7 +545,11 @@ body.menu-on{overflow:hidden}
 .wproj-hd{display:flex;align-items:baseline;gap:1.25rem;
   font-size:var(--t-meta);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase}
 .wproj-hd .fill{flex:1;height:1px;background:var(--rule-2);transform:translateY(-.25em)}
-.wproj-n{color:var(--red-ink);font-variant-numeric:tabular-nums}
+.wproj-n{color:var(--ink);font-variant-numeric:tabular-nums}
+/* The first project sits close under the section header. At the full project
+   spacing there was about 120px of nothing between "Selected work" and 01,
+   which read as content that had not loaded. */
+.work-list>.wproj:first-child{margin-top:clamp(1.6rem,3vw,2.4rem)}
 
 .wproj-body{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);
   align-items:start;margin-top:clamp(1.4rem,2.8vw,2.6rem)}
@@ -608,10 +592,10 @@ body.menu-on{overflow:hidden}
    visitor who has never heard of Enter or Coup knows what they are looking at
    before reading about my part in it. The company line is the standfirst,
    in ink at body size; my part sits under it at the smaller reading size. */
-.wproj-co{margin-top:1.2rem;font-size:var(--t-body);line-height:1.45;letter-spacing:-.008em;
-  color:var(--ink);max-width:34ch}
-.wproj-d{margin-top:1.2rem;font-size:var(--t-small);line-height:1.6;color:var(--ink-2);max-width:46ch}
-.wproj-co+.wproj-d{margin-top:.7rem}
+.wproj-co{margin-top:1.2rem;font-size:var(--t-mid);font-weight:500;line-height:1.25;letter-spacing:-.02em;
+  color:var(--ink);max-width:30ch;text-wrap:balance;hyphens:manual}
+.wproj-d{margin-top:1.2rem;font-size:var(--t-body);line-height:1.55;color:var(--ink-2);max-width:46ch}
+.wproj-co+.wproj-d{margin-top:1rem}
 /* The one run of bold inside body copy on the site, and it is deliberate: the
    verb phrase that says what I did, so a skimmer reads company line, then my
    part, and can stop there. Ink rather than --ink-2 so the weight and the tone
@@ -684,6 +668,10 @@ body.menu-on{overflow:hidden}
 .about-h{--lead:.97;font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.96}
 .about-body{font-size:var(--t-body);line-height:1.62;color:var(--ink-2);max-width:60ch}
 .about-body p+p{margin-top:1.1em}
+/* The section opener runs at the in-between size, so About steps down from
+   the heading to its first line to the body rather than dropping straight. */
+.about-body .lede{font-size:var(--t-mid);line-height:1.3;letter-spacing:-.02em;color:var(--ink);
+  max-width:28ch;text-wrap:balance}
 
 /* ── 15. CONTACT ─────────────────────────────────────────────────────────── */
 .contact{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start}
@@ -714,20 +702,34 @@ body.menu-on{overflow:hidden}
 .fg{display:flex;flex-direction:column;gap:.45rem;position:relative}
 .fg label{font-size:var(--t-lab);letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--mute)}
 .fg input,.fg textarea{
-  background:none;border:0;border-bottom:1px solid var(--rule);border-radius:0;
+  background:none;border:0;border-bottom:1px solid color-mix(in srgb,var(--ink) 35%,transparent);border-radius:0;
   padding:.55rem 0;font-size:var(--t-body);color:var(--ink);width:100%;
   -webkit-appearance:none;appearance:none;transition:border-color .35s var(--ez);
 }
-.fg input::placeholder,.fg textarea::placeholder{color:color-mix(in srgb,var(--mute) 78%,transparent)}
+/* Hints, not values: light enough that an empty field never reads as filled. */
+.fg input::placeholder,.fg textarea::placeholder{color:color-mix(in srgb,var(--mute) 45%,transparent)}
 .fg input:focus,.fg textarea:focus{outline:0;border-bottom-color:var(--red)}
 /* A field the form sent back. The message under the form says what to do;
    this says where. */
 .fg [aria-invalid="true"]{border-bottom-color:var(--red)}
 .fg textarea{resize:vertical;min-height:104px}
-.fsub{display:flex;align-items:center;gap:1.1rem;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.fsub{justify-self:start;display:inline-flex;align-items:center;gap:.8rem;cursor:pointer;
+  background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:0;
+  padding:1rem 1.6rem;min-height:48px;transition:background-color .3s var(--ez),border-color .3s var(--ez)}
+.fsub .circ{display:none}
+.fsub::after{content:'\2192';font-size:1rem;line-height:1;transition:transform .35s var(--ez)}
+.fsub:hover{background:var(--red);border-color:var(--red)}
+.fsub:hover::after{transform:translateX(3px)}
+.fsub:disabled{cursor:progress;opacity:.7}
 .fsub .cta-t{font-size:var(--t-lab);font-weight:700;text-transform:uppercase;letter-spacing:var(--tr-lab)}
-.fmsg{font-size:var(--t-small);color:var(--ink-2)}
-.fmsg.err{color:var(--red)}
+/* The result of sending, as a note with a rule down its side: ink for sent,
+   red for a problem. It sits above the button so it is read before the
+   button is pressed again. */
+.fmsg{font-size:var(--t-body);line-height:1.45;color:var(--ink);
+  border-left:2px solid var(--ink);padding:.7rem 0 .7rem 1rem;background:var(--sheet)}
+.fmsg::before{content:'\2713\00a0\00a0';font-weight:700}
+.fmsg.err{border-left-color:var(--red);color:var(--ink)}
+.fmsg.err::before{content:'!\00a0\00a0';color:var(--red)}
 
 /* ── 16. FOOTER ──────────────────────────────────────────────────────────── */
 /* Same inversion as .dark-band — the footer stands on the same ground. */
@@ -1787,15 +1789,36 @@ html.theme-anim,html.theme-anim *{
   transition:background-color .38s ease,color .38s ease,border-color .38s ease,fill .38s ease !important;
 }
 
+/* With the tag line gone, the standfirst is the only line under the headline,
+   so it carries the identity at a size that can hold the column. */
+.hero-l .hero-sub{max-width:36ch;font-size:clamp(1.1rem,1.5vw,1.4rem);line-height:1.35;
+  letter-spacing:-.015em;color:var(--ink-2)}
+
+/* Contact: email and LinkedIn on the left, the form beside them. */
+.contact-l{margin-top:clamp(1.2rem,2.4vw,1.8rem);font-size:var(--t-mid);line-height:1.3;letter-spacing:-.02em;color:var(--ink);max-width:26ch;text-wrap:balance}
+.contact-m{margin-top:.6rem;font-size:var(--t-small);color:var(--mute)}
+.contact-links{display:flex;flex-wrap:wrap;column-gap:clamp(1.2rem,2.4vw,2.2rem);margin-top:clamp(1.6rem,3vw,2.4rem)}
+.contact-links .mail-cta{margin-top:0;margin-bottom:.8rem}
+.form-alt{border-top:1px solid var(--rule);padding-top:1.1rem}
+.form-alt-h{margin:0 0 1.6rem;font-size:var(--t-small);letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
+
+/* Contact: the email is the primary action, the form the alternative. */
+.mail-cta{display:inline-flex;align-items:center;gap:1.1rem;margin-top:clamp(1.6rem,3vw,2.4rem)}
+.mail-cta .cta-t{font-size:var(--t-h3);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.mail-cta .cta-a{display:block;margin-top:.3rem;font-size:var(--t-small);color:var(--mute)}
+.mail-cta:hover .cta-t{color:var(--red)}
+
+
+
 /* ── 21. MOTION PREFERENCES / PRINT ──────────────────────────────────────── */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
     transition-duration:.001ms !important}
   [data-reveal]{opacity:1 !important;transform:none !important}
-  #intro{display:none}
+  .hero-l{animation:none}
 }
 @media print{
-  nav,footer,#intro,#prog,#gridov,#menu,#totop,#lb{display:none !important}
+  nav,footer,#prog,#gridov,#menu,#totop,#lb{display:none !important}
   body{background:#fff;color:#000}
 }

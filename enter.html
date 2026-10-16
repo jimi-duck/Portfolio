@@ -17,10 +17,10 @@
 <script>(function(){var r=document.documentElement;r.className+=' js';try{var t=localStorage.getItem('theme');if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';}r.setAttribute('data-theme',t);}catch(e){}if(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)r.className+=' coarse';setTimeout(function(){if(!r.dataset.swiss)r.className=r.className.replace(/\bjs\b/,'').replace(/\bintroing\b/,'');},4000);})();</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20fill%3D%27%23131311%27%2F%3E%3Ccircle%20cx%3D%2750%27%20cy%3D%2750%27%20r%3D%2726%27%20fill%3D%27%23e23a16%27%2F%3E%3C%2Fsvg%3E">
 <!-- /@head -->
-<meta name="description" content="How Enter surveyed a whole house in one visit: tested on paper first, then a field app, and AI findings shown on site.">
+<meta name="description" content="How I redesigned Enter’s house survey for automation: tested on paper, rebuilt as a field app, with AI findings shown to the homeowner on site.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Enter · James Ciclitira">
-<meta property="og:description" content="How Enter surveyed a whole house in one visit: tested on paper first, then a field app, and AI findings shown on site.">
+<meta property="og:title" content="Enter: redesigning the house survey for automated retrofit planning">
+<meta property="og:description" content="How I redesigned Enter’s house survey for automation: tested on paper, rebuilt as a field app, with AI findings shown to the homeowner on site.">
 <meta property="og:image" content="https://www.jciclitira.com/Man_selecting_the_footprint.jpg">
 <meta property="og:url" content="https://www.jciclitira.com/enter.html">
 <link rel="canonical" href="https://www.jciclitira.com/enter.html">
@@ -39,7 +39,6 @@
 <a class="skip" href="#main">Skip to content</a>
 <div id="prog" aria-hidden="true"></div>
 <div id="gridov" aria-hidden="true"></div>
-<div id="gridhint" aria-hidden="true">Grid · press G</div>
 <!-- /@chrome -->
 <!-- @nav -->
 <!-- The theme toggle exists twice — once in the desktop row, once in the mobile
@@ -74,8 +73,9 @@
   <a href="cv.html"><span class="n">04</span>Résumé</a>
   <div class="foot">
     <a href="https://linkedin.com/in/jciclitira" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a href="https://github.com/jimi-duck" target="_blank" rel="noopener">GitHub ↗</a>
     <a href="mailto:jciclitira@gmail.com">Email ↗</a>
-    <span class="lab lab-mute">Berlin, DE</span>
+    <span class="lab lab-mute">Berlin</span>
   </div>
 </nav>
 <!-- /@nav -->
@@ -88,21 +88,21 @@
     <a href="index.html" class="back">← All work</a>
     <p class="eyebrow">Climate tech · Field operations · 6&nbsp;min&nbsp;read</p>
     <h1 class="cs-title"><em>Enter</em></h1>
-    <p class="cs-tagline">I helped develop a tool that let tradespeople capture a whole house quickly and efficiently. With AI, the data gave instant results and reduced the workload on the regulated renovation plan (iSFP).</p>
+    <p class="cs-tagline">I designed the field survey Enter uses to turn a house visit into an energy model, an energy report for the homeowner and a renovation plan. The hard part was capturing reliable data in whatever order the tradesperson worked.</p>
   </div>
   <div class="meta-grid">
     <div class="meta-item"><label>Role</label><p>Senior Product Designer</p></div>
     <div class="meta-item"><label>Years</label><p>2024–2026</p></div>
-    <div class="meta-item"><label>Shipped</label><p>Ops tooling · Customer report</p></div>
+    <div class="meta-item"><label>Shipped</label><p>Survey app · Energy report</p></div>
   </div>
 </header>
 
 <!-- The whole case in one band. If this is all somebody reads, they leave
      with the problem, the work and the outcome. -->
 <dl class="glance" data-reveal>
-  <div><dt>The problem</dt><dd>Subsidies can cover up to 70% of a retrofit, but need a full site survey and an architect’s iSFP. Enter’s data was often incomplete. The iSFP took weeks.</dd></div>
-  <div><dt>What I did</dt><dd>Rode along on surveys. Tested with quick-and-dirty methods. Designed the survey app that fed into all the AI automation improvements.</dd></div>
-  <div><dt>The result</dt><dd>Shorter visits, more complete data, and a premium service for homeowners, with findings on site and a cheaper iSFP.</dd></div>
+  <div><dt>The problem</dt><dd>Subsidies can cover up to 70% of a retrofit, but need a full site survey and an architect’s iSFP (the official renovation plan). Enter’s data was often incomplete. The iSFP took weeks.</dd></div>
+  <div><dt>What I did</dt><dd>Rode along on surveys and tested a paper version in the field. Then designed the survey app that Enter’s automated modelling runs on, and the energy report.</dd></div>
+  <div><dt>The result</dt><dd>Shorter visits and more complete data, and homeowners got their findings on the spot, with a cheaper iSFP.</dd></div>
 </dl>
 
 <!-- Hero photo: field worker in a garden selecting the building footprint on a map -->
@@ -110,8 +110,8 @@
 
 <div class="stats" data-reveal>
   <div class="stat"><div class="stat-n">25%</div><div class="stat-l">Less time per on-site survey,<br>enough for one more appointment a day</div></div>
-  <div class="stat"><div class="stat-n">80 → 95%</div><div class="stat-l">Data completeness on surveys<br>reaching the energy model</div></div>
-  <div class="stat"><div class="stat-n">1 visit</div><div class="stat-l">Survey done and insights shared<br>before anyone leaves</div></div>
+  <div class="stat"><div class="stat-n">80 → 95%</div><div class="stat-l">Survey data complete<br>enough to model</div></div>
+  <div class="stat"><div class="stat-n">1 visit</div><div class="stat-l">Survey done and findings shared<br>before anyone leaves</div></div>
 </div>
 
 <!-- ═══ 01 · THE PROBLEM ══════════════════════════════════ -->
@@ -197,7 +197,7 @@
     <div class="two is-wide is-top">
       <h2>Tested on paper <em>before any engineering.</em></h2>
       <div>
-        <p class="lede">The real tool meant months of engineering, and we needed to know how accurate the official building records were, and where they fell short. I tested that for the price of a few afternoons: a 2D floor plan from the records, marked up in pencil on an iPad already in the van.</p>
+        <p class="lede">The real tool meant months of engineering. First we needed to know how accurate the official building records were, and where they fell short. I tested that for the price of a few afternoons: a 2D floor plan from the records, marked up in pencil on an iPad already in the van.</p>
         <p class="prose">Alongside it, I tried a riskier idea: define window types once, then mark where each window sits, instead of describing every one.</p>
         <p class="prose">Each round went to the field first, then to the modelling team, to see whether they could build from what came back.</p>
       </div>
@@ -245,8 +245,8 @@
       <div>
         <h2>A survey you can do <em>in any order.</em></h2>
         <p class="lede">Nobody surveys a house in order. You go down to the boiler, up to the loft, then back to the room someone was asleep in. The survey became four tabs you can leave and come back to.</p>
-        <p class="prose">Almost nothing is free text. Heat sources, wall build-ups and glazing are presets, so the app carries the modelling knowledge and the person on site brings what they can see and measure. Before I designed a screen, engineering, the AI team, the architect, product and I agreed what a survey had to produce, down to what counts as a window, or how we define an attic versus a loft. The same data fed the energy model, the homeowner’s report and the iSFP.</p>
-        <p class="prose">Before any of it was built, I tested a clickable prototype with 24 field workers across 13&nbsp;states. The tests ran as training sessions with the operations team.</p>
+        <p class="prose">Almost nothing is free text. Heat sources, wall build-ups and glazing are presets, so the app carries the modelling knowledge and the person on site brings what they can see and measure. Before I designed a screen, I got engineering, the AI team, the architect and product to agree what a survey had to produce, down to what counts as a window, or the difference between an attic and a loft. The same data fed the energy model, the energy report and the iSFP.</p>
+        <p class="prose">Before any of it was built, I tested a clickable prototype with 24 field workers in 13 of Germany’s 16&nbsp;states. The tests ran as training sessions with the operations team.</p>
       </div>
       <!-- Illustrative, not documentary: this frame is generated, unlike the
            field photography elsewhere on the page. The caption describes the
@@ -313,7 +313,7 @@
           <figcaption class="appshot-c">
             <div class="flow-n">The normal path</div>
             <div class="flow-t">Trace it on the map</div>
-            <div class="flow-d">Only connected parts select, so the envelope stays one volume.</div>
+            <div class="flow-d">You can only select connected parts, so the house stays one shape.</div>
           </figcaption>
         </figure>
         <figure class="appshot">
@@ -343,8 +343,8 @@
     <div class="two is-wide is-top">
       <h2>The AI estimates. <em>A professional corrects it.</em></h2>
       <div>
-        <p class="lede">The U-value, how much heat escapes through a wall or roof, is calculated live as details go in. Every figure stays editable, because someone looking into an opened-up wall knows more than a lookup table. That mattered more once Enter sold the tool to other firms, whose architects wanted the control.</p>
-        <p class="prose">An override more than 25% off the estimate is flagged, then accepted. Every override is logged: when the same estimate keeps getting corrected, that’s a ranked list of what the AI gets wrong.</p>
+        <p class="lede">The AI here is a model that turns survey data into an energy estimate. The U-value, how much heat escapes through a wall or roof, is calculated live as details go in. Every figure stays editable, because someone looking into an opened-up wall knows more than a lookup table. That mattered more once Enter sold the tool to other firms, whose architects wanted the control.</p>
+        <p class="prose">If an override is more than 25% off, the app asks you to confirm it. Every override is logged.</p>
       </div>
     </div>
 
@@ -372,6 +372,9 @@
         </figure>
       </div>
     </div>
+    <div class="pbox is-claim">
+      <p>When the same estimate keeps getting corrected, that’s a ranked list of what the AI gets wrong.</p>
+    </div>
   </section>
 </div>
 
@@ -382,7 +385,7 @@
   <section class="section" data-reveal>
     <p class="lbl"><span class="lbl-n">08</span>Data quality</p>
     <div class="two is-wide is-top">
-      <h2>Complete data, from houses and customers that <em>don’t cooperate.</em></h2>
+      <h2>Houses and homeowners <em>that don’t cooperate.</em></h2>
       <p class="lede">Some answers can’t be given on the day. Rather than let those gaps turn into guesses, the app makes someone own each one: the tradesperson on site, or the homeowner before anything is sent.</p>
     </div>
 
@@ -449,23 +452,24 @@
   </section>
 </div>
 
-<!-- ═══ 09 · THE CUSTOMER REPORT — DARK BAND ══════════════ -->
+<!-- ═══ 09 · THE ENERGY REPORT — DARK BAND ══════════════ -->
 <!-- The contents list that used to sit beside this headline is gone: the
      walkthrough below it is the same four parts, with the screens. -->
 <div class="dark-band" data-reveal>
   <div class="dark-band-inner">
-    <p class="lbl"><span class="lbl-n">09</span>The customer report</p>
+    <p class="lbl"><span class="lbl-n">09</span>The energy report</p>
     <div class="two is-wide is-top sp-mb">
-      <h2>The homeowner sees the insights <em>before anyone leaves.</em></h2>
+      <h2>The homeowner sees the findings <em>before anyone leaves.</em></h2>
       <div>
-        <p class="lede">The moment the survey was finished, AI returned near-instant insights: where the house stands, what it could reach, and what each measure costs and saves. The tradesperson presented them there and then, instead of the homeowner waiting weeks for the iSFP call.</p>
-        <p class="prose">The same insights gave the architect a head start on the iSFP, the detailed plan written in the office afterwards. Enter earned its money arranging the retrofit work with third parties, and results that arrived weeks later on a follow-up call converted poorly. I designed the report from scratch, for a tradesperson rather than an architect to present, and to prime the homeowner for the process to follow.</p>
+        <p class="lede">Enter made its money arranging the retrofit work, and findings that arrived weeks later on a call rarely turned into a sale. So the findings had to land in the house.</p>
+        <p class="prose">The moment the survey was finished, the house’s results came back within seconds: where it stands, what it could reach, and what each measure costs and saves. The tradesperson presented them there and then, instead of the homeowner waiting weeks for the iSFP call. The same findings gave the architect a head start on the iSFP, the detailed plan written in the office afterwards.</p>
+        <p class="prose">I designed the report from scratch, for a tradesperson rather than an architect to present, and to prime the homeowner for the process to follow.</p>
       </div>
     </div>
 
     <div class="walk">
       <div class="walk-row">
-        <div class="walk-media"><img src="Enter-report-1.png" alt="Report screen showing projected energy price development and expected household costs" loading="lazy" width="680" height="884"></div>
+        <div class="walk-media"><img src="Enter-report-1.png" alt="Energy report screen showing projected energy price development and expected household costs" loading="lazy" width="680" height="884"></div>
         <div class="walk-text">
           <p class="walk-n">01 · Future outlook</p>
           <h3 class="walk-t">The cost of doing nothing</h3>
@@ -473,7 +477,7 @@
         </div>
       </div>
       <div class="walk-row">
-        <div class="walk-media"><img src="Enter-report-2.png" alt="Report screen: the house today at energy class F, beside its potential of class A, €860–1,280 a year off energy bills and €8,000–12,000 added to its value, with four suggested measures" loading="lazy" width="680" height="884"></div>
+        <div class="walk-media"><img src="Enter-report-2.png" alt="Energy report screen: the house today at energy class F, beside its potential of class A, €860–1,280 a year off energy bills and €8,000–12,000 added to its value, with four suggested measures" loading="lazy" width="680" height="884"></div>
         <div class="walk-text">
           <p class="walk-n">02 · Assessment and potential</p>
           <h3 class="walk-t">From today’s house to its potential</h3>
@@ -481,7 +485,7 @@
         </div>
       </div>
       <div class="walk-row">
-        <div class="walk-media"><img src="Enter-report-3.png" alt="Report screen listing all available retrofit measures with rankings" loading="lazy" width="680" height="884"></div>
+        <div class="walk-media"><img src="Enter-report-3.png" alt="Energy report screen listing all available retrofit measures with rankings" loading="lazy" width="680" height="884"></div>
         <div class="walk-text">
           <p class="walk-n">03 · Renovation roadmap</p>
           <h3 class="walk-t">Every measure, ranked</h3>
@@ -489,7 +493,7 @@
         </div>
       </div>
       <div class="walk-row">
-        <div class="walk-media"><img src="Enter-report-4.png" alt="Report screen showing the individual impact of a selected heat pump measure" loading="lazy" width="680" height="884"></div>
+        <div class="walk-media"><img src="Enter-report-4.png" alt="Energy report screen showing the individual impact of a selected heat pump measure" loading="lazy" width="680" height="884"></div>
         <div class="walk-text">
           <p class="walk-n">04 · Measure detail</p>
           <h3 class="walk-t">Know what each measure changes</h3>
@@ -500,34 +504,25 @@
   </div>
 </div>
 
-<!-- ═══ 10 · HOW IT WAS MEASURED ══════════════════════════ -->
-<!-- The figures are in the band under the hero, where a skimmer finds them.
-     This closes on what each metric counted, in one row. -->
+<!-- ═══ 10 · WHAT CHANGED ═════════════════════════════════ -->
+<!-- Only what has a number. The iSFP turnaround and retrofit sales were
+     tracked, but there are no figures to show, so they're left out. -->
 <div class="body">
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">10</span>How we measured it</p>
-    <h2>Shorter visits, <em>more complete data.</em></h2>
+    <p class="lbl"><span class="lbl-n">10</span>What changed</p>
+    <h2>One more appointment a day, <em>and data the model can use.</em></h2>
     <div class="mgrid is-compact">
       <article class="mcard">
-        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="9.5" cy="5.2" rx="6" ry="2.4"/><path d="M3.5 5.2v5.6c0 1.33 2.69 2.4 6 2.4"/><path d="M3.5 10.8v5.6c0 1.33 2.69 2.4 6 2.4h.4"/><path d="M15.5 5.2v3"/><path d="M13.4 17.6l2 2 4-4.4"/></svg></span>
-        <p><strong>Data accuracy</strong>Completeness, overrides and declared gaps, per survey.</p>
-      </article>
-      <article class="mcard">
         <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.2" cy="13.4" r="6.8"/><path d="M8.2 2.4h4"/><path d="M10.2 2.4v4.2"/><path d="M10.2 10v3.4l2.2 1.5"/><path d="M20 13.6v6"/><path d="M18 17.6l2 2 2-2"/></svg></span>
-        <p><strong>Time on site</strong>From arriving at the house to leaving it.</p>
+        <p><strong>Time on site</strong>25% less per survey, from arriving at the house to leaving it. Enough for one more appointment a day.</p>
       </article>
       <article class="mcard">
-        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.4 3.2h5.9L19.6 7.5V20.8H9.4z"/><path d="M15.3 3.2v4.3h4.3"/><path d="M6.6 8.2H3.2"/><path d="M6.6 12H1.8"/><path d="M6.6 15.8H3.8"/></svg></span>
-        <p><strong>iSFP turnaround</strong>Days from the visit to a certified document.</p>
-      </article>
-      <article class="mcard">
-        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.2 10.4 12 3.6l8.8 6.8"/><path d="M5.4 12v8.4h13.2V12"/><path d="M8.2 16.6l1.9-1.7 1.9 1.5 1.9-1.5 1.9 1.7"/><path d="M12 16.4v2"/></svg></span>
-        <p><strong>Retrofit sales</strong>Homeowners who went ahead with the measures.</p>
+        <span class="mcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="9.5" cy="5.2" rx="6" ry="2.4"/><path d="M3.5 5.2v5.6c0 1.33 2.69 2.4 6 2.4"/><path d="M3.5 10.8v5.6c0 1.33 2.69 2.4 6 2.4h.4"/><path d="M15.5 5.2v3"/><path d="M13.4 17.6l2 2 4-4.4"/></svg></span>
+        <p><strong>Complete data</strong>Survey data complete enough to model went from 80% to 95%.</p>
       </article>
     </div>
   </section>
 </div>
-
 <a href="coup.html" class="next" data-reveal>
   <div class="next-l">
     <div><p class="next-eyebrow">Next project →</p><div class="next-title">Coup<br><em>Mobility</em></div></div>
@@ -569,7 +564,9 @@
       <div class="f-col">
         <h2>Elsewhere</h2>
         <a href="https://linkedin.com/in/jciclitira" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://github.com/jimi-duck" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="mailto:jciclitira@gmail.com">Email ↗</a>
+        <a href="CV/James_Ciclitira_Lebenslauf.pdf" download>Download CV ↓</a>
       </div>
     </div>
   </div>
