@@ -6267,8 +6267,8 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
   // stars do not show through, then each edge stroked twice, once wide and
   // soft with a glow and once thin and bright. Sized to the thirty-odd pixels
   // the painted hulls filled, so nothing about aiming or collision changes:
-  // the hit size is SHIP_RADIUS whatever is drawn here. The Sovereign is the
-  // longest of the three and the Nova the smallest.
+  // the hit size is SHIP_RADIUS whatever is drawn here. The Sovereign is a
+  // little longer than the Defiant and the Nova the smallest.
   //
   // Each drawX(g, rgb) draws centred on 0,0 facing +x; the caller sets
   // translate and rotate. They are only ever run into a baked sprite
@@ -6340,29 +6340,32 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     });
   }
 
-  // Sovereign: long and elegant. A stretched oval saucer, a slim neck to the
-  // secondary hull, and two long thin nacelles on short swept pylons.
+  // Sovereign: the long oval saucer of the class, kept close to the
+  // Defiant's length so it does not read as a stick, with a broad secondary
+  // hull, solid swept pylons and two thick nacelles.
   function drawCruiser(g, rgb){
+    neonShape(g, rgb, function(g){
+      g.moveTo(-5, -2.6); g.lineTo(-9.2, -2.6); g.lineTo(-9.8, -6.4); g.lineTo(-7, -6.4); g.closePath();
+      g.moveTo(-5, 2.6);  g.lineTo(-9.2, 2.6);  g.lineTo(-9.8, 6.4);  g.lineTo(-7, 6.4);  g.closePath();
+    });
+    neonShape(g, rgb, function(g){
+      capsule(g, -10.5, -8, 13, 3.4, 0);
+      capsule(g, -10.5, 8, 13, 3.4, 0);
+    });
+    neonShape(g, rgb, function(g){
+      g.moveTo(2, -1.8); g.lineTo(-2, -3); g.lineTo(-12.6, -3);
+      g.quadraticCurveTo(-16, 0, -12.6, 3);
+      g.lineTo(-2, 3); g.lineTo(2, 1.8); g.closePath();
+    });
+    neonShape(g, rgb, function(g){
+      g.ellipse(8, 0, 8.5, 7, 0, 0, Math.PI * 2);
+    });
     neonLine(g, rgb, function(g){
-      g.moveTo(-7, -2); g.lineTo(-10.5, -7.4);
-      g.moveTo(-7, 2);  g.lineTo(-10.5, 7.4);
-    });
-    neonShape(g, rgb, function(g){
-      capsule(g, -12, -8.6, 16, 2.6, 0);
-      capsule(g, -12, 8.6, 16, 2.6, 0);
-    });
-    neonShape(g, rgb, function(g){
-      capsule(g, -9, 0, 12, 4.2, 0);
-    });
-    neonShape(g, rgb, function(g){
-      g.rect(-3.5, -1, 6, 2);
-    });
-    neonShape(g, rgb, function(g){
-      g.ellipse(9, 0, 8, 6, 0, 0, Math.PI * 2);
-    });
-    neonLine(g, rgb, function(g){
-      g.ellipse(9, 0, 4.2, 3.1, 0, 0, Math.PI * 2);
-      g.moveTo(10.4, 0); g.arc(9.4, 0, 1, 0, Math.PI * 2);
+      g.ellipse(8, 0, 4.6, 3.8, 0, 0, Math.PI * 2);
+      g.moveTo(9.4, 0); g.arc(8.4, 0, 1, 0, Math.PI * 2);
+      g.moveTo(-14.6, -8); g.lineTo(-6.4, -8);
+      g.moveTo(-14.6, 8);  g.lineTo(-6.4, 8);
+      g.moveTo(-3, 0);     g.lineTo(-11.5, 0);
     });
   }
 
@@ -6400,7 +6403,7 @@ var ROT_SPEED = 0.06, THRUST = 0.155, BULLET_SPEED = 11, SHOT_COOLDOWN = 0.235, 
     torp:   { draw: drawEscort,  rgb: '255,159,67',  glow: '255,159,67',
               engines: [[-15.6, -9.2], [-15.6, 9.2]], core: [-6, 0], coreR: 2, tail: -14.8 },
     spread: { draw: drawCruiser, rgb: '0,240,255',   glow: '0,240,255',
-              engines: [[-20, -8.6], [-20, 8.6]], core: [-9, 0], coreR: 2.2, tail: -15 },
+              engines: [[-17, -8], [-17, 8]], core: [-8, 0], coreR: 2.2, tail: -15.4 },
     mine:   { draw: drawScout,   rgb: '199,125,255', glow: '255,140,240',
               engines: [[-12, -7], [-12, 7]], core: [-4, 0], coreR: 2, tail: -10.8 }
   };

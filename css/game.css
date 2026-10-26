@@ -1202,15 +1202,15 @@ html.coarse body.astro-active{touch-action:none}
 #astroLevel.is-pick .al-head .al-mark,
 #astroLevel.is-pick .al-bar{display:none}
 #astroLevel.is-pick .al-head{width:100%;margin-inline:auto;
-  max-width:calc(3 * 560px + 2 * var(--al-gap))}
+  max-width:calc(3 * 470px + 2 * var(--al-gap))}
 #astroLevel.is-pick .al-head .al-ttl{margin-left:0;text-align:left}
 #astroLevel.is-pick #astroLevelCard .al-t{font-family:var(--sans);font-weight:700;
-  font-size:clamp(30px,4.6vw,80px);letter-spacing:.01em;line-height:.95;
+  font-size:clamp(28px,3.8vw,64px);letter-spacing:.01em;line-height:.95;
   text-shadow:0 0 22px rgba(0,240,255,.4)}
 #astroLevel.is-pick #astroLevelCard .al-s{margin-top:clamp(.5rem,1.4vh,1rem);
-  font-size:clamp(10px,1.1vw,18px);letter-spacing:.14em;color:rgba(232,235,255,.62)}
+  font-size:clamp(10px,.95vw,15px);letter-spacing:.14em;color:rgba(232,235,255,.62)}
 #astroLevel.is-pick #astroLevelCard .al-s i{font-style:normal;margin:0 .7em;color:var(--nx-mute)}
-#astroLevel.is-pick .al-grid{max-width:calc(3 * 560px + 2 * var(--al-gap))}
+#astroLevel.is-pick .al-grid{max-width:calc(3 * 470px + 2 * var(--al-gap))}
 #astroLevel.is-pick #astroLevelCard .al-h{justify-content:center;max-width:none}
 #astroLevel.is-pick #astroLevelCard .al-h i{font-style:normal;margin:0 .6em}
 #astroLevel.is-pick #astroLevelCard .al-h kbd{color:var(--nx-mute)}
@@ -1220,9 +1220,9 @@ html.coarse body.astro-active{touch-action:none}
    way every other panel in the HUD draws its frame. The selected card's edge
    goes solid and glows; the other two keep their colour, dimmer, so all three
    ships can still be told apart from across the room. */
-.au-opt.is-pick{--pad:124,133,184;--cut:clamp(14px,1.3vw,22px);--px:clamp(1rem,1.9vw,2rem);
+.au-opt.is-pick{--pad:124,133,184;--cut:clamp(12px,1.1vw,18px);--px:clamp(.9rem,1.6vw,1.6rem);
   gap:0;container-type:inline-size;border-radius:0;
-  padding:0 0 clamp(1rem,2.6vh,2rem)}
+  padding:0 0 clamp(.9rem,2.2vh,1.6rem)}
 .au-opt.is-pick.is-gun{--pad:255,159,67}
 .au-opt.is-pick.is-hull{--pad:0,240,255}
 .au-opt.is-pick.is-ship{--pad:199,125,255}
@@ -1238,8 +1238,8 @@ html.coarse body.astro-active{touch-action:none}
 .au-opt.is-pick.is-sel::before{inset:1.5px;border-radius:0;
   clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),
     calc(100% - var(--cut)) 100%,0 100%,0 var(--cut));
-  background:radial-gradient(120% 60% at 50% 0%,rgba(var(--pad),.08),transparent 70%),
-    rgba(6,9,18,.97)}
+  background:radial-gradient(120% 60% at 50% 0%,rgba(var(--pad),.06),transparent 70%),
+    rgb(2,7,24)}
 .au-opt.is-pick:hover:not(.is-sel)::after{background:rgba(var(--pad),.75)}
 .au-opt.is-pick.is-sel{filter:drop-shadow(0 0 16px rgba(var(--pad),.4))}
 .au-opt.is-pick.is-sel::after{background:rgb(var(--pad))}
@@ -1250,45 +1250,52 @@ html.coarse body.astro-active{touch-action:none}
 .al-grid.is-key .au-opt.is-pick.is-sel{outline:0;box-shadow:none}
 .au-opt.is-pick:focus{box-shadow:none}
 
-/* The ship fills the top of the card and fades into it. The picture is
-   cropped by object-fit, never stretched, and the band's height is capped in
-   vh because the whole screen has to fit a laptop. */
+/* The ship fills the top of the card and fades into it. The whole picture is
+   always shown (object-fit:contain), never cropped or stretched: the band is
+   the picture's own 3:2 shape, inset a little so no ship touches the card
+   edge, and when the band is capped in vh to fit a laptop the picture shrinks
+   rather than losing its ends. The card's slab is the picture's own
+   background colour, so the picture's edges do not show. */
 .au-opt.is-pick .sp-art{display:block;position:relative;z-index:1;margin:1.5px 1.5px 0;
-  height:clamp(140px,33vh,340px);overflow:hidden;
-  clip-path:polygon(var(--cut) 0,100% 0,100% 100%,0 100%,0 var(--cut));
-  -webkit-mask-image:linear-gradient(#000 62%,transparent);
-  mask-image:linear-gradient(#000 62%,transparent)}
+  aspect-ratio:3 / 2;max-height:clamp(120px,28vh,290px);
+  padding:clamp(.7rem,1.8vh,1.2rem) 5% 0;box-sizing:border-box;overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 80%,transparent);
+  mask-image:linear-gradient(#000 80%,transparent)}
 .au-opt.is-pick .sp-art img{display:block;width:100%;height:100%;
-  object-fit:cover;object-position:50% 45%;opacity:.72;
+  object-fit:contain;object-position:50% 50%;opacity:.72;
+  /* a soft edge so the picture's own frame never shows as a box */
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 2%,#000 98%,transparent),
+    linear-gradient(transparent,#000 4%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent,#000 2%,#000 98%,transparent),
+    linear-gradient(transparent,#000 4%);
+  mask-composite:intersect;
   -webkit-user-drag:none;user-select:none;pointer-events:none;
   transition:opacity .2s var(--ez),transform .35s var(--ez)}
 .au-opt.is-pick:hover .sp-art img{opacity:.9}
-.au-opt.is-pick.is-sel .sp-art img{opacity:1;transform:scale(1.03)}
-@media (prefers-reduced-motion:reduce){
-  .au-opt.is-pick.is-sel .sp-art img{transform:none}
-}
+.au-opt.is-pick.is-sel .sp-art img{opacity:1}
 .au-opt.is-pick .sp-num{position:absolute;z-index:2;
   top:clamp(.8rem,1.8vh,1.4rem);left:var(--px);
-  font-family:var(--nx-mono);font-size:clamp(12px,1.15vw,19px);font-weight:600;
+  font-family:var(--nx-mono);font-size:clamp(11px,1vw,16px);font-weight:600;
   letter-spacing:.06em;color:rgb(var(--pad))}
 
 /* Name, class, opening gun, then how it flies. */
 .au-opt.is-pick .au-n,.au-opt.is-pick .sp-role,
 .au-opt.is-pick .sp-w,.au-opt.is-pick .sp-stats{margin-inline:var(--px)}
-.au-opt.is-pick .au-n{margin-top:clamp(-1.4rem,-1.6vh,-.4rem);
-  font-family:var(--sans);font-weight:700;font-size:clamp(20px,11cqi,54px);
+.au-opt.is-pick .au-n{margin-top:clamp(.2rem,.8vh,.5rem);
+  font-family:var(--sans);font-weight:700;font-size:clamp(18px,9.5cqi,42px);
   letter-spacing:.01em;line-height:1;white-space:nowrap}
 .au-opt.is-pick .sp-role{display:block;margin-top:clamp(.35rem,.9vh,.6rem);position:relative;z-index:1;
-  font-family:var(--nx-mono);font-size:clamp(10px,3.6cqi,17px);
+  font-family:var(--nx-mono);font-size:clamp(10px,3.2cqi,14px);
   letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--pad))}
 .au-opt.is-pick .sp-w{display:block;position:relative;z-index:1;
-  margin-top:clamp(.8rem,2vh,1.4rem);padding-top:clamp(.8rem,2vh,1.3rem);
+  margin-top:clamp(.7rem,1.7vh,1.1rem);padding-top:clamp(.7rem,1.7vh,1.1rem);
   border-top:1px solid rgba(124,133,184,.2)}
 .au-opt.is-pick .sp-w > em{display:block;font-style:normal;
-  font-family:var(--nx-mono);font-size:clamp(8.5px,2.6cqi,12px);letter-spacing:.12em;
+  font-family:var(--nx-mono);font-size:clamp(8.5px,2.4cqi,11px);letter-spacing:.12em;
   text-transform:uppercase;color:var(--nx-mute)}
 .au-opt.is-pick .sp-wn{display:block;margin-top:.4rem;
-  font-family:var(--nx-mono);font-size:clamp(11px,4.1cqi,19px);font-weight:600;line-height:1.3;
+  font-family:var(--nx-mono);font-size:clamp(11px,3.7cqi,16px);font-weight:600;line-height:1.3;
   letter-spacing:.02em;color:rgba(232,235,255,.85)}
 .au-opt.is-pick.is-sel .sp-wn{color:var(--nx-ink)}
 
@@ -1296,20 +1303,20 @@ html.coarse body.astro-active{touch-action:none}
    can be compared across the three cards at a glance. Pushed to the floor so
    all three cards end on the same line. The bars are slanted, like the
    speed marks on a dash. */
-.au-opt.is-pick .sp-stats{display:grid;gap:clamp(.3rem,.9vh,.6rem);position:relative;z-index:1;
-  margin-top:auto;padding-top:clamp(.9rem,2.2vh,1.5rem)}
+.au-opt.is-pick .sp-stats{display:grid;gap:clamp(.25rem,.75vh,.5rem);position:relative;z-index:1;
+  margin-top:auto;padding-top:clamp(.8rem,1.9vh,1.25rem)}
 .au-opt.is-pick .sp-row{display:grid;grid-template-columns:7.2em 1fr;align-items:center;gap:.6rem}
 .au-opt.is-pick .sp-row em{font-style:normal;font-family:var(--nx-mono);
-  font-size:clamp(8.5px,2.6cqi,12px);letter-spacing:.1em;text-transform:uppercase;
+  font-size:clamp(8.5px,2.4cqi,11px);letter-spacing:.1em;text-transform:uppercase;
   color:var(--nx-mute)}
 .au-opt.is-pick .sp-pips{display:grid;grid-template-columns:repeat(10,1fr);
-  gap:clamp(3px,1.1cqi,7px);height:clamp(6px,2.4cqi,12px);padding-inline:4px}
+  gap:clamp(3px,1cqi,6px);height:clamp(6px,2cqi,10px);padding-inline:4px}
 .au-opt.is-pick .sp-pips i{display:block;transform:skewX(-24deg);
   background:rgba(124,133,184,.16);transition:background .18s var(--ez)}
 .au-opt.is-pick .sp-pips i.on{background:rgba(var(--pad),.6)}
 .au-opt.is-pick.is-sel .sp-pips i.on{background:rgb(var(--pad))}
 .au-opt.is-pick .sp-plates{display:flex;gap:clamp(4px,1.2cqi,8px)}
-.au-opt.is-pick .sp-plates .px-hull{width:clamp(9px,3.4cqi,18px);height:clamp(12px,2.9cqi,16px)}
+.au-opt.is-pick .sp-plates .px-hull{width:clamp(9px,3cqi,15px);height:clamp(11px,2.6cqi,14px)}
 
 /* ── narrow ────────────────────────────────────────────────────────────────
    Two things change below 980px, and they are independent of each other.
@@ -1341,8 +1348,7 @@ html.coarse body.astro-active{touch-action:none}
      What it loses is height. */
   .al-grid .au-opt.is-pick{min-height:0}
   #astroLevel.is-pick #astroLevelCard{overflow:auto}
-  .au-opt.is-pick .sp-art{height:clamp(90px,24vh,220px)}
-  .au-opt.is-pick .au-n{margin-top:-.4rem}
+  .au-opt.is-pick .sp-art{max-height:clamp(90px,22vh,200px)}
 }
 /* Short and wide — a phone on its side. The columns cannot stack here (that is
    what the rule below is for) so the ship band gives up height instead. */
@@ -1353,7 +1359,7 @@ html.coarse body.astro-active{touch-action:none}
   #astroLevel.is-pick #astroLevelCard .al-t{font-size:clamp(20px,4vw,30px)}
   #astroLevel.is-pick #astroLevelCard .al-s{margin-top:.25rem;font-size:9.5px}
   .au-opt.is-pick{padding-bottom:.6rem;--px:.75rem}
-  .au-opt.is-pick .sp-art{height:clamp(44px,15vh,80px)}
+  .au-opt.is-pick .sp-art{max-height:clamp(44px,15vh,80px);padding-top:.35rem}
   .au-opt.is-pick .sp-num{top:.4rem;font-size:11px}
   .au-opt.is-pick .au-n{margin-top:0;font-size:clamp(15px,8cqi,20px)}
   .au-opt.is-pick .sp-role{margin-top:.2rem;font-size:9.5px}
@@ -1376,16 +1382,14 @@ html.coarse body.astro-active{touch-action:none}
      The four stat rows run full width underneath, two to a line. Stacked in
      the right-hand column they made each card about 190px tall around a
      picture half that height, and the third hull's figures scrolled out of
-     sight on a 375 x 667 phone. The picture fades to the right here, into
-     the nameplate, instead of down. */
+     sight on a 375 x 667 phone. */
   #astroLevel.is-pick .al-grid,#astroLevel.is-pick .al-head{max-width:640px}
   .au-opt.is-pick{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);
     grid-template-rows:auto auto auto auto;column-gap:clamp(.7rem,3vw,1.2rem);
     align-items:center;--px:0;padding:0 clamp(.8rem,3vw,1.1rem) .8rem 0}
-  .au-opt.is-pick .sp-art{grid-row:1 / 4;align-self:stretch;height:auto;min-height:96px;
-    margin:1.5px 0 0 1.5px;
-    -webkit-mask-image:linear-gradient(90deg,#000 65%,transparent);
-    mask-image:linear-gradient(90deg,#000 65%,transparent)}
+  .au-opt.is-pick .sp-art{grid-row:1 / 4;align-self:center;max-height:none;
+    margin:1.5px 0 0 1.5px;padding:.6rem .2rem .2rem .6rem;
+    -webkit-mask-image:none;mask-image:none}
   .au-opt.is-pick .sp-num{left:.8rem;top:.6rem;font-size:11px}
   .au-opt.is-pick .au-n{margin-top:.8rem;align-self:end;font-size:clamp(18px,6cqi,26px)}
   .au-opt.is-pick .sp-role{font-size:10px;align-self:start}
