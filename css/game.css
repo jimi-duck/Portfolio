@@ -1008,7 +1008,8 @@ html.coarse body.astro-active{touch-action:none}
    actually moved the selection, because the heuristic does not fire for focus
    moved programmatically — which is how this panel moves it. */
 .au-opt:focus-visible,
-.al-grid.is-key .au-opt.is-sel{outline:2px solid rgba(232,235,255,.72);outline-offset:3px}
+.al-grid.is-key .au-opt.is-sel{outline:2px solid rgba(232,235,255,.72);outline-offset:3px;
+  box-shadow:none}
 .au-opt:active{transform:translateY(0)}
 
 /* Five tiers, in the order the eye needs them: what kind of thing this is,
@@ -1158,15 +1159,18 @@ html.coarse body.astro-active{touch-action:none}
 .au-opt.has-art.is-sel .au-k{color:#05080f;background:var(--cat);border-color:var(--cat)}
 .au-opt.has-art .au-d,
 .au-opt.has-art.is-sel .au-d{border-top-color:rgba(var(--cat-rgb),.26)}
-/* The painting. One height for every card in the row, so the three pictures
-   line up and the text under them starts on one line; the spare height the
-   panel gives the row goes to the gap above the figures, as it always has. */
+/* The painting. Always shown whole: the band is the picture's own 3:2 shape,
+   and when it is capped in vh to fit a short screen the picture shrinks
+   (object-fit:contain) rather than being cropped. Every card in the row gets
+   the same band, so the three pictures line up and the text under them
+   starts on one line. */
 .au-opt.has-art .au-art{display:block;position:relative;z-index:1;flex:none;
-  height:clamp(100px,16vh,190px);margin-bottom:clamp(.6rem,1.3vh,.95rem);
-  overflow:hidden;background:#000;
+  aspect-ratio:3 / 2;max-height:clamp(100px,22vh,230px);
+  margin-bottom:clamp(.6rem,1.3vh,.95rem);
+  overflow:hidden;background:rgb(3,7,22);
   clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%,0 8px)}
 .au-opt.has-art .au-art img{display:block;width:100%;height:100%;
-  object-fit:cover;object-position:50% 45%;
+  object-fit:contain;object-position:50% 50%;
   opacity:.86;transition:opacity .18s var(--ez)}
 .au-opt.has-art:hover .au-art img,
 .au-opt.has-art.is-sel .au-art img{opacity:1}
@@ -1456,13 +1460,13 @@ html.coarse body.astro-active{touch-action:none}
    a frozen run is no place to scroll past a picture to reach the figures. */
 @media (max-width:980px){
   #astroLevelCard{width:100%}
-  .au-opt.has-art .au-art{height:clamp(84px,15vh,140px);margin-bottom:.6rem}
+  .au-opt.has-art .au-art{max-height:clamp(84px,15vh,140px);margin-bottom:.6rem}
 }
 /* Stacked, the three pictures are paid for three times over, so they shrink
    to a strip — and on a phone too short for even that, measured against the
    607px the stacked panel needs without them, they go. */
 @media (max-width:980px) and (min-height:560px){
-  .au-opt.has-art .au-art{height:clamp(44px,6vh,96px);margin-bottom:.5rem}
+  .au-opt.has-art .au-art{max-height:clamp(44px,6vh,96px);margin-bottom:.5rem}
 }
 @media (max-width:980px) and (min-height:560px) and (max-height:759px){
   .au-opt.has-art .au-art{display:none}
