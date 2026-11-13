@@ -1853,22 +1853,20 @@ html.theme-anim,html.theme-anim *{
   body{background:#fff;color:#000}
 }
 
-/* ── AI experiments block (homepage) ───────────────────────────────────────
-   The one block on the homepage that points at lab.html. The words sit on the
-   page like any other section; the image under them is the three projects
-   together in one frame, as on the presentation slide. */
-.side{display:block;margin-top:clamp(1.6rem,3vw,2.6rem);color:var(--ink)}
-.side-top{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:1.2rem var(--gap);align-items:end}
-.side-h{font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.98;text-wrap:balance;max-width:14em}
-.side-h em{font-style:normal;color:var(--red)}
-.side-d{max-width:40ch;color:var(--ink-2);font-size:clamp(1.02rem,1.2vw,1.14rem);line-height:1.5}
-.side-img{display:block;width:100%;height:auto;margin-top:clamp(1.6rem,3.4vw,2.8rem)}
-.side:hover .side-cta::after{transform:scaleX(1);transform-origin:left}
-.side:hover .side-cta::before{transform:translateX(4px)}
-.side:focus-visible{outline:2px solid var(--red);outline-offset:4px}
-@media (max-width:900px){
-  .side-top{grid-template-columns:1fr}
-  }
+/* ── AI experiments (homepage) ─────────────────────────────────────────────
+   A .wproj like the case studies, with a headline in place of a company name.
+   The headline runs longer than a name, so it steps down a size, and its
+   closing phrase takes the accent like every other headline on the site. */
+.wproj-t.is-long{font-size:clamp(1.8rem,3.4vw,3rem);line-height:.98;text-wrap:balance}
+.wproj-t.is-long em{font-style:normal;color:var(--red)}
+/* Under its own section header, so it skips the top rule the case studies
+   use to separate one project from the next. */
+.wproj.is-solo{padding-top:0}
+.wproj.is-solo::before{display:none}
+@media (min-width:901px){
+  .wproj.is-solo .wproj-fig{grid-column:6 / 13}
+  .wproj.is-solo .wproj-txt{grid-column:1 / 6}
+}
 
 /* The experiments page sets Wayward on the dark band. The band normally
    inverts in dark mode; the game is dark either way, so this one stays dark. */
