@@ -1853,30 +1853,23 @@ html.theme-anim,html.theme-anim *{
   body{background:#fff;color:#000}
 }
 
-/* ── Side projects panel (homepage) ────────────────────────────────────────
-   The one block on the homepage that points at lab.html. Always dark, in both
-   themes, because its one image is: the three projects together in a single
-   frame, Wayward's key art with Erntereif and Tanken in front of it, as on the
-   presentation slide. Words above, image in the middle, the three names under
-   it. */
-.side{--s-bg:#08090d;--s-ink:#efede7;--s-mute:color-mix(in srgb,#efede7 66%,transparent);
-  --s-rule:color-mix(in srgb,#efede7 16%,transparent);
-  display:block;margin-top:clamp(1.6rem,3vw,2.6rem);padding:clamp(1.4rem,4vw,3.6rem);
-  background:var(--s-bg);color:var(--s-ink)}
+/* ── AI experiments block (homepage) ───────────────────────────────────────
+   The one block on the homepage that points at lab.html. The words sit on the
+   page like any other section; the image under them is the three projects
+   together in one frame, as on the presentation slide; the three names sit
+   under the image. */
+.side{display:block;margin-top:clamp(1.6rem,3vw,2.6rem);color:var(--ink)}
 .side-top{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:1.2rem var(--gap);align-items:end}
-.side-k{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--s-mute)}
-.side-h{font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.98;text-wrap:balance;
-  margin-top:var(--space-tight);max-width:14em}
-.side-h em{font-style:normal;color:#ff5b36}
-.side-d{max-width:40ch;color:var(--s-mute);font-size:clamp(1.02rem,1.2vw,1.14rem);line-height:1.5}
-.side-cta{color:var(--s-ink)}
+.side-h{font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.98;text-wrap:balance;max-width:14em}
+.side-h em{font-style:normal;color:var(--red)}
+.side-d{max-width:40ch;color:var(--ink-2);font-size:clamp(1.02rem,1.2vw,1.14rem);line-height:1.5}
 .side-img{display:block;width:100%;height:auto;margin-top:clamp(1.6rem,3.4vw,2.8rem)}
 .side-list{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem var(--gap);
-  margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--s-rule)}
+  margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--rule)}
 .side-list li{display:flex;gap:.7rem;align-items:baseline}
-.side-list .n{font-size:var(--t-lab);letter-spacing:var(--tr-lab);color:var(--s-mute);font-variant-numeric:tabular-nums}
-.side-list b{display:block;font-weight:700;font-size:var(--t-body)}
-.side-list li>span:last-child{font-size:var(--t-small);color:var(--s-mute);line-height:1.35}
+.side-list .n{font-size:var(--t-lab);letter-spacing:var(--tr-lab);color:var(--mute);font-variant-numeric:tabular-nums}
+.side-list b{display:block;font-weight:700;font-size:var(--t-body);color:var(--ink)}
+.side-list li>span:last-child{font-size:var(--t-small);color:var(--mute);line-height:1.35}
 .side:hover .side-cta::after{transform:scaleX(1);transform-origin:left}
 .side:hover .side-cta::before{transform:translateX(4px)}
 .side:focus-visible{outline:2px solid var(--red);outline-offset:4px}
