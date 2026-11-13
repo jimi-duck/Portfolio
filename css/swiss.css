@@ -1863,6 +1863,10 @@ html.theme-anim,html.theme-anim *{
    use to separate one project from the next. */
 .wproj.is-solo{padding-top:0}
 .wproj.is-solo::before{display:none}
+@media (min-width:901px){
+  .wproj.is-solo .wproj-fig{grid-column:6 / 13}
+  .wproj.is-solo .wproj-txt{grid-column:1 / 6}
+}
 
 /* The experiments page sets Wayward on the dark band. The band normally
    inverts in dark mode; the game is dark either way, so this one stays dark. */
