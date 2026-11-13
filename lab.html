@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI experiments · James Ciclitira</title>
+<title>Side projects · James Ciclitira</title>
 <!-- @head -->
 <!-- Runs before the first paint, which is the whole point of it being inline
      and not in swiss.js: a stylesheet chosen a frame late is a white flash on
@@ -23,10 +23,10 @@
      if it ever becomes a page worth being found cold. One without the other is
      half a decision. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Things I build with AI to see what happens: Wayward, a space-survival roguelite for the browser, a seasonal produce calendar in React, and an iOS app for German fuel prices.">
+<meta name="description" content="Three things I built with Claude Code: Wayward, a space game for the browser, a seasonal produce calendar, and an iPhone app for German fuel prices.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="AI experiments · James Ciclitira">
-<meta property="og:description" content="Things I build with AI to see what happens: Wayward, a space-survival roguelite for the browser, a seasonal produce calendar in React, and an iOS app for German fuel prices.">
+<meta property="og:title" content="Side projects · James Ciclitira">
+<meta property="og:description" content="Three things I built with Claude Code: Wayward, a space game for the browser, a seasonal produce calendar, and an iPhone app for German fuel prices.">
 <meta property="og:image" content="https://www.jciclitira.com/img/wayward-menu.jpg">
 <meta property="og:url" content="https://www.jciclitira.com/lab.html">
 <!-- Self-referencing, like every other page. It does nothing while the robots
@@ -92,34 +92,63 @@
 
 <main id="main" tabindex="-1">
 
+<!-- Built like a case study on purpose: the same hero, the same meta column,
+     the same .glance band under it. These are side projects, but they are
+     shown with the same care as the client work, and a reader who knows the
+     case studies already knows how to read this page. -->
 <header class="cs-hero" data-reveal>
   <div>
     <a href="index.html" class="back">← All work</a>
-    <p class="eyebrow">Side projects · 2026</p>
-    <h1 class="cs-title is-long">AI experiments</h1>
-    <p class="cs-tagline">Things I build with AI to see what happens. No brief, no client, just for fun.</p>
+    <p class="eyebrow">Built with Claude Code · 2026</p>
+    <h1 class="cs-title is-long">Side projects</h1>
+    <p class="cs-tagline">A space game for the browser, a seasonal produce calendar and an iPhone app for fuel prices. Three things I built for myself with Claude Code, outside client work.</p>
+  </div>
+  <div class="meta-grid">
+    <div class="meta-item"><label>Built with</label><p>Claude Code · TypeScript · React · SwiftUI</p></div>
+    <div class="meta-item"><label>Year</label><p>2026</p></div>
+    <div class="meta-item"><label>Try them</label><p><a class="tlink" href="https://wayward.jimi-duck.workers.dev/" target="_blank" rel="noopener">Wayward ↗︎</a> · <a class="tlink" href="https://chimerical-shortbread-708934.netlify.app/" target="_blank" rel="noopener">Erntereif ↗︎</a></p></div>
   </div>
 </header>
 
-<div class="body">
+<!-- The index. The same band a case study opens with, used here for the three
+     projects instead of problem / what I did / result: read only this and you
+     know what is on the page. Each cell jumps to its section. -->
+<dl class="glance lab-index" data-reveal>
+  <div><dt><a href="#wayward">01 · Wayward ↓</a></dt><dd>A 3D space-survival game for desktop and phone browsers. Still being built.</dd></div>
+  <div><dt><a href="#erntereif">02 · Erntereif ↓</a></dt><dd>A seasonal calendar of what’s being harvested near you, month by month.</dd></div>
+  <div><dt><a href="#tanken">03 · Tanken ↓</a></dt><dd>An iPhone app for German fuel prices, and whether to fill up now or wait.</dd></div>
+</dl>
 
-  <!-- ═══ 01 · WAYWARD · THREE.JS ═══════════════════════ -->
-  <!-- First because it is the one still being built. It lives in its own repo
-       and deploys on its own, so this entry links out rather than opening
-       anything over the page. -->
-  <section class="section" data-reveal>
-    <p class="lbl">01 · Wayward · Three.js</p>
-    <h2>A battered ore hauler, a secret the regime<br>wants buried, and <em>a long way to go.</em></h2>
+<!-- Every project is framed the same way, so the three can be compared:
+       label   number and name
+       h2      what it is, in one line, with the lede beside it
+       glance  the brief, the hard part, and what it is built with
+       media   the screens
+     Wayward sits on the dark band because the game is dark: its screenshots
+     read as part of the band rather than as black rectangles on paper. -->
 
-    <p class="prose sp-s">Seventy years ago the jump lanes went dark, and the Continuance, the government that rules the core, blamed a Krail shortage. You’ve stolen a decommissioned Continuance ore hauler, the Wayward, with a sealed archive aboard that proves the blackout was a purge.</p>
+<!-- ═══ 01 · WAYWARD — DARK BAND ═══════════════════════ -->
+<!-- First because it is the one still being built. It lives in its own repo
+     and deploys on its own, so this entry links out rather than opening
+     anything over the page. -->
+<div class="dark-band is-night" id="wayward" data-reveal>
+  <div class="dark-band-inner">
+    <p class="lbl"><span class="lbl-n">01</span>Wayward</p>
+    <div class="two is-wide is-top">
+      <h2>An ore hauler, a buried secret, <em>a long way to go.</em></h2>
+      <div>
+        <p class="lede">You’ve stolen the Wayward, an old government ore hauler with an archive aboard that proves the jump-lane blackout seventy years ago was a purge. Mine Cyrite, refine it into jump fluid, refit the ship, and stay ahead of the Offices of Peace across eight regions.</p>
+        <a class="lab-cta" href="https://wayward.jimi-duck.workers.dev/" target="_blank" rel="noopener"><span class="cta-t">Play Wayward ↗︎</span></a>
+      </div>
+    </div>
 
-    <p class="prose">Mine Cyrite, refine it into jump fluid, refit your ship at work bays and keep one step ahead of the Offices of Peace across eight regions. A 3D space-survival roguelite for desktop and phone browsers, built with TypeScript and Three.js.</p>
+    <dl class="glance is-inset">
+      <div><dt>The brief</dt><dd>A 3D roguelite with a story behind it, that runs in a phone browser as well as on a desktop.</dd></div>
+      <div><dt>The hard part</dt><dd>Balance. A scripted pilot plays whole journeys and writes a report, so a change shows up in the numbers before I play it.</dd></div>
+      <div><dt>Built with</dt><dd>TypeScript and Three.js. Its own repo, deployed on its own.</dd></div>
+    </dl>
 
-    <p class="prose">A scripted pilot plays whole journeys and writes a balance report, so a change shows up in the numbers before I play it.</p>
-
-    <p class="sp-s"><a class="tlink lbl" href="https://wayward.jimi-duck.workers.dev/" target="_blank" rel="noopener" style="color:var(--red-ink)">Play it ↗︎</a></p>
-
-    <img class="img sp-m" src="img/wayward-menu.jpg" alt="The Wayward main menu: the logo and the line Keep moving, with New Journey, Arcade Mode and Settings, over the yellow ore hauler leaving an asteroid field beside an orbital station" loading="lazy" width="1600" height="900">
+    <img class="img" src="img/wayward-menu.jpg" alt="The Wayward main menu: the logo and the line Keep moving, with New Journey, Arcade Mode and Settings, over the yellow ore hauler leaving an asteroid field beside an orbital station" loading="lazy" width="1600" height="900">
     <p class="cap">Mine. Survive. Stay off the grid.</p>
 
     <!-- The four in-game shots sit two by two so the section reads as one
@@ -142,46 +171,66 @@
         <p class="cap">The refit bay suggests three upgrades for the ship you have</p>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- ═══ 02 · ERNTEREIF · REACT ══════════════════════════ -->
-  <!-- Each section opens with the job story, in a plain .pbox: an emphasised
-       paragraph at reading size, which is what that component is for. The
-       .is-claim modifier is the other thing entirely — a full-width statement —
-       so it stays out of this. -->
-  <section class="section" data-reveal>
-    <p class="lbl">02 · Erntereif · React</p>
-    <h2>A seasonal calendar for<br>what is actually <em>growing near you.</em></h2>
+<div class="body">
 
-    <div class="pbox is-brief"><p>When I’m food shopping, I want to know what’s in season here right now, so I can buy that instead of something flown in out of season.</p></div>
+  <!-- ═══ 02 · ERNTEREIF ══════════════════════════════════ -->
+  <!-- The job story that used to open this section in quotes is now the
+       brief cell: same words, without quoting myself. -->
+  <section class="section" id="erntereif" data-reveal>
+    <p class="lbl"><span class="lbl-n">02</span>Erntereif</p>
+    <div class="two is-wide is-top">
+      <h2>A seasonal calendar for what’s <em>growing near you.</em></h2>
+      <div>
+        <p class="lede">Pick a month and it shows what’s being harvested, what’s out of cold store, and what the imported version costs in carbon. 87 crops, five countries, German interface.</p>
+        <a class="lab-cta" href="https://chimerical-shortbread-708934.netlify.app/" target="_blank" rel="noopener"><span class="cta-t">Open Erntereif ↗︎</span></a>
+      </div>
+    </div>
 
-    <p class="prose sp-s">87 crops, five countries, German interface. Pick a month and it shows what’s being harvested, what’s out of cold store, and what the imported version costs in carbon. React and TypeScript. All 87 images are cut from one generated contact sheet, so they share a light and an angle.</p>
+    <dl class="glance is-inset">
+      <div><dt>The brief</dt><dd>When I’m food shopping, I want to know what’s in season here right now, so I can buy that instead of something flown in.</dd></div>
+      <div><dt>The hard part</dt><dd>Making 87 images look like one set. All of them are cut from one generated contact sheet, so they share a light and an angle.</dd></div>
+      <div><dt>Built with</dt><dd>React and TypeScript.</dd></div>
+    </dl>
 
-    <img class="img sp-m" src="img/erntereif-hero.jpg" alt="Erntereif in September: a large serif headline reading Was der September bringt on a cream ground beside painted pumpkin, kale and apple, with 65 varieties being harvested and 66 available" loading="lazy" width="1600" height="1000">
+    <img class="img" src="img/erntereif-hero.jpg" alt="Erntereif in September: a large serif headline reading Was der September bringt on a cream ground beside painted pumpkin, kale and apple, with 65 varieties being harvested and 66 available" loading="lazy" width="1600" height="1000">
     <p class="cap">September in Germany. 65 varieties harvested, 66 available once cold store counts</p>
 
-    <img class="img sp-m" src="img/erntereif-march.jpg" alt="The same page switched to March: nine varieties harvested, 22 available, and a badge reading Keller und Lager" loading="lazy" width="1600" height="1000">
-    <p class="cap">March, the same page. Nine harvested against September’s 65</p>
-
-    <img class="img sp-m" src="img/erntereif-grid.jpg" alt="The produce grid: rows of painted vegetables on a cream ground, each with its name, its Latin name and a short cooking note" loading="lazy" width="1600" height="1000">
-    <p class="cap">Every crop carries a cooking note</p>
-
-    <p class="sp-s"><a class="tlink lbl" href="https://chimerical-shortbread-708934.netlify.app/" target="_blank" rel="noopener" style="color:var(--red-ink)">Open it ↗︎</a></p>
+    <!-- Same pairing as Wayward: one lead image, then the rest side by side. -->
+    <div class="two sp-m">
+      <div>
+        <img class="img" src="img/erntereif-march.jpg" alt="The same page switched to March: nine varieties harvested, 22 available, and a badge reading Keller und Lager" loading="lazy" width="1600" height="1000">
+        <p class="cap">March, the same page. Nine harvested against September’s 65</p>
+      </div>
+      <div>
+        <img class="img" src="img/erntereif-grid.jpg" alt="The produce grid: rows of painted vegetables on a cream ground, each with its name, its Latin name and a short cooking note" loading="lazy" width="1600" height="1000">
+        <p class="cap">Every crop carries a cooking note</p>
+      </div>
+    </div>
   </section>
 
-  <!-- ═══ 03 · TANKEN · SWIFTUI ═════════════════════════ -->
+  <!-- ═══ 03 · TANKEN ═════════════════════════════════════ -->
   <!-- All five screens run the app’s own -sample-history demo mode, which is
        canned end to end and says so on screen in red. That label is the reason
        these can be shown at all: nothing here is presented as a real price. -->
-  <section class="section" data-reveal>
-    <p class="lbl">03 · Tanken · SwiftUI</p>
-    <h2>Fuel prices, and whether<br>to fill up <em>now or wait.</em></h2>
+  <section class="section" id="tanken" data-reveal>
+    <p class="lbl"><span class="lbl-n">03</span>Tanken</p>
+    <div class="two is-wide is-top">
+      <h2>Fuel prices, and whether to fill up <em>now or wait.</em></h2>
+      <div>
+        <p class="lede">German stations have had to report their prices publicly since 2013. Tanken reads that feed and shows today’s average, how it got there, the five biggest chains ranked cheapest first, and a guarded outlook for tomorrow.</p>
+      </div>
+    </div>
 
-    <div class="pbox is-brief"><p>When I drive past a petrol station, I want to know whether today’s price is a good one, so I don’t fill up the day before it drops.</p></div>
+    <dl class="glance is-inset">
+      <div><dt>The brief</dt><dd>When I drive past a petrol station, I want to know whether today’s price is a good one, so I don’t fill up the day before it drops.</dd></div>
+      <div><dt>The hard part</dt><dd>Being straight about the forecast. A feed it can’t reach says so, and lowers the reliability instead of being guessed at.</dd></div>
+      <div><dt>Built with</dt><dd>SwiftUI. One screen, no tab bar.</dd></div>
+    </dl>
 
-    <p class="prose sp-s">German stations have had to report their prices publicly since 2013, so Tanken reads that feed: today’s average, how it got there, the five biggest chains ranked cheapest first, and a guarded outlook for tomorrow. SwiftUI, one screen, no tab bar.</p>
-
-    <div class="appshots n3 sp-l">
+    <div class="appshots n3">
       <figure class="appshot">
         <img class="device-img" src="img/tanken-01-hero-1w.png" alt="Tanken home screen: national average of 1,794 euros, down 0,025 over a week, with a one-week line chart and the brand ranking below" loading="lazy" width="660" height="1435">
         <figcaption class="appshot-c">
@@ -214,7 +263,7 @@
         <figcaption class="appshot-c">
           <div class="flow-n">04 · Prognose</div>
           <div class="flow-t">Why it thinks that</div>
-          <div class="flow-d">A feed it can’t reach says so, and drags the reliability down rather than being guessed at.</div>
+          <div class="flow-d">Each input listed, and how far to trust the result.</div>
         </figcaption>
       </figure>
       <figure class="appshot">
@@ -228,18 +277,20 @@
     </div>
   </section>
 
-  <!-- ═══ AI, HONESTLY ═══════════════════════════════ -->
-  <!-- The page closes on the thing all three have in common rather than on a
-       comparison between two of them, which is what stood here before. No
-       stats block: a reservation with a figure bolted to it reads as a finding,
-       and this is not one. -->
+  <!-- ═══ 04 · HOW THEY WERE BUILT ══════════════════════ -->
+  <!-- The page closes on the thing all three have in common. Set as a
+       chapter like the others, so it reads as part of the page and not as a
+       footnote. No stats: a reservation with a figure bolted to it reads as a
+       finding, and this is not one. -->
   <section class="section" data-reveal>
-    <p class="lbl">AI, honestly</p>
-    <h2>Quick, and <em>not quite there.</em></h2>
-
-    <p class="prose sp-s">All three were built with Claude Code. It gets something running fast, and none of these would exist without it. Getting from running to what I wanted took a lot of back and forth.</p>
-
-    <p class="prose">I’m still working out where that line sits.</p>
+    <p class="lbl"><span class="lbl-n">04</span>How they were built</p>
+    <div class="two is-wide is-top">
+      <h2>All three built <em>with Claude Code.</em></h2>
+      <div>
+        <p class="lede">It gets something running fast, and none of these would exist without it. Getting from running to what I wanted took a lot of back and forth.</p>
+        <p class="prose">I’m still working out where that line sits.</p>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -276,7 +327,7 @@
         <a href="coup.html">02 · Coup Mobility</a>
         <a href="cooler-future.html">03 · Cooler Future</a>
         <a href="vivy.html">04 · Vivy</a>
-        <a href="lab.html" class="f-aside">AI experiments</a>
+        <a href="lab.html" class="f-aside">Side projects</a>
       </div>
       <div class="f-col">
         <h2>Elsewhere</h2>
