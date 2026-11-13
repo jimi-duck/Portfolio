@@ -1863,6 +1863,10 @@ html.theme-anim,html.theme-anim *{
    use to separate one project from the next. */
 .wproj.is-solo{padding-top:0}
 .wproj.is-solo::before{display:none}
+/* Its image is a cut-out with its own soft shadows, so no backing sheet and
+   no fixed crop: the shadow needs its full height to fade out. */
+.wproj.is-solo .wproj-fig{background:none;aspect-ratio:auto;overflow:visible;contain:none}
+.wproj.is-solo .wproj-fig img{height:auto}
 @media (min-width:901px){
   .wproj.is-solo .wproj-fig{grid-column:6 / 13}
   .wproj.is-solo .wproj-txt{grid-column:1 / 6}
