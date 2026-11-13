@@ -1855,49 +1855,34 @@ html.theme-anim,html.theme-anim *{
 
 /* ── Side projects panel (homepage) ────────────────────────────────────────
    The one block on the homepage that points at lab.html. Always dark, in both
-   themes: it stands on the Wayward key art, which is dark, and the two
-   screenshots on it were shot for a dark ground. Text, screens and the list
-   sit in the left half; the ship fills the right, faded into the ground so
-   the type never sits on the art. On a phone the art becomes a banner on top
-   and everything stacks under it. */
+   themes, because its one image is: the three projects together in a single
+   frame, Wayward's key art with Erntereif and Tanken in front of it, as on the
+   presentation slide. Words above, image in the middle, the three names under
+   it. */
 .side{--s-bg:#08090d;--s-ink:#efede7;--s-mute:color-mix(in srgb,#efede7 66%,transparent);
   --s-rule:color-mix(in srgb,#efede7 16%,transparent);
-  position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 var(--gap);
-  margin-top:clamp(1.6rem,3vw,2.6rem);padding:clamp(2rem,4.6vw,4.4rem);overflow:hidden;
-  background:var(--s-bg) url(../img/side-projects-ship.jpg) no-repeat 72% 50% / cover;color:var(--s-ink);
-  isolation:isolate}
-.side::before{content:'';position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(90deg,var(--s-bg) 0%,var(--s-bg) 32%,color-mix(in srgb,var(--s-bg) 70%,transparent) 48%,transparent 66%)}
-.side>*{grid-column:1}
+  display:block;margin-top:clamp(1.6rem,3vw,2.6rem);padding:clamp(1.4rem,4vw,3.6rem);
+  background:var(--s-bg);color:var(--s-ink)}
+.side-top{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:1.2rem var(--gap);align-items:end}
 .side-k{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--s-mute)}
 .side-h{font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.98;text-wrap:balance;
-  margin-top:var(--space-tight);max-width:13em}
+  margin-top:var(--space-tight);max-width:14em}
 .side-h em{font-style:normal;color:#ff5b36}
-.side-d{margin-top:1.1rem;max-width:40ch;color:var(--s-mute);font-size:clamp(1.02rem,1.2vw,1.14rem);line-height:1.5}
-.side-shots{display:block;width:100%;max-width:560px;height:auto;margin-top:clamp(1.6rem,3vw,2.6rem)}
-.side-list{list-style:none;display:flex;flex-wrap:wrap;gap:.9rem clamp(1.4rem,3vw,2.6rem);
-  margin-top:clamp(1.2rem,2.4vw,2rem);padding-top:1rem;border-top:1px solid var(--s-rule)}
+.side-d{max-width:40ch;color:var(--s-mute);font-size:clamp(1.02rem,1.2vw,1.14rem);line-height:1.5}
+.side-cta{color:var(--s-ink)}
+.side-img{display:block;width:100%;height:auto;margin-top:clamp(1.6rem,3.4vw,2.8rem)}
+.side-list{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem var(--gap);
+  margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--s-rule)}
 .side-list li{display:flex;gap:.7rem;align-items:baseline}
 .side-list .n{font-size:var(--t-lab);letter-spacing:var(--tr-lab);color:var(--s-mute);font-variant-numeric:tabular-nums}
 .side-list b{display:block;font-weight:700;font-size:var(--t-body)}
 .side-list li>span:last-child{font-size:var(--t-small);color:var(--s-mute);line-height:1.35}
-/* Wayward is the art, so its label sits on the art, top right. */
-.side-list li.is-game{position:absolute;top:clamp(2rem,4.6vw,4.4rem);right:clamp(2rem,4.6vw,4.4rem);
-  padding:.7rem 1rem;background:color-mix(in srgb,var(--s-bg) 72%,transparent);border:1px solid var(--s-rule);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.side-cta{color:var(--s-ink);justify-self:start}
 .side:hover .side-cta::after{transform:scaleX(1);transform-origin:left}
 .side:hover .side-cta::before{transform:translateX(4px)}
-.side:hover .side-h em{color:#ff7a5a}
 .side:focus-visible{outline:2px solid var(--red);outline-offset:4px}
 @media (max-width:900px){
-  .side{grid-template-columns:1fr;background-image:none;padding:0 0 clamp(1.6rem,5vw,2.4rem)}
-  .side::before{display:none}
-  .side>*{margin-inline:clamp(1.2rem,5vw,2rem)}
-  .side::after{content:'';order:-1;display:block;aspect-ratio:16/9;margin:0 0 1.6rem;
-    background:url(../img/side-projects-ship.jpg) no-repeat 70% 50% / cover}
-  .side-list li.is-game{position:static;padding:0;background:none;border:0;backdrop-filter:none;-webkit-backdrop-filter:none}
-  .side-shots{width:calc(100% - 2 * clamp(1.2rem,5vw,2rem))}
+  .side-top{grid-template-columns:1fr}
+  .side-list{grid-template-columns:1fr}
 }
 
 /* The experiments page sets Wayward on the dark band. The band normally
