@@ -918,6 +918,26 @@ body.grid-on #gridhint{display:block}
 .glance dt{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;
   color:var(--mute);margin-bottom:.65rem}
 .glance dd{font-size:clamp(1.02rem,1.2vw,1.14rem);line-height:1.5;color:var(--ink);max-width:36ch}
+/* The same band inside a chapter, used on the experiments page to frame each
+   project as brief / hard part / built with. The column is already padded, so
+   it takes the full width, and it gets a lighter rule than the page-level band
+   because the chapter's own 2px rule is the landmark here. */
+.glance.is-inset{width:100%;margin:clamp(1.8rem,3.4vw,2.8rem) 0;border-top-color:var(--rule)}
+/* The page-level band on the experiments page is an index: each label jumps to
+   its project. */
+.lab-index dt a{color:var(--ink)}
+.lab-index dt a:hover{color:var(--red-ink)}
+/* A standalone project link. The homepage .wproj-cta, but it hovers on itself
+   rather than on a parent card, and is set in the accent so it reads as the
+   one thing to do in the chapter. */
+.lab-cta{display:inline-flex;align-items:center;gap:.6rem;margin-top:clamp(1.2rem,2.2vw,1.8rem);
+  position:relative;padding-bottom:.45rem;color:var(--red-ink)}
+.lab-cta .cta-t{font-size:var(--t-lab);font-weight:700;text-transform:uppercase;letter-spacing:var(--tr-lab)}
+.lab-cta::before{content:'\2192';font-size:1rem;line-height:1;transition:transform .45s var(--ez)}
+.lab-cta::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;
+  transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ez)}
+.lab-cta:hover::after{transform:scaleX(1);transform-origin:left}
+.lab-cta:hover::before{transform:translateX(4px)}
 
 /* The chapter number. Grey rather than red: a page with nine chapters would
    otherwise spend the accent nine times. The number is there so a skimmer can
@@ -1832,3 +1852,24 @@ html.theme-anim,html.theme-anim *{
   nav,footer,#prog,#gridov,#menu,#totop,#lb{display:none !important}
   body{background:#fff;color:#000}
 }
+
+/* ── AI experiments block (homepage) ───────────────────────────────────────
+   The one block on the homepage that points at lab.html. The words sit on the
+   page like any other section; the image under them is the three projects
+   together in one frame, as on the presentation slide. */
+.side{display:block;margin-top:clamp(1.6rem,3vw,2.6rem);color:var(--ink)}
+.side-top{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:1.2rem var(--gap);align-items:end}
+.side-h{font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.98;text-wrap:balance;max-width:14em}
+.side-h em{font-style:normal;color:var(--red)}
+.side-d{max-width:40ch;color:var(--ink-2);font-size:clamp(1.02rem,1.2vw,1.14rem);line-height:1.5}
+.side-img{display:block;width:100%;height:auto;margin-top:clamp(1.6rem,3.4vw,2.8rem)}
+.side:hover .side-cta::after{transform:scaleX(1);transform-origin:left}
+.side:hover .side-cta::before{transform:translateX(4px)}
+.side:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+@media (max-width:900px){
+  .side-top{grid-template-columns:1fr}
+  }
+
+/* The experiments page sets Wayward on the dark band. The band normally
+   inverts in dark mode; the game is dark either way, so this one stays dark. */
+.dark-band.is-night{--band:#131311;--band-ink:#efede7}
