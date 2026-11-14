@@ -1858,7 +1858,6 @@ html.theme-anim,html.theme-anim *{
    The headline runs longer than a name, so it steps down a size, and its
    closing phrase takes the accent like every other headline on the site. */
 .wproj-t.is-long{font-size:clamp(1.8rem,3.4vw,3rem);line-height:.98;text-wrap:balance}
-.wproj-t.is-long em{font-style:normal;color:var(--red)}
 /* Under its own section header, so it skips the top rule the case studies
    use to separate one project from the next. */
 .wproj.is-solo{padding-top:0}
