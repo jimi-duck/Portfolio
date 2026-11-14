@@ -1866,6 +1866,23 @@ html.theme-anim,html.theme-anim *{
    no fixed crop: the shadow needs its full height to fade out. */
 .wproj.is-solo .wproj-fig{background:none;aspect-ratio:auto;overflow:visible;contain:none}
 .wproj.is-solo .wproj-fig img{height:auto}
+/* Built with: the stack behind each experiment, shown as the tool's own mark
+   on a dark tile so the logos read the same in light and dark themes */
+.wmeta.is-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wmeta>.is-tech{grid-column:1 / -1}
+.tech-list{list-style:none;margin:.35rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.7rem 1.6rem}
+.tech-list li{display:flex;align-items:center;gap:.6rem;font-size:var(--t-small);color:var(--ink)}
+.tech-ic{flex:none;display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:.55rem;
+  background:#1c1c1c;border:1px solid rgba(255,255,255,.12)}
+.tech-ic svg{width:1.15rem;height:1.15rem;fill:currentColor}
+.tech-ic.is-three{color:#fff}
+.tech-ic.is-react{color:#61dafb}
+.tech-ic.is-swift{color:#f05138;background:#fff;border-color:transparent}
+.tech-ic.is-swift svg{width:100%;height:100%;border-radius:.55rem}
+@media (max-width:900px){
+  .wmeta.is-two{grid-template-columns:1fr}
+  .wmeta>.is-tech{display:block}
+}
 @media (min-width:901px){
   .wproj.is-solo .wproj-fig{grid-column:6 / 13}
   .wproj.is-solo .wproj-txt{grid-column:1 / 6}
