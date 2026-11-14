@@ -1866,6 +1866,36 @@ html.theme-anim,html.theme-anim *{
    no fixed crop: the shadow needs its full height to fade out. */
 .wproj.is-solo .wproj-fig{background:none;aspect-ratio:auto;overflow:visible;contain:none}
 .wproj.is-solo .wproj-fig img{height:auto}
+/* Built with: each project's stack sits on the image beside it, as the tool's
+   own mark on a dark tile with its name, so it reads in light and dark themes */
+.wmeta.is-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tech-tags{list-style:none;margin:0;padding:0}
+.tech-tags li{position:absolute;display:flex;align-items:center;gap:.5rem;
+  padding:.3rem .75rem .3rem .3rem;border-radius:.7rem;background:rgba(20,20,20,.86);
+  border:1px solid rgba(255,255,255,.1);box-shadow:0 6px 18px rgba(0,0,0,.18);
+  color:#fff;font-size:var(--t-small);line-height:1;white-space:nowrap;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.tech-tags li.is-react{left:57.9%;top:12%;transform:translateX(-50%)}
+.tech-tags li.is-three{left:30%;top:80%}
+.tech-tags li.is-swift{right:0;top:39%}
+/* half over the phone edge only where the page has room for the overhang */
+@media (min-width:1100px){.tech-tags li.is-swift{right:auto;left:97%;transform:translateX(-50%)}}
+.tech-ic{flex:none;display:grid;place-items:center;width:1.9rem;height:1.9rem;border-radius:.5rem;
+  background:#2a2a2a}
+.tech-ic svg{width:1.05rem;height:1.05rem;fill:currentColor}
+.tech-ic.is-three{color:#fff}
+.tech-ic.is-react{color:#61dafb}
+.tech-ic.is-swift{color:#f05138;background:#fff}
+.tech-ic.is-swift svg{width:100%;height:100%;border-radius:.5rem}
+@media (max-width:900px){
+  .wmeta.is-two{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .tech-tags li{font-size:.72rem;gap:.35rem;padding:.2rem .5rem .2rem .2rem;border-radius:.5rem}
+  .tech-ic{width:1.4rem;height:1.4rem;border-radius:.38rem}
+  .tech-ic svg{width:.8rem;height:.8rem}
+  .tech-ic.is-swift svg{border-radius:.38rem}
+}
 @media (min-width:901px){
   .wproj.is-solo .wproj-fig{grid-column:6 / 13}
   .wproj.is-solo .wproj-txt{grid-column:1 / 6}
