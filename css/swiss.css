@@ -1875,9 +1875,11 @@ html.theme-anim,html.theme-anim *{
   border:1px solid rgba(255,255,255,.1);box-shadow:0 6px 18px rgba(0,0,0,.18);
   color:#fff;font-size:var(--t-small);line-height:1;white-space:nowrap;
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.tech-tags li.is-react{left:43%;top:12%}
+.tech-tags li.is-react{left:57.9%;top:12%;transform:translateX(-50%)}
 .tech-tags li.is-three{left:30%;top:80%}
-.tech-tags li.is-swift{right:1%;top:39%}
+.tech-tags li.is-swift{right:0;top:39%}
+/* half over the phone edge only where the page has room for the overhang */
+@media (min-width:1100px){.tech-tags li.is-swift{right:auto;left:97%;transform:translateX(-50%)}}
 .tech-ic{flex:none;display:grid;place-items:center;width:1.9rem;height:1.9rem;border-radius:.5rem;
   background:#2a2a2a}
 .tech-ic svg{width:1.05rem;height:1.05rem;fill:currentColor}
