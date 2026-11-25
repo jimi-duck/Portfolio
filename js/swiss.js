@@ -813,43 +813,22 @@
     });
   }
 
-  /* ── ROAM: THREE STEPS ─────────────────────────────────────────────────────
-     Tell it, find a route, explore the run. Choosing a step replays its
-     drawing (the class comes off, a reflow, the class goes back on, and the
-     CSS animations restart from zero). The steps advance on their own every
-     six seconds while the block is on screen, and wait for as long as a
-     pointer is over it or focus is inside it. A touch, or a click on a tab,
-     stops them for good: the reader has taken over. Reduced motion: no
-     drawing, no typing, no advancing. Every step is shown finished. */
+  /* ── ROAM: ONE RUN, THREE CHAPTERS ─────────────────────────────────────────
+     Tell it, find a route, explore the run: the app's own screens for one
+     real run. The chapters advance on their own every six seconds while the
+     block is on screen, and wait for as long as a pointer is over it or focus
+     is inside it. A touch, or a click on a tab, stops them for good: the
+     reader has taken over. Reduced motion: no advancing, and the chapters
+     switch without the fade. */
   function roamFlow() {
     var box = $('[data-roam]');
     if (!box) return;
     var tabs = $$('.rf-tab', box), panels = $$('.rf-panel', box);
-    var typed = $('.rm-typed', box);
-    var full = typed ? typed.getAttribute('data-text') : '';
-    var MS = 6000, cur = 0, timer = 0, typeT = 0;
+    var MS = 6000, cur = 0, timer = 0;
     var hover = false, focus = false, stopped = reduced, visible = false;
     box.style.setProperty('--rf-ms', MS + 'ms');
     box.setAttribute('data-ready', '');
 
-    function type() {
-      clearInterval(typeT);
-      if (!typed) return;
-      if (reduced) { typed.textContent = full; return; }
-      var k = 0;
-      typed.textContent = '';
-      typeT = setInterval(function () {
-        k++;
-        typed.textContent = full.slice(0, k);
-        if (k >= full.length) clearInterval(typeT);
-      }, 55);
-    }
-    function play(p) {
-      if (reduced) return;
-      p.classList.toggle('is-play', false);
-      void p.offsetWidth;
-      p.classList.toggle('is-play', true);
-    }
     function running() { return !stopped && !hover && !focus && visible; }
     function schedule() {
       clearTimeout(timer);
@@ -857,7 +836,7 @@
       box.classList.toggle('is-cycling', on);
       box.classList.toggle('is-paused', !on);
       if (!on) return;
-      // restart the timer bar with the step
+      // restart the timer bar with the chapter
       var bar = $('.rf-tab[aria-selected="true"] .rf-bar', box);
       if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
       timer = setTimeout(function () { select((cur + 1) % tabs.length, false); }, MS);
@@ -869,10 +848,10 @@
       panels.forEach(function (p, k) {
         p.classList.toggle('is-on', k === i);
         p.setAttribute('aria-hidden', k === i ? 'false' : 'true');
-        if (k !== i) p.classList.toggle('is-play', false);
       });
-      play(panels[i]);
-      if (i === 0) type();
+      // on a phone the screens scroll sideways; each chapter starts at its first
+      var row = $('.rf-shots', panels[i]);
+      if (row) row.scrollLeft = 0;
       schedule();
     }
 
@@ -910,11 +889,13 @@
     var box = $('[data-erntereif]');
     if (!box) return;
     var range = $('.er-range', box), bars = $$('.er-bar', box);
+    var shots = $$('.er-shot', box);
     var tone = $('.er-tone', box), month = $('.er-title em', box);
     var h = $('[data-k="h"]', box), a = $('[data-k="a"]', box), nw = $('.er-new span', box);
     var NAMES = { 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September' };
     function show(m) {
       var bar = null;
+      shots.forEach(function (im) { im.classList.toggle('is-on', +im.getAttribute('data-m') === m); });
       bars.forEach(function (b) {
         var on = +b.getAttribute('data-m') === m;
         b.classList.toggle('is-on', on);

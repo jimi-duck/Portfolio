@@ -152,103 +152,109 @@
       <div><dt>Built with</dt><dd>Expo Web, TypeScript, SVG map rendering. Deployed on Cloudflare Workers.</dd></div>
     </dl>
 
+    <!-- One real run, start to finish, in Roam's own screens: captured from
+         the app built from its repo, Rosenthaler Platz, 8 km, Explore. Every
+         number in the copy is the app's own for that run. Three chapters, the
+         app's own order; swiss.js (roamFlow) owns the tabs. Without it every
+         chapter is shown, one under the next. Sight photos come from Unsplash
+         on the live app; here the app shows its map placeholder instead. -->
     <div class="roam-flow" data-roam>
-      <div class="rf-tabs" role="tablist" aria-label="How Roam works, in three steps">
+      <div class="rf-tabs" role="tablist" aria-label="One run in Roam, in three steps">
         <button class="rf-tab" type="button" role="tab" id="rf-tab-1" aria-controls="rf-panel-1" aria-selected="true"><span class="rf-n">01</span> · Tell it<i class="rf-bar" aria-hidden="true"></i></button>
         <button class="rf-tab" type="button" role="tab" id="rf-tab-2" aria-controls="rf-panel-2" aria-selected="false" tabindex="-1"><span class="rf-n">02</span> · Find a route<i class="rf-bar" aria-hidden="true"></i></button>
         <button class="rf-tab" type="button" role="tab" id="rf-tab-3" aria-controls="rf-panel-3" aria-selected="false" tabindex="-1"><span class="rf-n">03</span> · Explore the run<i class="rf-bar" aria-hidden="true"></i></button>
       </div>
-
       <div class="rf-panels">
-        <!-- 01 · Tell it -->
-        <div class="rf-panel is-on" role="tabpanel" id="rf-panel-1" aria-labelledby="rf-tab-1" tabindex="0">
+        <div class="rf-panel is-on" role="tabpanel" id="rf-panel-1" aria-labelledby="rf-tab-1">
           <div class="rf-txt">
-            <h3 class="rf-h">Say what you want from the run.</h3>
-            <p class="rf-d">Type it as you’d say it, like “8 km by the water”. Roam reads the distance and what you want to see. No filters to set, no account, no GPS tracking.</p>
+            <h3 class="rf-h">Three questions, then a run.</h3>
+            <p class="rf-d">Roam opens on a map of Berlin, with no account and no location prompt. It asks where you start, how far you want to go, and what would make the run great.</p>
           </div>
-          <div class="rf-stage">
-            <div class="rm-ask">
-              <p class="rm-k">Where to?</p>
-              <div class="rm-field">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                <span class="rm-typed" data-text="8 km by the water">8 km by the water</span><i class="rm-caret" aria-hidden="true"></i>
-              </div>
-              <p class="rm-k">Read as</p>
-              <ul class="rm-chips">
-                <li>Distance <b>8 km</b></li>
-                <li>Sights <b>Water</b></li>
-                <li>Shape <b>Loop</b></li>
-              </ul>
-              <p class="rm-note">No account. No sign-in. Start points are never logged.</p>
-            </div>
+          <div class="rf-shots">
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-01-start.jpg" alt="Roam step 1 of 3, Where do you start: a map of central Berlin with an orange start dot at Rosenthaler Platz, and a row of suggested start points" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">1 of 3 · Where do you start?</div>
+                <div class="flow-d">Tap the map or pick a spot. Here, Rosenthaler Platz.</div>
+              </figcaption>
+            </figure>
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-02-distance.jpg" alt="Roam step 2 of 3, How far today: 5, 8, 10 and 15+ km with times, 8 km selected, and a shaded circle round the start on the map" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">2 of 3 · How far today?</div>
+                <div class="flow-d">An 8 km loop stays within about 1.5 km of the start: the circle on the map.</div>
+              </figcaption>
+            </figure>
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-03-wish.jpg" alt="Roam step 3 of 3, What would make this run great: Go green, Explore, Scenic and Keep it calm, with Explore selected and the sights within reach shown as dots on the map" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">3 of 3 · What would make this run great?</div>
+                <div class="flow-d">Up to two wishes. Here, Explore: sights and hidden gems.</div>
+              </figcaption>
+            </figure>
           </div>
         </div>
-
-        <!-- 02 · Find a route -->
-        <div class="rf-panel" role="tabpanel" id="rf-panel-2" aria-labelledby="rf-tab-2" tabindex="0">
+        <div class="rf-panel" role="tabpanel" id="rf-panel-2" aria-labelledby="rf-tab-2">
           <div class="rf-txt">
-            <h3 class="rf-h">A loop past the sights, in order.</h3>
-            <p class="rf-d">Roam links the sights into a runnable loop. Here, the 8.4 km Spree Loop: Monbijou Park at km 1.0, the Bode Museum at km 1.8 and Berlin Cathedral at km 3.1.</p>
+            <h3 class="rf-h">Three loops, planned on the phone.</h3>
+            <p class="rf-d">Roam plans routes on the device, from OpenStreetMap and Wikidata for Berlin. For this run it offered three loops of 7.7 to 8.1 km. The best match passes 10 sights, from the Fernsehturm to the New Synagogue.</p>
           </div>
-          <div class="rf-stage">
-            <svg class="rm-map" viewBox="0 0 480 360" role="img" aria-label="Map of Berlin Mitte with the Spree either side of Museum Island. An orange loop of 8.4 km runs along the river past three numbered pins: 1 Monbijou Park, 2 Bode Museum, 3 Berlin Cathedral.">
-              <g class="rm-streets">
-                <path d="M0 44 L480 22"/><path d="M0 214 L480 236"/><path d="M0 318 L480 300"/>
-                <path d="M104 0 L118 360"/><path d="M182 0 L176 360"/><path d="M372 0 L344 360"/><path d="M440 0 L430 360"/>
-                <path d="M240 0 L300 120"/><path d="M0 150 L150 140"/>
-              </g>
-              <path class="rm-park" d="M196 60 L262 68 L272 98 L232 102 L206 86 Z"/>
-              <path class="rm-park" d="M224 166 L252 158 L262 186 L232 194 Z"/>
-              <g class="rm-water">
-                <path d="M480 300 C440 290 380 274 340 268"/>
-                <path d="M340 268 C310 220 270 160 225 118 L205 104"/>
-                <path class="is-canal" d="M340 268 C280 270 230 240 215 190 S200 130 205 104"/>
-                <path d="M205 104 C170 96 120 104 0 112"/>
-              </g>
-              <text class="rm-lbl is-water" x="36" y="134">Spree</text>
-              <text class="rm-lbl is-area" x="24" y="30">Berlin Mitte</text>
-              <path class="rm-route" pathLength="100" d="M110 88 C140 80 180 78 228 80 C236 96 222 110 212 122 C226 150 244 176 262 196 C278 220 292 246 304 262 C330 262 360 252 384 236 C410 200 416 150 400 110 C384 70 350 44 300 36 C250 30 180 30 140 38 C112 46 104 66 110 88 Z"/>
-              <g class="rm-start"><circle cx="110" cy="88" r="6"/><text class="rm-lbl" x="98" y="78" text-anchor="end">Start</text></g>
-              <g class="rm-pin" style="--d:0"><circle cx="228" cy="80" r="11"/><text x="228" y="84.5">1</text></g>
-              <text class="rm-lbl rm-pl" style="--d:0" x="244" y="64">Monbijou Park</text>
-              <g class="rm-pin" style="--d:1"><circle cx="212" cy="122" r="11"/><text x="212" y="126.5">2</text></g>
-              <text class="rm-lbl rm-pl" style="--d:1" x="196" y="146" text-anchor="end">Bode Museum</text>
-              <g class="rm-pin" style="--d:2"><circle cx="262" cy="196" r="11"/><text x="262" y="200.5">3</text></g>
-              <text class="rm-lbl rm-pl" style="--d:2" x="250" y="224" text-anchor="end">Berlin Cathedral</text>
-              <text class="rm-lbl is-total" x="456" y="340" text-anchor="end">Spree Loop · 8.4 km</text>
-            </svg>
+          <div class="rf-shots">
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-04-options.jpg" alt="Roam results: an orange 7.7 km loop from Rosenthaler Platz through Mitte with ten numbered sights, and the best-match card, Old Museum and Old National Gallery, 42 to 46 minutes, moderate, 15 landmarks" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">Three options</div>
+                <div class="flow-d">Each loop is named after its sights, numbered in running order on the map.</div>
+              </figcaption>
+            </figure>
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-05-details.jpg" alt="Route details: why you will like it, the loop on a map, and Along the way listing Alexanderplatz Station at km 3.6 and the Fernsehturm at km 3.7, on your right, 40 m off the path" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">Route details</div>
+                <div class="flow-d">Why you’ll like it: 10 sights, 1.2 km along water, quiet streets. Then every sight with its kilometre.</div>
+              </figcaption>
+            </figure>
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-06-surface.jpg" alt="Good to know: a kilometre-by-kilometre surface strip, 5.8 km smooth, 0.4 km packed gravel, 0.5 km soft ground and 0.9 km cobbles, then water, lighting, traffic and heads-ups for cobbles at km 4.9 to 5.3 and three flights of steps" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">Good to know</div>
+                <div class="flow-d">The surface for every kilometre: 5.8 km smooth, 0.9 km cobbles, and where the cobbles are.</div>
+              </figcaption>
+            </figure>
           </div>
         </div>
-
-        <!-- 03 · Explore the run -->
-        <div class="rf-panel" role="tabpanel" id="rf-panel-3" aria-labelledby="rf-tab-3" tabindex="0">
+        <div class="rf-panel" role="tabpanel" id="rf-panel-3" aria-labelledby="rf-tab-3">
           <div class="rf-txt">
-            <h3 class="rf-h">What’s underfoot, before you go.</h3>
-            <p class="rf-d">Each sight comes with its kilometre, and the whole route with its surface: 64% smooth asphalt, 26% compacted park gravel and 10% historic cobblestones.</p>
+            <h3 class="rf-h">Stop by stop, before you go.</h3>
+            <p class="rf-d">“Explore the run” turns the route into its 10 stops. Each one says which side it’s on, how far off the path, how many minutes in, and what’s underfoot.</p>
           </div>
-          <div class="rf-stage">
-            <div class="rm-card">
-              <p class="rm-k">Spree Loop · 8.4 km · 3 sights</p>
-              <ol class="rm-sights">
-                <li><span class="rm-no">1</span>Monbijou Park<span class="rm-km">km 1.0</span></li>
-                <li><span class="rm-no">2</span>Bode Museum<span class="rm-km">km 1.8</span></li>
-                <li><span class="rm-no">3</span>Berlin Cathedral and Lustgarten<span class="rm-km">km 3.1</span></li>
-              </ol>
-              <p class="rm-k">Underfoot</p>
-              <div class="rm-gauge" role="img" aria-label="Surface: 64% smooth asphalt, 26% compacted park gravel, 10% historic cobblestones">
-                <i class="is-asph" style="--w:64"></i><i class="is-grav" style="--w:26"></i><i class="is-cob" style="--w:10"></i>
-              </div>
-              <ul class="rm-legend">
-                <li><i class="is-asph"></i>Smooth asphalt<b>64%</b></li>
-                <li><i class="is-grav"></i>Compacted park gravel<b>26%</b></li>
-                <li><i class="is-cob"></i>Historic cobblestones<b>10%</b></li>
-              </ul>
-            </div>
+          <div class="rf-shots">
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-07-run.jpg" alt="The run overview for Old Museum and Old National Gallery: 7.7 km, 42 to 46 minutes, and the ten stops listed with their kilometres, from the Fernsehturm at km 3.7 to the Old National Gallery at km 5.6" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">The run</div>
+                <div class="flow-d">10 stops and 7 small finds between them, each with its kilometre.</div>
+              </figcaption>
+            </figure>
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-08-stop1.jpg" alt="Stop 1 of 10 at km 3.7, Fernsehturm Berlin: on your right, 40 m off the path, about 21 minutes in, look out, a view opens here, with a small map of the route so far" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">Stop 1 of 10 · km 3.7</div>
+                <div class="flow-d">Fernsehturm Berlin: on your right, 40 m off the path. A view opens here.</div>
+              </figcaption>
+            </figure>
+            <figure class="appshot rf-shot">
+              <img class="device-img rf-phone" src="img/roam-09-stop6.jpg" alt="Stop 6 of 10 at km 5.6, Old National Gallery: on your right, 50 m off the path, in view, with underfoot smooth paving or asphalt and around you along the water, car-free, steps here" loading="lazy" width="600" height="1298">
+              <figcaption class="appshot-c">
+                <div class="flow-n">Stop 6 of 10 · km 5.6</div>
+                <div class="flow-d">Old National Gallery. Underfoot: smooth paving, along the water, with steps.</div>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
     </div>
-    <p class="cap">An example run in Berlin Mitte, drawn for this page in Roam’s colours</p>
+    <p class="cap">One run in Roam: 8 km from Rosenthaler Platz, sights first. Real screens; sight photos show the app’s map placeholder</p>
   </section>
 
 </div>
@@ -270,7 +276,7 @@
 
     <dl class="glance is-inset">
       <div><dt>The brief</dt><dd>A 3D space game with a story behind it, that runs in a phone browser as well as on a desktop.</dd></div>
-      <div><dt>The hard part</dt><dd>Getting the story right. The AI drafted each build from my prompts, I played it, and what I found went into the next prompt.</dd></div>
+      <div><dt>The hard part</dt><dd>Getting the story right. Testing each draft by playing it, and pushing the AI until the plot and the game work.</dd></div>
       <div><dt>Built with</dt><dd>TypeScript and Three.js. Its own repo, deployed on its own.</dd></div>
     </dl>
 
@@ -321,13 +327,17 @@
       <div><dt>Built with</dt><dd>React and TypeScript.</dd></div>
     </dl>
 
+    <img class="img" src="img/erntereif-hero.jpg" alt="Erntereif in September: a large serif headline reading Was der September bringt on a cream ground beside painted pumpkin, kale and apple, with 65 varieties being harvested and 66 available" loading="lazy" width="1600" height="1000">
+    <p class="cap sp-mb">September in Germany. 65 varieties harvested, 66 available once cold store counts</p>
+
     <!-- The month the app opens on, March to September, scrubbable. The figures
          are the app's own: Erntereif's summariseMonth() run over its produce
          file for Germany, the same numbers its hero prints for each month. The
          bars are the harvested count, so the scrubber is also the curve. One
          native range input sits over the bars and does the work: keyboard,
-         touch drag and the screen-reader value come with it. Without script
-         the panel stays on September, which the screenshot below also shows. -->
+         touch drag and the screen-reader value come with it. Under it, the
+         app's own "Jetzt in Saison" grid for the same month, captured from the
+         app built from its repo. Without script the panel stays on September. -->
     <div class="er-scrub" data-erntereif>
       <div class="er-head">
         <p class="er-tone">Hochsaison</p>
@@ -350,23 +360,18 @@
         </div>
         <input class="er-range" type="range" min="3" max="9" step="1" value="9" aria-label="Month, March to September" aria-valuetext="September: 65 being harvested, 66 available">
       </div>
-    </div>
-    <p class="cap">Germany, March to September, from the app’s own data. Drag across the months or use the arrow keys</p>
-
-    <img class="img" src="img/erntereif-hero.jpg" alt="Erntereif in September: a large serif headline reading Was der September bringt on a cream ground beside painted pumpkin, kale and apple, with 65 varieties being harvested and 66 available" loading="lazy" width="1600" height="1000">
-    <p class="cap">September in Germany. 65 varieties harvested, 66 available once cold store counts</p>
-
-    <!-- Same pairing as Wayward: one lead image, then the rest side by side. -->
-    <div class="two sp-m">
-      <div>
-        <img class="img" src="img/erntereif-march.jpg" alt="The same page switched to March: nine varieties harvested, 22 available, and a badge reading Keller und Lager" loading="lazy" width="1600" height="1000">
-        <p class="cap">March, the same page. Nine harvested against September’s 65</p>
-      </div>
-      <div>
-        <img class="img" src="img/erntereif-grid.jpg" alt="The produce grid: rows of painted vegetables on a cream ground, each with its name, its Latin name and a short cooking note" loading="lazy" width="1600" height="1000">
-        <p class="cap">Every crop carries a cooking note</p>
+      <div class="er-shots">
+        <img class="img er-shot" data-m="3" src="img/erntereif-month-03.jpg" alt="Erntereif’s Jetzt in Saison grid for March in Germany: the painted produce being harvested that month, with its count" loading="lazy" width="1600" height="1000">
+        <img class="img er-shot" data-m="4" src="img/erntereif-month-04.jpg" alt="Erntereif’s Jetzt in Saison grid for April in Germany: the painted produce being harvested that month, with its count" loading="lazy" width="1600" height="1000">
+        <img class="img er-shot" data-m="5" src="img/erntereif-month-05.jpg" alt="Erntereif’s Jetzt in Saison grid for May in Germany: the painted produce being harvested that month, with its count" loading="lazy" width="1600" height="1000">
+        <img class="img er-shot" data-m="6" src="img/erntereif-month-06.jpg" alt="Erntereif’s Jetzt in Saison grid for June in Germany: the painted produce being harvested that month, with its count" loading="lazy" width="1600" height="1000">
+        <img class="img er-shot" data-m="7" src="img/erntereif-month-07.jpg" alt="Erntereif’s Jetzt in Saison grid for July in Germany: the painted produce being harvested that month, with its count" loading="lazy" width="1600" height="1000">
+        <img class="img er-shot" data-m="8" src="img/erntereif-month-08.jpg" alt="Erntereif’s Jetzt in Saison grid for August in Germany: the painted produce being harvested that month, with its count" loading="lazy" width="1600" height="1000">
+        <img class="img er-shot is-on" data-m="9" src="img/erntereif-month-09.jpg" alt="Erntereif’s Jetzt in Saison grid for September in Germany: the painted produce being harvested that month, with its count" loading="lazy" width="1600" height="1000">
       </div>
     </div>
+    <p class="cap">Germany, March to September. The figures and the grid below them are the app’s own for each month. Drag across the months or use the arrow keys</p>
+
   </section>
 
   <!-- ═══ 04 · TANKEN ═════════════════════════════════════ -->

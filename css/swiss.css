@@ -1912,18 +1912,9 @@ html.theme-anim,html.theme-anim *{
    a row of five screens. html.js gates every hidden state, the same way the
    reveals do, so a failed script never hides content. */
 
-/* ROAM. The stage is drawn in Roam's own palette — cream and forest, with the
-   orange kept for the route and the pins — so it reads as the app rather than
-   as the site. The tabs around it stay in the site's own ink. */
-.roam-flow{
-  --rm-ground:#FBF7F1;--rm-ink:#1B3427;--rm-or:#EC672A;
-  --rm-mute:color-mix(in srgb,var(--rm-ink) 68%,var(--rm-ground));
-  --rm-line:color-mix(in srgb,var(--rm-ink) 14%,var(--rm-ground));
-  --rm-water:#D8E4DE;--rm-park:#E4EAD8;
-  margin-top:var(--space-block)}
-:root[data-theme="dark"] .roam-flow{
-  --rm-ground:#0F1F17;--rm-ink:#FBF7F1;
-  --rm-water:#1C3A2E;--rm-park:#173024}
+/* ROAM. One real run in the app's own screens, in three chapters. The tabs
+   are in the site's ink; the screens carry Roam's colours on their own. */
+.roam-flow{margin-top:var(--space-block)}
 .rf-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
 .rf-tab{position:relative;display:block;width:100%;text-align:left;padding:.95rem 0 .9rem;
   border:0;border-top:1px solid var(--rule);background:none;color:var(--mute);cursor:pointer;
@@ -1939,87 +1930,25 @@ html.theme-anim,html.theme-anim *{
 .roam-flow.is-paused .rf-tab[aria-selected="true"] .rf-bar{animation:none;transform:scaleX(1)}
 @keyframes rf-timer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
-/* All three panels share one grid cell, so the block is as tall as the tallest
-   and switching never moves the page under the reader. */
-.rf-panels{display:grid;margin-top:clamp(1rem,2vw,1.6rem)}
+/* All three chapters share one grid cell, so the block is as tall as the
+   tallest and switching never moves the page under the reader. */
+.rf-panels{display:grid;margin-top:clamp(1.2rem,2.4vw,2rem)}
 .rf-panel{grid-area:1 / 1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:var(--gap);align-items:center}
+  gap:var(--gap);align-items:start;align-content:start}
 html.js .roam-flow[data-ready] .rf-panel:not(.is-on){visibility:hidden}
-.rf-panel:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
-.rf-txt{grid-column:1 / 6}
-.rf-stage{grid-column:6 / 13}
+.rf-txt{grid-column:1 / 4}
+.rf-shots{grid-column:4 / 13;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
 .rf-h{font-size:var(--t-h3);font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .rf-d{margin-top:.7rem;font-size:var(--t-body);line-height:1.5;color:var(--ink-2);max-width:34ch}
-.rf-stage{aspect-ratio:16 / 10;background:var(--rm-ground);color:var(--rm-ink);
-  display:grid;place-items:center;overflow:hidden;position:relative}
-.rm-k{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--rm-mute)}
-
-/* 01 · the ask */
-.rm-ask{width:min(82%,420px)}
-.rm-field{display:flex;align-items:center;gap:.7rem;margin:.6rem 0 1.5rem;padding:.9rem 1.1rem;
-  border:1.5px solid var(--rm-ink);border-radius:999px;font-size:clamp(1.05rem,1.6vw,1.35rem);
-  letter-spacing:-.01em;min-height:3.4em}
-.rm-field svg{width:1.1em;height:1.1em;flex:none;color:var(--rm-or)}
-.rm-caret{display:inline-block;width:2px;height:1.15em;background:var(--rm-or);margin-left:-.45rem;
-  animation:rm-blink 1s steps(1) infinite}
-@keyframes rm-blink{50%{opacity:0}}
-.rm-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.4rem}
-.rm-chips li{padding:.45rem .8rem;border-radius:999px;background:var(--rm-line);font-size:var(--t-small);color:var(--rm-mute)}
-.rm-chips b{color:var(--rm-ink);margin-left:.25rem}
-.rm-note{font-size:var(--t-small);color:var(--rm-mute);border-top:1px solid var(--rm-line);padding-top:.8rem}
-.roam-flow .is-play .rm-chips li{animation:rm-up .5s var(--ez) both}
-.roam-flow .is-play .rm-chips li:nth-child(1){animation-delay:1.1s}
-.roam-flow .is-play .rm-chips li:nth-child(2){animation-delay:1.25s}
-.roam-flow .is-play .rm-chips li:nth-child(3){animation-delay:1.4s}
-@keyframes rm-up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* 02 · the map */
-.rm-map{width:100%;height:100%;display:block}
-.rm-streets path{stroke:var(--rm-line);stroke-width:2;fill:none}
-.rm-park{fill:var(--rm-park)}
-.rm-water path{stroke:var(--rm-water);stroke-width:16;fill:none;stroke-linecap:round}
-.rm-water path.is-canal{stroke-width:9}
-.rm-route{fill:none;stroke:var(--rm-or);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;
-  stroke-dasharray:100;stroke-dashoffset:0}
-.rm-start circle{fill:var(--rm-ground);stroke:var(--rm-ink);stroke-width:3}
-.rm-pin circle{fill:var(--rm-or);stroke:var(--rm-ground);stroke-width:3}
-.rm-pin text{fill:#fff;font-size:12px;font-weight:700;text-anchor:middle}
-.rm-lbl{fill:var(--rm-ink);font-size:13px;font-weight:700;letter-spacing:-.01em;
-  paint-order:stroke;stroke:var(--rm-ground);stroke-width:4px;stroke-linejoin:round}
-.rm-lbl.is-water{fill:var(--rm-mute);font-weight:400;font-style:italic}
-.rm-lbl.is-area{fill:var(--rm-mute);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
-.rm-lbl.is-total{font-size:14px}
-.rm-pin{transform-box:fill-box;transform-origin:center}
-/* The draw runs only while a panel is playing; at rest the route is drawn. */
-.roam-flow .is-play .rm-route{animation:rm-draw 2.4s cubic-bezier(.45,0,.25,1) both .2s}
-.roam-flow .is-play .rm-pin{animation:rm-pop .5s var(--ez) both;animation-delay:calc(.55s + var(--d) * .35s)}
-.roam-flow .is-play .rm-pl{animation:rm-fade .4s ease both;animation-delay:calc(.7s + var(--d) * .35s)}
-@keyframes rm-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
-@keyframes rm-pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:none}}
-@keyframes rm-fade{from{opacity:0}to{opacity:1}}
-
-/* 03 · the run */
-.rm-card{width:min(86%,440px)}
-.rm-sights{list-style:none;margin:.6rem 0 1.4rem;counter-reset:none}
-.rm-sights li{display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-top:1px solid var(--rm-line);
-  font-size:var(--t-small)}
-.rm-no{flex:none;display:grid;place-items:center;width:1.45rem;height:1.45rem;border-radius:50%;
-  background:var(--rm-or);color:#fff;font-size:.72rem;font-weight:700}
-.rm-km{margin-left:auto;color:var(--rm-mute);font-variant-numeric:tabular-nums;white-space:nowrap}
-.rm-gauge{display:flex;height:14px;margin:.6rem 0 .8rem;gap:2px;border-radius:2px;overflow:hidden}
-.rm-gauge i{flex:0 0 calc(var(--w) * 1% - 2px);transform-origin:left}
-.is-asph{background:var(--rm-ink)}
-.is-grav{background:var(--rm-or)}
-.is-cob{background:repeating-linear-gradient(135deg,var(--rm-ink) 0 2px,transparent 2px 5px);
-  box-shadow:inset 0 0 0 1px var(--rm-ink)}
-.rm-legend{list-style:none;display:grid;gap:.35rem}
-.rm-legend li{display:flex;align-items:center;gap:.55rem;font-size:var(--t-small);color:var(--rm-mute)}
-.rm-legend li>i{width:.8rem;height:.8rem;flex:none;border-radius:2px}
-.rm-legend b{margin-left:auto;color:var(--rm-ink);font-variant-numeric:tabular-nums}
-.roam-flow .is-play .rm-gauge i{animation:rm-grow .9s var(--ez) both}
-.roam-flow .is-play .rm-gauge i:nth-child(2){animation-delay:.15s}
-.roam-flow .is-play .rm-gauge i:nth-child(3){animation-delay:.3s}
-@keyframes rm-grow{from{transform:scaleX(0)}to{transform:none}}
+.rf-shot .device-img.rf-phone{max-width:100%;width:100%;border-radius:clamp(14px,1.6vw,24px);
+  border:1px solid var(--rule);box-shadow:0 10px 30px rgba(19,19,17,.08);margin-bottom:.9rem}
+.rf-shot .appshot-c .flow-d{margin-top:.3rem}
+/* A chapter fades in when it is chosen; under reduced motion it just appears
+   (the site-wide block at the foot of this file zeroes the duration). */
+.roam-flow .rf-panel.is-on .rf-shot{animation:rf-in .6s var(--ez) both}
+.roam-flow .rf-panel.is-on .rf-shot:nth-child(2){animation-delay:.08s}
+.roam-flow .rf-panel.is-on .rf-shot:nth-child(3){animation-delay:.16s}
+@keyframes rf-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .roam-flow+.cap{margin-top:var(--space-tight)}
 
 /* No script: no tabs to press, so every step is shown, one under the next. */
@@ -2058,6 +1987,12 @@ html:not(.js) .rf-panel{grid-area:auto}
   -webkit-appearance:none;appearance:none;touch-action:pan-y}
 .er-range:focus-visible+*,.er-scale:has(.er-range:focus-visible){outline:2px solid var(--ink);outline-offset:6px}
 html:not(.js) .er-range{display:none}
+/* The app's own grid for the chosen month, all seven stacked in one cell. The
+   lightbox wraps each image in a button, so the stacking is on whatever the
+   direct child is. */
+.er-shots{grid-column:1 / -1;display:grid;margin-top:var(--space-tight)}
+.er-shots>*{grid-area:1 / 1}
+html.js .er-shots>:not(.is-on):not(:has(.is-on)){visibility:hidden}
 
 /* TANKEN. Steps down the left, one phone on the right. */
 .tk-flow{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:center}
@@ -2095,9 +2030,13 @@ html:not(.js) .tk-shot{grid-area:auto}
 html:not(.js) .tk-shot .appshot-c{display:block;margin-top:.8rem}
 
 @media (max-width:900px){
-  .rf-panel{grid-template-columns:1fr;align-items:start;align-content:start;gap:1.1rem}
-  .rf-txt,.rf-stage{grid-column:auto}
-  .rf-stage{order:-1}
+  .rf-panel{grid-template-columns:1fr;gap:1.1rem}
+  .rf-txt,.rf-shots{grid-column:auto}
+  /* The three screens become a row to swipe through, the next one peeking in. */
+  .rf-shots{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1rem;
+    margin-inline:calc(var(--pad) * -1);padding:0 var(--pad) .4rem;scroll-padding-inline:var(--pad);scrollbar-width:none}
+  .rf-shots::-webkit-scrollbar{display:none}
+  .rf-shot{flex:0 0 min(64vw,300px);scroll-snap-align:start}
   .er-scrub{grid-template-columns:1fr;row-gap:1.6rem}
   .er-head,.er-scale{grid-column:auto}
   .tk-flow{grid-template-columns:1fr}
@@ -2112,15 +2051,10 @@ html:not(.js) .tk-shot .appshot-c{display:block;margin-top:.8rem}
 }
 @media (max-width:560px){
   .rf-tab{font-size:.7rem;letter-spacing:.06em;padding-top:.8rem}
-  .rf-stage{aspect-ratio:auto;min-height:290px;padding:1.4rem 0}
-  .rf-panel:nth-child(2) .rf-stage{padding:0;min-height:0;aspect-ratio:4 / 3}
-  .rm-ask,.rm-card{width:calc(100% - 2.4rem)}
-  .rm-field{font-size:1.05rem}
   .er-scrub{padding:1.2rem}
   .tk-tab .flow-n{font-size:.68rem;letter-spacing:.04em}
   .tk-shot .device-img{max-width:230px}
 }
 @media (prefers-reduced-motion:reduce){
-  .rm-caret{animation:none}
   .roam-flow .rf-bar{animation:none !important}
 }
