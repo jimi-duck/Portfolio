@@ -23,10 +23,10 @@
      if it ever becomes a page worth being found cold. One without the other is
      half a decision. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Three things I made with AI tools: Wayward, a space game for the browser, a seasonal produce calendar, and an iPhone app for German fuel prices.">
+<meta name="description" content="Four things I made with AI tools: Roam, a running route planner, Wayward, a space game, a seasonal produce calendar and an iPhone app for fuel prices.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AI experiments · James Ciclitira">
-<meta property="og:description" content="Three things I made with AI tools: Wayward, a space game for the browser, a seasonal produce calendar, and an iPhone app for German fuel prices.">
+<meta property="og:description" content="Four things I made with AI tools: Roam, a running route planner, Wayward, a space game, a seasonal produce calendar and an iPhone app for fuel prices.">
 <meta property="og:image" content="https://www.jciclitira.com/img/wayward-menu.jpg">
 <meta property="og:url" content="https://www.jciclitira.com/lab.html">
 <!-- Self-referencing, like every other page. It does nothing while the robots
@@ -101,25 +101,26 @@
     <a href="index.html" class="back">← All work</a>
     <p class="eyebrow">Side projects · 2026</p>
     <h1 class="cs-title is-long">AI experiments</h1>
-    <p class="cs-tagline">A space game for the browser, a seasonal produce calendar and an iPhone app for fuel prices. Three things I made with AI tools, outside client work.</p>
+    <p class="cs-tagline">A route-planning runner’s map, a space game for the browser, a seasonal produce calendar and an iPhone app for fuel prices. Four things I made with AI tools, outside client work.</p>
   </div>
   <div class="meta-grid">
-    <div class="meta-item"><label>AI tools</label><p>ChatGPT · Lovable · Claude</p></div>
+    <div class="meta-item"><label>Tools</label><p>ChatGPT · Lovable · Claude</p></div>
     <div class="meta-item"><label>Year</label><p>2026</p></div>
-    <div class="meta-item"><label>Try them</label><p><a class="tlink" href="https://wayward.jimi-duck.workers.dev/" target="_blank" rel="noopener">Wayward ↗︎</a> · <a class="tlink" href="https://chimerical-shortbread-708934.netlify.app/" target="_blank" rel="noopener">Erntereif ↗︎</a></p></div>
+    <div class="meta-item"><label>Try them</label><p><a class="tlink" href="https://roam.jimi-duck.workers.dev/" target="_blank" rel="noopener">Roam ↗︎</a> · <a class="tlink" href="https://wayward.jimi-duck.workers.dev/" target="_blank" rel="noopener">Wayward ↗︎</a> · <a class="tlink" href="https://chimerical-shortbread-708934.netlify.app/" target="_blank" rel="noopener">Erntereif ↗︎</a></p></div>
   </div>
 </header>
 
-<!-- The index. The same band a case study opens with, used here for the three
+<!-- The index. The same band a case study opens with, used here for the four
      projects instead of problem / what I did / result: read only this and you
      know what is on the page. Each cell jumps to its section. -->
 <dl class="glance lab-index" data-reveal>
-  <div><dt><a href="#wayward">01 · Wayward ↓</a></dt><dd>A 3D space-survival game for desktop and phone browsers. Still being built.</dd></div>
-  <div><dt><a href="#erntereif">02 · Erntereif ↓</a></dt><dd>A seasonal calendar of what’s being harvested near you, month by month.</dd></div>
-  <div><dt><a href="#tanken">03 · Tanken ↓</a></dt><dd>An iPhone app for German fuel prices, and whether to fill up now or wait.</dd></div>
+  <div><dt><a href="#roam">01 · Roam ↓</a></dt><dd>Running routes past sights you’d miss, without accounts or GPS bloat.</dd></div>
+  <div><dt><a href="#wayward">02 · Wayward ↓</a></dt><dd>A 3D space-survival game for desktop and phone browsers. Still being built.</dd></div>
+  <div><dt><a href="#erntereif">03 · Erntereif ↓</a></dt><dd>A seasonal calendar of what’s being harvested near you, month by month.</dd></div>
+  <div><dt><a href="#tanken">04 · Tanken ↓</a></dt><dd>An iPhone app for German fuel prices, and whether to fill up now or wait.</dd></div>
 </dl>
 
-<!-- Every project is framed the same way, so the three can be compared:
+<!-- Every project is framed the same way, so the four can be compared:
        label   number and name
        h2      what it is, in one line, with the lede beside it
        glance  the brief, the hard part, and what it is built with
@@ -127,13 +128,138 @@
      Wayward sits on the dark band because the game is dark: its screenshots
      read as part of the band rather than as black rectangles on paper. -->
 
-<!-- ═══ 01 · WAYWARD — DARK BAND ═══════════════════════ -->
-<!-- First because it is the one still being built. It lives in its own repo
+<div class="body">
+
+  <!-- ═══ 01 · ROAM ═══════════════════════════════════════ -->
+  <!-- First because it is the newest, and the one the page now opens on. The
+       three steps below are a drawing, not a screen recording: an example run
+       in Berlin Mitte, set in Roam's own colours, that walks through what the
+       app does in the order a runner meets it. swiss.js (roamFlow) owns the
+       tabs; without it every step is shown, one under the next. -->
+  <section class="section" id="roam" data-reveal>
+    <p class="lbl"><span class="lbl-n">01</span>Roam</p>
+    <div class="two is-wide is-top">
+      <h2>Running routes past sights, <em>without the tracking bloat.</em></h2>
+      <div>
+        <p class="lede">Pick a distance and what you want to see, and Roam builds runnable loops past the sights, with every kilometre of what’s underfoot. No account, no GPS tracking, no social feed.</p>
+        <a class="lab-cta" href="https://roam.jimi-duck.workers.dev/" target="_blank" rel="noopener"><span class="cta-t">Open Roam ↗︎</span></a>
+      </div>
+    </div>
+
+    <dl class="glance is-inset">
+      <div><dt>The brief</dt><dd>When I’m in a city, I want to step outside and run somewhere interesting without spending twenty minutes planning a route or wrestling with fitness app paywalls.</dd></div>
+      <div><dt>The hard part</dt><dd>Route graphing and topological curation. AI can propose paths, but real running routes need to know surfaces (smooth asphalt vs. ankle-breaking cobblestones) and valid pedestrian bridges without bloated map SDKs.</dd></div>
+      <div><dt>Built with</dt><dd>Expo Web, TypeScript, SVG map rendering. Deployed on Cloudflare Workers.</dd></div>
+    </dl>
+
+    <div class="roam-flow" data-roam>
+      <div class="rf-tabs" role="tablist" aria-label="How Roam works, in three steps">
+        <button class="rf-tab" type="button" role="tab" id="rf-tab-1" aria-controls="rf-panel-1" aria-selected="true"><span class="rf-n">01</span> · Tell it<i class="rf-bar" aria-hidden="true"></i></button>
+        <button class="rf-tab" type="button" role="tab" id="rf-tab-2" aria-controls="rf-panel-2" aria-selected="false" tabindex="-1"><span class="rf-n">02</span> · Find a route<i class="rf-bar" aria-hidden="true"></i></button>
+        <button class="rf-tab" type="button" role="tab" id="rf-tab-3" aria-controls="rf-panel-3" aria-selected="false" tabindex="-1"><span class="rf-n">03</span> · Explore the run<i class="rf-bar" aria-hidden="true"></i></button>
+      </div>
+
+      <div class="rf-panels">
+        <!-- 01 · Tell it -->
+        <div class="rf-panel is-on" role="tabpanel" id="rf-panel-1" aria-labelledby="rf-tab-1" tabindex="0">
+          <div class="rf-txt">
+            <h3 class="rf-h">Say what you want from the run.</h3>
+            <p class="rf-d">Type it as you’d say it, like “8 km by the water”. Roam reads the distance and what you want to see. No filters to set, no account, no GPS tracking.</p>
+          </div>
+          <div class="rf-stage">
+            <div class="rm-ask">
+              <p class="rm-k">Where to?</p>
+              <div class="rm-field">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span class="rm-typed" data-text="8 km by the water">8 km by the water</span><i class="rm-caret" aria-hidden="true"></i>
+              </div>
+              <p class="rm-k">Read as</p>
+              <ul class="rm-chips">
+                <li>Distance <b>8 km</b></li>
+                <li>Sights <b>Water</b></li>
+                <li>Shape <b>Loop</b></li>
+              </ul>
+              <p class="rm-note">No account. No sign-in. Start points are never logged.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 · Find a route -->
+        <div class="rf-panel" role="tabpanel" id="rf-panel-2" aria-labelledby="rf-tab-2" tabindex="0">
+          <div class="rf-txt">
+            <h3 class="rf-h">A loop past the sights, in order.</h3>
+            <p class="rf-d">Roam links the sights into a runnable loop. Here, the 8.4 km Spree Loop: Monbijou Park at km 1.0, the Bode Museum at km 1.8 and Berlin Cathedral at km 3.1.</p>
+          </div>
+          <div class="rf-stage">
+            <svg class="rm-map" viewBox="0 0 480 360" role="img" aria-label="Map of Berlin Mitte with the Spree either side of Museum Island. An orange loop of 8.4 km runs along the river past three numbered pins: 1 Monbijou Park, 2 Bode Museum, 3 Berlin Cathedral.">
+              <g class="rm-streets">
+                <path d="M0 44 L480 22"/><path d="M0 214 L480 236"/><path d="M0 318 L480 300"/>
+                <path d="M104 0 L118 360"/><path d="M182 0 L176 360"/><path d="M372 0 L344 360"/><path d="M440 0 L430 360"/>
+                <path d="M240 0 L300 120"/><path d="M0 150 L150 140"/>
+              </g>
+              <path class="rm-park" d="M196 60 L262 68 L272 98 L232 102 L206 86 Z"/>
+              <path class="rm-park" d="M224 166 L252 158 L262 186 L232 194 Z"/>
+              <g class="rm-water">
+                <path d="M480 300 C440 290 380 274 340 268"/>
+                <path d="M340 268 C310 220 270 160 225 118 L205 104"/>
+                <path class="is-canal" d="M340 268 C280 270 230 240 215 190 S200 130 205 104"/>
+                <path d="M205 104 C170 96 120 104 0 112"/>
+              </g>
+              <text class="rm-lbl is-water" x="36" y="134">Spree</text>
+              <text class="rm-lbl is-area" x="24" y="30">Berlin Mitte</text>
+              <path class="rm-route" pathLength="100" d="M110 88 C140 80 180 78 228 80 C236 96 222 110 212 122 C226 150 244 176 262 196 C278 220 292 246 304 262 C330 262 360 252 384 236 C410 200 416 150 400 110 C384 70 350 44 300 36 C250 30 180 30 140 38 C112 46 104 66 110 88 Z"/>
+              <g class="rm-start"><circle cx="110" cy="88" r="6"/><text class="rm-lbl" x="98" y="78" text-anchor="end">Start</text></g>
+              <g class="rm-pin" style="--d:0"><circle cx="228" cy="80" r="11"/><text x="228" y="84.5">1</text></g>
+              <text class="rm-lbl rm-pl" style="--d:0" x="244" y="64">Monbijou Park</text>
+              <g class="rm-pin" style="--d:1"><circle cx="212" cy="122" r="11"/><text x="212" y="126.5">2</text></g>
+              <text class="rm-lbl rm-pl" style="--d:1" x="196" y="146" text-anchor="end">Bode Museum</text>
+              <g class="rm-pin" style="--d:2"><circle cx="262" cy="196" r="11"/><text x="262" y="200.5">3</text></g>
+              <text class="rm-lbl rm-pl" style="--d:2" x="250" y="224" text-anchor="end">Berlin Cathedral</text>
+              <text class="rm-lbl is-total" x="456" y="340" text-anchor="end">Spree Loop · 8.4 km</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 03 · Explore the run -->
+        <div class="rf-panel" role="tabpanel" id="rf-panel-3" aria-labelledby="rf-tab-3" tabindex="0">
+          <div class="rf-txt">
+            <h3 class="rf-h">What’s underfoot, before you go.</h3>
+            <p class="rf-d">Each sight comes with its kilometre, and the whole route with its surface: 64% smooth asphalt, 26% compacted park gravel and 10% historic cobblestones.</p>
+          </div>
+          <div class="rf-stage">
+            <div class="rm-card">
+              <p class="rm-k">Spree Loop · 8.4 km · 3 sights</p>
+              <ol class="rm-sights">
+                <li><span class="rm-no">1</span>Monbijou Park<span class="rm-km">km 1.0</span></li>
+                <li><span class="rm-no">2</span>Bode Museum<span class="rm-km">km 1.8</span></li>
+                <li><span class="rm-no">3</span>Berlin Cathedral and Lustgarten<span class="rm-km">km 3.1</span></li>
+              </ol>
+              <p class="rm-k">Underfoot</p>
+              <div class="rm-gauge" role="img" aria-label="Surface: 64% smooth asphalt, 26% compacted park gravel, 10% historic cobblestones">
+                <i class="is-asph" style="--w:64"></i><i class="is-grav" style="--w:26"></i><i class="is-cob" style="--w:10"></i>
+              </div>
+              <ul class="rm-legend">
+                <li><i class="is-asph"></i>Smooth asphalt<b>64%</b></li>
+                <li><i class="is-grav"></i>Compacted park gravel<b>26%</b></li>
+                <li><i class="is-cob"></i>Historic cobblestones<b>10%</b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="cap">An example run in Berlin Mitte, drawn for this page in Roam’s colours</p>
+  </section>
+
+</div>
+
+<!-- ═══ 02 · WAYWARD — DARK BAND ═══════════════════════ -->
+<!-- Straight after Roam, and like it still being built. It lives in its own repo
      and deploys on its own, so this entry links out rather than opening
      anything over the page. -->
 <div class="dark-band is-night" id="wayward" data-reveal>
   <div class="dark-band-inner">
-    <p class="lbl"><span class="lbl-n">01</span>Wayward</p>
+    <p class="lbl"><span class="lbl-n">02</span>Wayward</p>
     <div class="two is-wide is-top">
       <h2>An ore hauler, a buried secret, <em>a long way to go.</em></h2>
       <div>
@@ -144,7 +270,7 @@
 
     <dl class="glance is-inset">
       <div><dt>The brief</dt><dd>A 3D space game with a story behind it, that runs in a phone browser as well as on a desktop.</dd></div>
-      <div><dt>The hard part</dt><dd>Getting the story right. Testing each draft by playing it, and pushing the AI until the plot and the game work.</dd></div>
+      <div><dt>The hard part</dt><dd>Getting the story right. The AI drafted each build from my prompts, I played it, and what I found went into the next prompt.</dd></div>
       <div><dt>Built with</dt><dd>TypeScript and Three.js. Its own repo, deployed on its own.</dd></div>
     </dl>
 
@@ -176,11 +302,11 @@
 
 <div class="body">
 
-  <!-- ═══ 02 · ERNTEREIF ══════════════════════════════════ -->
+  <!-- ═══ 03 · ERNTEREIF ══════════════════════════════════ -->
   <!-- The job story that used to open this section in quotes is now the
        brief cell: same words, without quoting myself. -->
   <section class="section" id="erntereif" data-reveal>
-    <p class="lbl"><span class="lbl-n">02</span>Erntereif</p>
+    <p class="lbl"><span class="lbl-n">03</span>Erntereif</p>
     <div class="two is-wide is-top">
       <h2>A seasonal calendar for what’s <em>growing near you.</em></h2>
       <div>
@@ -194,6 +320,38 @@
       <div><dt>The hard part</dt><dd>Data integrity and QA. Generative tools draft data in seconds, but reviewing 87 crops meant wrestling with the real question: fact-checking every item by hand versus learning where to trust AI-generated content.</dd></div>
       <div><dt>Built with</dt><dd>React and TypeScript.</dd></div>
     </dl>
+
+    <!-- The month the app opens on, March to September, scrubbable. The figures
+         are the app's own: Erntereif's summariseMonth() run over its produce
+         file for Germany, the same numbers its hero prints for each month. The
+         bars are the harvested count, so the scrubber is also the curve. One
+         native range input sits over the bars and does the work: keyboard,
+         touch drag and the screen-reader value come with it. Without script
+         the panel stays on September, which the screenshot below also shows. -->
+    <div class="er-scrub" data-erntereif>
+      <div class="er-head">
+        <p class="er-tone">Hochsaison</p>
+        <p class="er-title" lang="de">Was der <em>September</em> bringt</p>
+        <dl class="er-stats">
+          <div><dt>Being harvested</dt><dd data-k="h">65</dd></div>
+          <div><dt>Available, with cold store</dt><dd data-k="a">66</dd></div>
+        </dl>
+        <p class="er-new">New this month: <span>quinces, table grapes, parsnips</span></p>
+      </div>
+      <div class="er-scale">
+        <div class="er-bars" aria-hidden="true">
+          <span class="er-bar" style="--h:9" data-m="3" data-de="März" data-h="9" data-a="22" data-tone="Keller &amp; Lager" data-new="wild garlic, spinach"><i><b>9</b></i><span>Mar</span></span>
+          <span class="er-bar" style="--h:15" data-m="4" data-de="April" data-h="15" data-a="26" data-tone="Keller &amp; Lager" data-new="asparagus, radishes, rhubarb"><i><b>15</b></i><span>Apr</span></span>
+          <span class="er-bar" style="--h:22" data-m="5" data-de="Mai" data-h="22" data-a="28" data-tone="Das Jahr geht los" data-new="strawberries, kohlrabi, rocket"><i><b>22</b></i><span>May</span></span>
+          <span class="er-bar" style="--h:43" data-m="6" data-de="Juni" data-h="43" data-a="45" data-tone="Volle Saison" data-new="sweet cherries, courgettes, broccoli"><i><b>43</b></i><span>Jun</span></span>
+          <span class="er-bar" style="--h:55" data-m="7" data-de="Juli" data-h="55" data-a="56" data-tone="Hochsaison" data-new="tomatoes, apricots, blueberries"><i><b>55</b></i><span>Jul</span></span>
+          <span class="er-bar" style="--h:63" data-m="8" data-de="August" data-h="63" data-a="64" data-tone="Hochsaison" data-new="apples, pears, pumpkins"><i><b>63</b></i><span>Aug</span></span>
+          <span class="er-bar is-on" style="--h:65" data-m="9" data-de="September" data-h="65" data-a="66" data-tone="Hochsaison" data-new="quinces, table grapes, parsnips"><i><b>65</b></i><span>Sep</span></span>
+        </div>
+        <input class="er-range" type="range" min="3" max="9" step="1" value="9" aria-label="Month, March to September" aria-valuetext="September: 65 being harvested, 66 available">
+      </div>
+    </div>
+    <p class="cap">Germany, March to September, from the app’s own data. Drag across the months or use the arrow keys</p>
 
     <img class="img" src="img/erntereif-hero.jpg" alt="Erntereif in September: a large serif headline reading Was der September bringt on a cream ground beside painted pumpkin, kale and apple, with 65 varieties being harvested and 66 available" loading="lazy" width="1600" height="1000">
     <p class="cap">September in Germany. 65 varieties harvested, 66 available once cold store counts</p>
@@ -211,12 +369,12 @@
     </div>
   </section>
 
-  <!-- ═══ 03 · TANKEN ═════════════════════════════════════ -->
+  <!-- ═══ 04 · TANKEN ═════════════════════════════════════ -->
   <!-- All five screens run the app’s own -sample-history demo mode, which is
        canned end to end and says so on screen in red. That label is the reason
        these can be shown at all: nothing here is presented as a real price. -->
   <section class="section" id="tanken" data-reveal>
-    <p class="lbl"><span class="lbl-n">03</span>Tanken</p>
+    <p class="lbl"><span class="lbl-n">04</span>Tanken</p>
     <div class="two is-wide is-top">
       <h2>Fuel prices, and whether to fill up <em>now or wait.</em></h2>
       <div>
@@ -230,60 +388,97 @@
       <div><dt>Built with</dt><dd>SwiftUI. One screen, no tab bar.</dd></div>
     </dl>
 
-    <div class="appshots n3">
-      <figure class="appshot">
-        <img class="device-img" src="img/tanken-01-hero-1w.png" alt="Tanken home screen: national average of 1,794 euros, down 0,025 over a week, with a one-week line chart and the brand ranking below" loading="lazy" width="660" height="1435">
-        <figcaption class="appshot-c">
-          <div class="flow-n">01 · Heute</div>
-          <div class="flow-t">What it costs today</div>
-          <div class="flow-d">Grade, national average, and the move since last week.</div>
-        </figcaption>
-      </figure>
-      <figure class="appshot">
-        <img class="device-img" src="img/tanken-02-chart-3m.png" alt="The same screen over three months: a denser line chart with 91 readings, average 1,847 euros, range 1,794 to 1,896" loading="lazy" width="660" height="1435">
-        <figcaption class="appshot-c">
-          <div class="flow-n">02 · Verlauf</div>
-          <div class="flow-t">How it got there</div>
-          <div class="flow-d">1W to Max. The held reading replaces the headline while you drag.</div>
-        </figcaption>
-      </figure>
-      <figure class="appshot">
-        <img class="device-img" src="img/tanken-03-brands-prognose.png" alt="Brand table listing JET, TotalEnergies, Esso, Shell and Aral with average prices and overnight moves, above a forecast reading Morgen: eher guenstiger at 46 per cent" loading="lazy" width="660" height="1435">
-        <figcaption class="appshot-c">
-          <div class="flow-n">03 · Marken</div>
-          <div class="flow-t">Who is cheapest</div>
-          <div class="flow-d">Five chains ranked, each with its overnight move, then the outlook.</div>
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="appshots n2 sp-m">
-      <figure class="appshot">
-        <img class="device-img" src="img/tanken-04-prognose-method.png" alt="The calculation sheet: fuel prices falling, three market feeds listed as nicht verbunden, price history unfavourable, and a 46 / 22 / 32 per cent split with reliability given as medium" loading="lazy" width="660" height="1435">
-        <figcaption class="appshot-c">
-          <div class="flow-n">04 · Prognose</div>
-          <div class="flow-t">Why it thinks that</div>
-          <div class="flow-d">Each input listed, and how far to trust the result.</div>
-        </figcaption>
-      </figure>
-      <figure class="appshot">
-        <img class="device-img" src="img/tanken-05-info.png" alt="Info sheet: Tankerkoenig licence attribution, market data sources, a privacy note, and an explanation of what the numbers mean" loading="lazy" width="660" height="1435">
-        <figcaption class="appshot-c">
-          <div class="flow-n">05 · Info</div>
-          <div class="flow-t">Where the numbers come from</div>
-          <div class="flow-d">Sources, the CC BY attribution, and what the figures don’t cover.</div>
-        </figcaption>
-      </figure>
+    <!-- The five screens as one phone you can step through, in the order the
+         app reads top to bottom. The step list is the set of tabs; on a phone
+         it folds to a row of numbers and the caption moves under the screen.
+         All five images stay in the page (only one is shown), so each still
+         opens full size in the lightbox with its own caption. Without script
+         they fall back to a plain row of five. swiss.js: stepper(). -->
+    <div class="tk-flow" data-stepper>
+      <div class="tk-tabs" role="tablist" aria-label="Tanken, screen by screen">
+        <button class="tk-tab" type="button" role="tab" id="tk-tab-1" aria-controls="tk-panel-1" aria-selected="true">
+          <span class="flow-n">01 · Heute</span>
+          <span class="flow-t">What it costs today</span>
+          <span class="flow-d">Grade, national average, and the move since last week.</span>
+        </button>
+        <button class="tk-tab" type="button" role="tab" id="tk-tab-2" aria-controls="tk-panel-2" aria-selected="false" tabindex="-1">
+          <span class="flow-n">02 · Verlauf</span>
+          <span class="flow-t">How it got there</span>
+          <span class="flow-d">1W to Max. The held reading replaces the headline while you drag.</span>
+        </button>
+        <button class="tk-tab" type="button" role="tab" id="tk-tab-3" aria-controls="tk-panel-3" aria-selected="false" tabindex="-1">
+          <span class="flow-n">03 · Marken</span>
+          <span class="flow-t">Who is cheapest</span>
+          <span class="flow-d">Five chains ranked, each with its overnight move, then the outlook.</span>
+        </button>
+        <button class="tk-tab" type="button" role="tab" id="tk-tab-4" aria-controls="tk-panel-4" aria-selected="false" tabindex="-1">
+          <span class="flow-n">04 · Prognose</span>
+          <span class="flow-t">Why it thinks that</span>
+          <span class="flow-d">Each input listed, and how far to trust the result.</span>
+        </button>
+        <button class="tk-tab" type="button" role="tab" id="tk-tab-5" aria-controls="tk-panel-5" aria-selected="false" tabindex="-1">
+          <span class="flow-n">05 · Info</span>
+          <span class="flow-t">Where the numbers come from</span>
+          <span class="flow-d">Sources, the CC BY attribution, and what the figures don’t cover.</span>
+        </button>
+      </div>
+      <div class="tk-stage">
+        <figure class="appshot tk-shot is-on" role="tabpanel" id="tk-panel-1" aria-labelledby="tk-tab-1">
+          <img class="device-img" src="img/tanken-01-hero-1w.png" alt="Tanken home screen: national average of 1,794 euros, down 0,025 over a week, with a one-week line chart and the brand ranking below" loading="lazy" width="660" height="1435">
+          <figcaption class="appshot-c">
+            <div class="flow-n">01 · Heute</div>
+            <div class="flow-t">What it costs today</div>
+            <div class="flow-d">Grade, national average, and the move since last week.</div>
+          </figcaption>
+        </figure>
+        <figure class="appshot tk-shot" role="tabpanel" id="tk-panel-2" aria-labelledby="tk-tab-2">
+          <img class="device-img" src="img/tanken-02-chart-3m.png" alt="The same screen over three months: a denser line chart with 91 readings, average 1,847 euros, range 1,794 to 1,896" loading="lazy" width="660" height="1435">
+          <figcaption class="appshot-c">
+            <div class="flow-n">02 · Verlauf</div>
+            <div class="flow-t">How it got there</div>
+            <div class="flow-d">1W to Max. The held reading replaces the headline while you drag.</div>
+          </figcaption>
+        </figure>
+        <figure class="appshot tk-shot" role="tabpanel" id="tk-panel-3" aria-labelledby="tk-tab-3">
+          <img class="device-img" src="img/tanken-03-brands-prognose.png" alt="Brand table listing JET, TotalEnergies, Esso, Shell and Aral with average prices and overnight moves, above a forecast reading Morgen: eher guenstiger at 46 per cent" loading="lazy" width="660" height="1435">
+          <figcaption class="appshot-c">
+            <div class="flow-n">03 · Marken</div>
+            <div class="flow-t">Who is cheapest</div>
+            <div class="flow-d">Five chains ranked, each with its overnight move, then the outlook.</div>
+          </figcaption>
+        </figure>
+        <figure class="appshot tk-shot" role="tabpanel" id="tk-panel-4" aria-labelledby="tk-tab-4">
+          <img class="device-img" src="img/tanken-04-prognose-method.png" alt="The calculation sheet: fuel prices falling, three market feeds listed as nicht verbunden, price history unfavourable, and a 46 / 22 / 32 per cent split with reliability given as medium" loading="lazy" width="660" height="1435">
+          <figcaption class="appshot-c">
+            <div class="flow-n">04 · Prognose</div>
+            <div class="flow-t">Why it thinks that</div>
+            <div class="flow-d">Each input listed, and how far to trust the result.</div>
+          </figcaption>
+        </figure>
+        <figure class="appshot tk-shot" role="tabpanel" id="tk-panel-5" aria-labelledby="tk-tab-5">
+          <img class="device-img" src="img/tanken-05-info.png" alt="Info sheet: Tankerkoenig licence attribution, market data sources, a privacy note, and an explanation of what the numbers mean" loading="lazy" width="660" height="1435">
+          <figcaption class="appshot-c">
+            <div class="flow-n">05 · Info</div>
+            <div class="flow-t">Where the numbers come from</div>
+            <div class="flow-d">Sources, the CC BY attribution, and what the figures don’t cover.</div>
+          </figcaption>
+        </figure>
+        <div class="tk-nav">
+          <button class="tk-prev" type="button" aria-label="Previous screen">←</button>
+          <span class="tk-count" aria-hidden="true"><b>1</b> / 5</span>
+          <button class="tk-next" type="button" aria-label="Next screen">→</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══ 04 · HOW THEY WERE BUILT ══════════════════════ -->
-  <!-- The page closes on the thing all three have in common. Set as a
+  <!-- ═══ 05 · HOW THEY WERE BUILT ══════════════════════ -->
+  <!-- The page closes on the thing all four have in common. Set as a
        chapter like the others, so it reads as part of the page and not as a
        footnote. No stats: a reservation with a figure bolted to it reads as a
        finding, and this is not one. -->
   <section class="section" data-reveal>
-    <p class="lbl"><span class="lbl-n">04</span>How they were made</p>
+    <p class="lbl"><span class="lbl-n">05</span>How they were made</p>
     <div class="two is-wide is-top">
       <h2>Made with a mix of <em>AI tools.</em></h2>
       <div>

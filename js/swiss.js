@@ -787,11 +787,185 @@
     });
   }
 
+  /* ── TABS, SHARED ──────────────────────────────────────────────────────────
+     The two step-throughs on the experiments page are both ARIA tab sets:
+     roving tabindex, arrows and Home/End move and select, Enter is the
+     button's own. `select` is the component's; this only wires the keys. */
+  function tabKeys(tabs, select) {
+    tabs.forEach(function (t, i) {
+      t.addEventListener('keydown', function (e) {
+        var n = tabs.length, j = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % n;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + n) % n;
+        else if (e.key === 'Home') j = 0;
+        else if (e.key === 'End') j = n - 1;
+        if (j < 0) return;
+        e.preventDefault();
+        select(j, true);
+        tabs[j].focus();
+      });
+    });
+  }
+  function markTabs(tabs, i) {
+    tabs.forEach(function (t, k) {
+      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      t.tabIndex = k === i ? 0 : -1;
+    });
+  }
+
+  /* ── ROAM: THREE STEPS ─────────────────────────────────────────────────────
+     Tell it, find a route, explore the run. Choosing a step replays its
+     drawing (the class comes off, a reflow, the class goes back on, and the
+     CSS animations restart from zero). The steps advance on their own every
+     six seconds while the block is on screen, and wait for as long as a
+     pointer is over it or focus is inside it. A touch, or a click on a tab,
+     stops them for good: the reader has taken over. Reduced motion: no
+     drawing, no typing, no advancing. Every step is shown finished. */
+  function roamFlow() {
+    var box = $('[data-roam]');
+    if (!box) return;
+    var tabs = $$('.rf-tab', box), panels = $$('.rf-panel', box);
+    var typed = $('.rm-typed', box);
+    var full = typed ? typed.getAttribute('data-text') : '';
+    var MS = 6000, cur = 0, timer = 0, typeT = 0;
+    var hover = false, focus = false, stopped = reduced, visible = false;
+    box.style.setProperty('--rf-ms', MS + 'ms');
+    box.setAttribute('data-ready', '');
+
+    function type() {
+      clearInterval(typeT);
+      if (!typed) return;
+      if (reduced) { typed.textContent = full; return; }
+      var k = 0;
+      typed.textContent = '';
+      typeT = setInterval(function () {
+        k++;
+        typed.textContent = full.slice(0, k);
+        if (k >= full.length) clearInterval(typeT);
+      }, 55);
+    }
+    function play(p) {
+      if (reduced) return;
+      p.classList.toggle('is-play', false);
+      void p.offsetWidth;
+      p.classList.toggle('is-play', true);
+    }
+    function running() { return !stopped && !hover && !focus && visible; }
+    function schedule() {
+      clearTimeout(timer);
+      var on = running();
+      box.classList.toggle('is-cycling', on);
+      box.classList.toggle('is-paused', !on);
+      if (!on) return;
+      // restart the timer bar with the step
+      var bar = $('.rf-tab[aria-selected="true"] .rf-bar', box);
+      if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+      timer = setTimeout(function () { select((cur + 1) % tabs.length, false); }, MS);
+    }
+    function select(i, byUser) {
+      if (byUser) stopped = true;
+      cur = i;
+      markTabs(tabs, i);
+      panels.forEach(function (p, k) {
+        p.classList.toggle('is-on', k === i);
+        p.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+        if (k !== i) p.classList.toggle('is-play', false);
+      });
+      play(panels[i]);
+      if (i === 0) type();
+      schedule();
+    }
+
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { select(i, true); }); });
+    tabKeys(tabs, select);
+    box.addEventListener('mouseenter', function () { hover = true; schedule(); });
+    box.addEventListener('mouseleave', function () { hover = false; schedule(); });
+    box.addEventListener('focusin', function () { focus = true; schedule(); });
+    box.addEventListener('focusout', function (e) {
+      if (!box.contains(e.relatedTarget)) { focus = false; schedule(); }
+    });
+    box.addEventListener('touchstart', function () { stopped = true; schedule(); }, { passive: true });
+
+    markTabs(tabs, 0);
+    panels.forEach(function (p, k) { p.setAttribute('aria-hidden', k === 0 ? 'false' : 'true'); });
+    // The first step plays, and the clock starts, when the block comes into view.
+    if ('IntersectionObserver' in window) {
+      var first = true;
+      new IntersectionObserver(function (en) {
+        visible = en[0].isIntersecting;
+        if (visible && first) { first = false; select(cur, false); }
+        else schedule();
+      }, { threshold: 0.35 }).observe(box);
+    } else {
+      visible = true;
+      select(0, false);
+    }
+  }
+
+  /* ── ERNTEREIF: MONTH SCRUBBER ─────────────────────────────────────────────
+     The figures live on the bars as data attributes; the range input over the
+     bars picks one. It updates on every step of the input, so the headline
+     follows the finger. */
+  function erntereif() {
+    var box = $('[data-erntereif]');
+    if (!box) return;
+    var range = $('.er-range', box), bars = $$('.er-bar', box);
+    var tone = $('.er-tone', box), month = $('.er-title em', box);
+    var h = $('[data-k="h"]', box), a = $('[data-k="a"]', box), nw = $('.er-new span', box);
+    var NAMES = { 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September' };
+    function show(m) {
+      var bar = null;
+      bars.forEach(function (b) {
+        var on = +b.getAttribute('data-m') === m;
+        b.classList.toggle('is-on', on);
+        if (on) bar = b;
+      });
+      if (!bar) return;
+      var d = bar.dataset;
+      tone.textContent = d.tone;
+      month.textContent = d.de;
+      h.textContent = d.h;
+      a.textContent = d.a;
+      nw.textContent = d['new'];
+      range.setAttribute('aria-valuetext', NAMES[m] + ': ' + d.h + ' being harvested, ' + d.a + ' available');
+    }
+    range.addEventListener('input', function () { show(+range.value); });
+    show(+range.value);
+  }
+
+  /* ── TANKEN: STEP-THROUGH ──────────────────────────────────────────────────
+     Five screens in one phone frame. Tabs, previous and next, and the arrow
+     keys on the tabs. No timer: these are read, not watched. */
+  function stepper() {
+    var box = $('[data-stepper]');
+    if (!box) return;
+    var tabs = $$('.tk-tab', box), shots = $$('.tk-shot', box);
+    var count = $('.tk-count b', box), cur = 0;
+    box.setAttribute('data-ready', '');
+    function select(i) {
+      cur = i;
+      markTabs(tabs, i);
+      shots.forEach(function (s, k) {
+        s.classList.toggle('is-on', k === i);
+        s.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+        // keep the lightbox buttons of hidden screens out of the tab order
+        $$('button', s).forEach(function (b) { b.tabIndex = k === i ? 0 : -1; });
+      });
+      if (count) count.textContent = i + 1;
+    }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { select(i); }); });
+    tabKeys(tabs, select);
+    $('.tk-prev', box).addEventListener('click', function () { select((cur - 1 + tabs.length) % tabs.length); });
+    $('.tk-next', box).addEventListener('click', function () { select((cur + 1) % tabs.length); });
+    select(0);
+  }
+
   /* ── BOOT ──────────────────────────────────────────────────────────────── */
   function boot() {
     document.documentElement.dataset.swiss = '1';
     theme(); nav(); gridOverlay(); lightbox(); footerTop();
     progress(); launcherFade(); toTop(); launcher(); game();
+    roamFlow(); erntereif(); stepper();
     scrollLoop();
     reveals();
     addEventListener('load', function () { revealOnScreen(false); });

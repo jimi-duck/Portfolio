@@ -1904,3 +1904,223 @@ html.theme-anim,html.theme-anim *{
 /* The experiments page sets Wayward on the dark band. The band normally
    inverts in dark mode; the game is dark either way, so this one stays dark. */
 .dark-band.is-night{--band:#131311;--band-ink:#efede7}
+
+/* ── AI experiments: the three interactive pieces ──────────────────────────
+   Roam's three steps, Erntereif's month scrubber and Tanken's step-through.
+   Each is driven by swiss.js and each renders whole without it: Roam shows its
+   steps one under the next, Erntereif stays on September, Tanken falls back to
+   a row of five screens. html.js gates every hidden state, the same way the
+   reveals do, so a failed script never hides content. */
+
+/* ROAM. The stage is drawn in Roam's own palette — cream and forest, with the
+   orange kept for the route and the pins — so it reads as the app rather than
+   as the site. The tabs around it stay in the site's own ink. */
+.roam-flow{
+  --rm-ground:#FBF7F1;--rm-ink:#1B3427;--rm-or:#EC672A;
+  --rm-mute:color-mix(in srgb,var(--rm-ink) 68%,var(--rm-ground));
+  --rm-line:color-mix(in srgb,var(--rm-ink) 14%,var(--rm-ground));
+  --rm-water:#D8E4DE;--rm-park:#E4EAD8;
+  margin-top:var(--space-block)}
+:root[data-theme="dark"] .roam-flow{
+  --rm-ground:#0F1F17;--rm-ink:#FBF7F1;
+  --rm-water:#1C3A2E;--rm-park:#173024}
+.rf-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.rf-tab{position:relative;display:block;width:100%;text-align:left;padding:.95rem 0 .9rem;
+  border:0;border-top:1px solid var(--rule);background:none;color:var(--mute);cursor:pointer;
+  font:inherit;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;
+  transition:color .25s ease}
+.rf-tab:hover,.rf-tab[aria-selected="true"]{color:var(--ink)}
+.rf-n{font-variant-numeric:tabular-nums}
+/* The active tab's rule, and the auto-advance timer filling it. */
+.rf-bar{position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--ink);
+  transform:scaleX(0);transform-origin:left}
+.rf-tab[aria-selected="true"] .rf-bar{transform:scaleX(1)}
+.roam-flow.is-cycling .rf-tab[aria-selected="true"] .rf-bar{animation:rf-timer var(--rf-ms,6000ms) linear both}
+.roam-flow.is-paused .rf-tab[aria-selected="true"] .rf-bar{animation:none;transform:scaleX(1)}
+@keyframes rf-timer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* All three panels share one grid cell, so the block is as tall as the tallest
+   and switching never moves the page under the reader. */
+.rf-panels{display:grid;margin-top:clamp(1rem,2vw,1.6rem)}
+.rf-panel{grid-area:1 / 1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:var(--gap);align-items:center}
+html.js .roam-flow[data-ready] .rf-panel:not(.is-on){visibility:hidden}
+.rf-panel:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.rf-txt{grid-column:1 / 6}
+.rf-stage{grid-column:6 / 13}
+.rf-h{font-size:var(--t-h3);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.rf-d{margin-top:.7rem;font-size:var(--t-body);line-height:1.5;color:var(--ink-2);max-width:34ch}
+.rf-stage{aspect-ratio:16 / 10;background:var(--rm-ground);color:var(--rm-ink);
+  display:grid;place-items:center;overflow:hidden;position:relative}
+.rm-k{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--rm-mute)}
+
+/* 01 · the ask */
+.rm-ask{width:min(82%,420px)}
+.rm-field{display:flex;align-items:center;gap:.7rem;margin:.6rem 0 1.5rem;padding:.9rem 1.1rem;
+  border:1.5px solid var(--rm-ink);border-radius:999px;font-size:clamp(1.05rem,1.6vw,1.35rem);
+  letter-spacing:-.01em;min-height:3.4em}
+.rm-field svg{width:1.1em;height:1.1em;flex:none;color:var(--rm-or)}
+.rm-caret{display:inline-block;width:2px;height:1.15em;background:var(--rm-or);margin-left:-.45rem;
+  animation:rm-blink 1s steps(1) infinite}
+@keyframes rm-blink{50%{opacity:0}}
+.rm-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.4rem}
+.rm-chips li{padding:.45rem .8rem;border-radius:999px;background:var(--rm-line);font-size:var(--t-small);color:var(--rm-mute)}
+.rm-chips b{color:var(--rm-ink);margin-left:.25rem}
+.rm-note{font-size:var(--t-small);color:var(--rm-mute);border-top:1px solid var(--rm-line);padding-top:.8rem}
+.roam-flow .is-play .rm-chips li{animation:rm-up .5s var(--ez) both}
+.roam-flow .is-play .rm-chips li:nth-child(1){animation-delay:1.1s}
+.roam-flow .is-play .rm-chips li:nth-child(2){animation-delay:1.25s}
+.roam-flow .is-play .rm-chips li:nth-child(3){animation-delay:1.4s}
+@keyframes rm-up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 02 · the map */
+.rm-map{width:100%;height:100%;display:block}
+.rm-streets path{stroke:var(--rm-line);stroke-width:2;fill:none}
+.rm-park{fill:var(--rm-park)}
+.rm-water path{stroke:var(--rm-water);stroke-width:16;fill:none;stroke-linecap:round}
+.rm-water path.is-canal{stroke-width:9}
+.rm-route{fill:none;stroke:var(--rm-or);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:100;stroke-dashoffset:0}
+.rm-start circle{fill:var(--rm-ground);stroke:var(--rm-ink);stroke-width:3}
+.rm-pin circle{fill:var(--rm-or);stroke:var(--rm-ground);stroke-width:3}
+.rm-pin text{fill:#fff;font-size:12px;font-weight:700;text-anchor:middle}
+.rm-lbl{fill:var(--rm-ink);font-size:13px;font-weight:700;letter-spacing:-.01em;
+  paint-order:stroke;stroke:var(--rm-ground);stroke-width:4px;stroke-linejoin:round}
+.rm-lbl.is-water{fill:var(--rm-mute);font-weight:400;font-style:italic}
+.rm-lbl.is-area{fill:var(--rm-mute);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.rm-lbl.is-total{font-size:14px}
+.rm-pin{transform-box:fill-box;transform-origin:center}
+/* The draw runs only while a panel is playing; at rest the route is drawn. */
+.roam-flow .is-play .rm-route{animation:rm-draw 2.4s cubic-bezier(.45,0,.25,1) both .2s}
+.roam-flow .is-play .rm-pin{animation:rm-pop .5s var(--ez) both;animation-delay:calc(.55s + var(--d) * .35s)}
+.roam-flow .is-play .rm-pl{animation:rm-fade .4s ease both;animation-delay:calc(.7s + var(--d) * .35s)}
+@keyframes rm-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes rm-pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:none}}
+@keyframes rm-fade{from{opacity:0}to{opacity:1}}
+
+/* 03 · the run */
+.rm-card{width:min(86%,440px)}
+.rm-sights{list-style:none;margin:.6rem 0 1.4rem;counter-reset:none}
+.rm-sights li{display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-top:1px solid var(--rm-line);
+  font-size:var(--t-small)}
+.rm-no{flex:none;display:grid;place-items:center;width:1.45rem;height:1.45rem;border-radius:50%;
+  background:var(--rm-or);color:#fff;font-size:.72rem;font-weight:700}
+.rm-km{margin-left:auto;color:var(--rm-mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rm-gauge{display:flex;height:14px;margin:.6rem 0 .8rem;gap:2px;border-radius:2px;overflow:hidden}
+.rm-gauge i{flex:0 0 calc(var(--w) * 1% - 2px);transform-origin:left}
+.is-asph{background:var(--rm-ink)}
+.is-grav{background:var(--rm-or)}
+.is-cob{background:repeating-linear-gradient(135deg,var(--rm-ink) 0 2px,transparent 2px 5px);
+  box-shadow:inset 0 0 0 1px var(--rm-ink)}
+.rm-legend{list-style:none;display:grid;gap:.35rem}
+.rm-legend li{display:flex;align-items:center;gap:.55rem;font-size:var(--t-small);color:var(--rm-mute)}
+.rm-legend li>i{width:.8rem;height:.8rem;flex:none;border-radius:2px}
+.rm-legend b{margin-left:auto;color:var(--rm-ink);font-variant-numeric:tabular-nums}
+.roam-flow .is-play .rm-gauge i{animation:rm-grow .9s var(--ez) both}
+.roam-flow .is-play .rm-gauge i:nth-child(2){animation-delay:.15s}
+.roam-flow .is-play .rm-gauge i:nth-child(3){animation-delay:.3s}
+@keyframes rm-grow{from{transform:scaleX(0)}to{transform:none}}
+.roam-flow+.cap{margin-top:var(--space-tight)}
+
+/* No script: no tabs to press, so every step is shown, one under the next. */
+html:not(.js) .rf-tabs{display:none}
+html:not(.js) .rf-panels{gap:var(--space-block)}
+html:not(.js) .rf-panel{grid-area:auto}
+
+/* ERNTEREIF. The app's own hero, reset in the site's type: the month headline,
+   its two figures, what arrives that month, and the bars as the scrubber. */
+.er-scrub{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:end;
+  margin-bottom:var(--space-tight);padding:clamp(1.4rem,3vw,2.4rem);background:var(--sheet);border:1px solid var(--rule)}
+.er-head{grid-column:1 / 6}
+.er-scale{grid-column:7 / 13;position:relative}
+.er-tone{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--mute)}
+.er-title{margin-top:.5rem;font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.98}
+.er-title em{font-style:normal;color:var(--red)}
+.er-stats{display:flex;gap:clamp(1.4rem,3vw,2.6rem);margin-top:clamp(1rem,2vw,1.5rem);padding-top:.9rem;border-top:1px solid var(--rule)}
+.er-stats dt{font-size:var(--t-small);color:var(--mute)}
+.er-stats dd{font-size:clamp(1.8rem,3.4vw,2.8rem);font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;margin-top:.3rem}
+.er-new{margin-top:1rem;font-size:var(--t-small);color:var(--mute)}
+.er-new span{color:var(--ink)}
+.er-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:clamp(.3rem,1vw,.7rem);
+  height:clamp(160px,18vw,230px);align-items:end}
+.er-bar{display:flex;flex-direction:column;justify-content:flex-end;height:100%;text-align:center}
+.er-bar i{display:block;position:relative;height:calc(var(--h) / 66 * 82%);min-height:6px;
+  background:var(--rule);transition:background-color .25s ease}
+.er-bar i b{font-style:normal;position:absolute;left:0;right:0;bottom:100%;padding-bottom:.3rem;font-size:var(--t-small);
+  font-weight:700;color:var(--ink);opacity:0;font-variant-numeric:tabular-nums;transition:opacity .2s ease}
+.er-bar>span{margin-top:.5rem;font-size:var(--t-lab);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.er-bar.is-on i{background:var(--ink)}
+.er-bar.is-on i b{opacity:1}
+.er-bar.is-on>span{color:var(--ink)}
+/* The range input covers the bars, transparent: clicking or dragging anywhere
+   over them picks the month under the pointer. */
+.er-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;
+  -webkit-appearance:none;appearance:none;touch-action:pan-y}
+.er-range:focus-visible+*,.er-scale:has(.er-range:focus-visible){outline:2px solid var(--ink);outline-offset:6px}
+html:not(.js) .er-range{display:none}
+
+/* TANKEN. Steps down the left, one phone on the right. */
+.tk-flow{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:center}
+.tk-tabs{grid-column:1 / 6;display:grid}
+.tk-stage{grid-column:7 / 12;display:grid;justify-items:center}
+.tk-tab{display:block;width:100%;text-align:left;padding:1rem 0 1rem 1.1rem;border:0;border-top:1px solid var(--rule);
+  border-left:2px solid transparent;background:none;color:inherit;font:inherit;cursor:pointer;
+  transition:border-color .25s ease}
+.tk-tab:last-child{border-bottom:1px solid var(--rule)}
+.tk-tab .flow-n{display:block;color:var(--mute)}
+.tk-tab .flow-t{display:block;font-size:var(--t-body);letter-spacing:-.012em;line-height:1.25;margin-top:.3rem;color:var(--mute);
+  transition:color .25s ease}
+.tk-tab .flow-d{display:block;font-size:var(--t-small);color:var(--mute);margin-top:.35rem;line-height:1.5;max-width:40ch}
+.tk-tab:hover .flow-t{color:var(--ink)}
+.tk-tab[aria-selected="true"]{border-left-color:var(--red)}
+.tk-tab[aria-selected="true"] .flow-t{color:var(--ink);font-weight:700}
+.tk-tab[aria-selected="false"] .flow-d{display:none}
+.tk-shot{grid-area:1 / 1;width:100%}
+.tk-shot .device-img{margin-bottom:0}
+/* The step list already carries the words; the caption stays in the page for
+   the lightbox and for the phone layout below. */
+.tk-shot .appshot-c{display:none}
+html.js .tk-flow[data-ready] .tk-shot:not(.is-on){visibility:hidden}
+.tk-nav{grid-area:2 / 1;display:flex;align-items:center;gap:1rem;margin-top:1rem}
+.tk-nav button{min-width:44px;min-height:44px;border:1px solid var(--ink);background:none;color:var(--ink);
+  font:inherit;font-size:1.05rem;cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.tk-nav button:hover{background:var(--ink);color:var(--paper)}
+.tk-count{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);color:var(--mute);font-variant-numeric:tabular-nums}
+.tk-count b{color:var(--ink)}
+/* No script: the five screens as a plain row, captions under each. */
+html:not(.js) .tk-flow{display:block}
+html:not(.js) .tk-tabs,html:not(.js) .tk-nav{display:none}
+html:not(.js) .tk-stage{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--gap)}
+html:not(.js) .tk-shot{grid-area:auto}
+html:not(.js) .tk-shot .appshot-c{display:block;margin-top:.8rem}
+
+@media (max-width:900px){
+  .rf-panel{grid-template-columns:1fr;align-items:start;align-content:start;gap:1.1rem}
+  .rf-txt,.rf-stage{grid-column:auto}
+  .rf-stage{order:-1}
+  .er-scrub{grid-template-columns:1fr;row-gap:1.6rem}
+  .er-head,.er-scale{grid-column:auto}
+  .tk-flow{grid-template-columns:1fr}
+  .tk-tabs{grid-column:auto;grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tk-stage{grid-column:auto}
+  .tk-tab{padding:.75rem 0 .7rem;border-left:0;border-top:2px solid var(--rule);border-bottom:0 !important;text-align:center}
+  .tk-tab .flow-t,.tk-tab .flow-d{display:none !important}
+  .tk-tab[aria-selected="true"]{border-top-color:var(--red)}
+  .tk-tab[aria-selected="true"] .flow-n{color:var(--ink)}
+  .tk-shot .appshot-c{display:block;text-align:center;margin-top:1rem}
+  .tk-shot .appshot-c .flow-n{display:none}
+}
+@media (max-width:560px){
+  .rf-tab{font-size:.7rem;letter-spacing:.06em;padding-top:.8rem}
+  .rf-stage{aspect-ratio:auto;min-height:290px;padding:1.4rem 0}
+  .rf-panel:nth-child(2) .rf-stage{padding:0;min-height:0;aspect-ratio:4 / 3}
+  .rm-ask,.rm-card{width:calc(100% - 2.4rem)}
+  .rm-field{font-size:1.05rem}
+  .er-scrub{padding:1.2rem}
+  .tk-tab .flow-n{font-size:.68rem;letter-spacing:.04em}
+  .tk-shot .device-img{max-width:230px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rm-caret{animation:none}
+  .roam-flow .rf-bar{animation:none !important}
+}
