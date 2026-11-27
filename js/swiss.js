@@ -788,7 +788,7 @@
   }
 
   /* ── TABS, SHARED ──────────────────────────────────────────────────────────
-     The two step-throughs on the experiments page are both ARIA tab sets:
+     Wayward's scenes on the experiments page are an ARIA tab set:
      roving tabindex, arrows and Home/End move and select, Enter is the
      button's own. `select` is the component's; this only wires the keys. */
   function tabKeys(tabs, select) {
@@ -813,131 +813,179 @@
     });
   }
 
-  /* ── ROAM: ONE RUN, THREE CHAPTERS ─────────────────────────────────────────
-     Tell it, find a route, explore the run: the app's own screens for one
-     real run. The chapters advance on their own every six seconds while the
-     block is on screen, and wait for as long as a pointer is over it or focus
-     is inside it. A touch, or a click on a tab, stops them for good: the
-     reader has taken over. Reduced motion: no advancing, and the chapters
-     switch without the fade. */
-  function roamFlow() {
-    var box = $('[data-roam]');
-    if (!box) return;
-    var tabs = $$('.rf-tab', box), panels = $$('.rf-panel', box);
-    var MS = 6000, cur = 0, timer = 0;
-    var hover = false, focus = false, stopped = reduced, visible = false;
-    box.style.setProperty('--rf-ms', MS + 'ms');
-    box.setAttribute('data-ready', '');
-
-    function running() { return !stopped && !hover && !focus && visible; }
-    function schedule() {
-      clearTimeout(timer);
-      var on = running();
-      box.classList.toggle('is-cycling', on);
-      box.classList.toggle('is-paused', !on);
-      if (!on) return;
-      // restart the timer bar with the chapter
-      var bar = $('.rf-tab[aria-selected="true"] .rf-bar', box);
-      if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
-      timer = setTimeout(function () { select((cur + 1) % tabs.length, false); }, MS);
-    }
-    function select(i, byUser) {
-      if (byUser) stopped = true;
-      cur = i;
-      markTabs(tabs, i);
-      panels.forEach(function (p, k) {
-        p.classList.toggle('is-on', k === i);
-        p.setAttribute('aria-hidden', k === i ? 'false' : 'true');
-      });
-      // on a phone the screens scroll sideways; each chapter starts at its first
-      var row = $('.rf-shots', panels[i]);
-      if (row) row.scrollLeft = 0;
-      schedule();
-    }
-
-    tabs.forEach(function (t, i) { t.addEventListener('click', function () { select(i, true); }); });
-    tabKeys(tabs, select);
-    box.addEventListener('mouseenter', function () { hover = true; schedule(); });
-    box.addEventListener('mouseleave', function () { hover = false; schedule(); });
-    box.addEventListener('focusin', function () { focus = true; schedule(); });
-    box.addEventListener('focusout', function (e) {
-      if (!box.contains(e.relatedTarget)) { focus = false; schedule(); }
+  /* ── ROAM: THE MAP ─────────────────────────────────────────────────────────
+     Three of Roam's own loops on its own map. The distance buttons are a
+     radio group (arrows move and choose); choosing one fades the loop in and
+     moves the map to frame it, instantly under reduced motion. A stop in the
+     list, or its marker on the map, lights both and marks its km on the
+     surface strip. The map is framed to whatever shape its box is, so the
+     phone's squarer map still shows the whole loop. */
+  function roamMap() {
+    var root = $('[data-roam-map]');
+    if (!root) return;
+    var svg = $('.rx-svg', root), base = $('.rx-base', root);
+    var boxes = JSON.parse(root.getAttribute('data-boxes'));
+    var img = JSON.parse(root.getAttribute('data-img'));
+    var radios = $$('.rx-dist [role="radio"]', root);
+    var routes = $$('.rx-route', root), panels = $$('.rx-panel', root);
+    var cur = '8', vb = null, raf = 0;
+    var places = $$('.rx-places > g', root);
+    places.forEach(function (g) {
+      var m = /translate\(([\d.]+) ([\d.]+)\)/.exec(g.getAttribute('transform')) || [0, 0, 0];
+      g.__x = +m[1]; g.__y = +m[2];
     });
-    box.addEventListener('touchstart', function () { stopped = true; schedule(); }, { passive: true });
 
-    markTabs(tabs, 0);
-    panels.forEach(function (p, k) { p.setAttribute('aria-hidden', k === 0 ? 'false' : 'true'); });
-    // The first step plays, and the clock starts, when the block comes into view.
-    if ('IntersectionObserver' in window) {
-      var first = true;
-      new IntersectionObserver(function (en) {
-        visible = en[0].isIntersecting;
-        if (visible && first) { first = false; select(cur, false); }
-        else schedule();
-      }, { threshold: 0.35 }).observe(box);
-    } else {
-      visible = true;
-      select(0, false);
+    // light or dark basemap, following the site's theme
+    var lightSrc = base.getAttribute('href'), darkSrc = base.getAttribute('data-dark');
+    function paint() {
+      base.setAttribute('href', document.documentElement.getAttribute('data-theme') === 'dark' ? darkSrc : lightSrc);
     }
-  }
+    paint();
+    if ('MutationObserver' in window) {
+      new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
 
-  /* ── ERNTEREIF: MONTH SCRUBBER ─────────────────────────────────────────────
-     The figures live on the bars as data attributes; the range input over the
-     bars picks one. It updates on every step of the input, so the headline
-     follows the finger. */
-  function erntereif() {
-    var box = $('[data-erntereif]');
-    if (!box) return;
-    var range = $('.er-range', box), bars = $$('.er-bar', box);
-    var shots = $$('.er-shot', box);
-    var tone = $('.er-tone', box), month = $('.er-title em', box);
-    var h = $('[data-k="h"]', box), a = $('[data-k="a"]', box), nw = $('.er-new span', box);
-    var NAMES = { 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September' };
-    function show(m) {
-      var bar = null;
-      shots.forEach(function (im) { im.classList.toggle('is-on', +im.getAttribute('data-m') === m); });
-      bars.forEach(function (b) {
-        var on = +b.getAttribute('data-m') === m;
-        b.classList.toggle('is-on', on);
-        if (on) bar = b;
+    function fit(b) {
+      var r = svg.getBoundingClientRect();
+      var A = r.width && r.height ? r.width / r.height : 1.5;
+      var x = b[0], y = b[1], w = b[2], h = b[3];
+      if (w / h < A) { var nw = h * A; x -= (nw - w) / 2; w = nw; }
+      else { var nh = w / A; y -= (nh - h) / 2; h = nh; }
+      if (w <= img[2]) x = Math.max(img[0], Math.min(x, img[0] + img[2] - w));
+      if (h <= img[3]) y = Math.max(img[1], Math.min(y, img[1] + img[3] - h));
+      return [x, y, w, h];
+    }
+    function apply(v) {
+      vb = v;
+      svg.setAttribute('viewBox', v.map(function (n) { return n.toFixed(1); }).join(' '));
+      var cw = svg.getBoundingClientRect().width || 1;
+      svg.style.setProperty('--u', (v[2] / cw).toFixed(4));
+      // a place name near the edge would be cut off: leave it out
+      places.forEach(function (g) {
+        var x = g.__x, y = g.__y, mx = v[2] * 0.14, my = v[3] * 0.06;
+        g.classList.toggle('is-off', x < v[0] + mx || x > v[0] + v[2] - mx || y < v[1] + my || y > v[1] + v[3] - my);
       });
-      if (!bar) return;
-      var d = bar.dataset;
-      tone.textContent = d.tone;
-      month.textContent = d.de;
-      h.textContent = d.h;
-      a.textContent = d.a;
-      nw.textContent = d['new'];
-      range.setAttribute('aria-valuetext', NAMES[m] + ': ' + d.h + ' being harvested, ' + d.a + ' available');
     }
-    range.addEventListener('input', function () { show(+range.value); });
-    show(+range.value);
+    function frame(animate) {
+      var to = fit(boxes[cur]);
+      cancelAnimationFrame(raf);
+      if (!animate || !vb || reduced) { apply(to); return; }
+      var from = vb.slice(), t0 = performance.now(), D = 750;
+      (function step(now) {
+        var t = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - t, 4);
+        apply(from.map(function (a, i) { return a + (to[i] - a) * e; }));
+        if (t < 1) raf = requestAnimationFrame(step);
+      })(t0);
+    }
+
+    // stops: one lit at a time, list and map together
+    function light(i) {
+      var panel = $('.rx-panel[data-km="' + cur + '"]', root);
+      var route = $('.rx-route[data-km="' + cur + '"]', root);
+      $$('.rx-s', panel).forEach(function (b) {
+        var on = b.getAttribute('data-i') === String(i);
+        b.classList.toggle('is-hot', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      $$('.rx-stop', route).forEach(function (g) {
+        var on = g.getAttribute('data-i') === String(i);
+        g.classList.toggle('is-hot', on);
+        // the lit marker draws over its neighbours
+        if (on) g.parentNode.appendChild(g);
+      });
+      var here = $('.rx-here', panel), btn = i ? $('.rx-s[data-i="' + i + '"]', panel) : null;
+      if (here) {
+        if (btn) here.style.left = btn.getAttribute('data-at') + '%';
+        here.classList.toggle('is-on', !!btn);
+      }
+    }
+    var pinned = 0;
+    panels.forEach(function (p) {
+      var bar = $('.rx-bar', p);
+      if (bar) {
+        var here = document.createElement('span');
+        here.className = 'rx-here';
+        here.setAttribute('aria-hidden', 'true');
+        bar.parentNode.appendChild(here);
+      }
+      $$('.rx-s', p).forEach(function (b) {
+        var i = +b.getAttribute('data-i');
+        b.addEventListener('click', function () { pinned = pinned === i ? 0 : i; light(pinned); });
+        b.addEventListener('mouseenter', function () { light(i); });
+        b.addEventListener('mouseleave', function () { light(pinned); });
+        b.addEventListener('focus', function () { light(i); });
+        b.addEventListener('blur', function () { light(pinned); });
+      });
+    });
+    routes.forEach(function (r) {
+      $$('.rx-stop', r).forEach(function (g) {
+        var i = +g.getAttribute('data-i');
+        g.addEventListener('click', function () { pinned = pinned === i ? 0 : i; light(pinned); });
+        g.addEventListener('mouseenter', function () { light(i); });
+        g.addEventListener('mouseleave', function () { light(pinned); });
+      });
+    });
+
+    function choose(k, animate) {
+      cur = k;
+      pinned = 0;
+      root.setAttribute('data-on', k);
+      radios.forEach(function (b) {
+        var on = b.getAttribute('data-km') === k;
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+      });
+      routes.forEach(function (r) { r.classList.toggle('is-on', r.getAttribute('data-km') === k); });
+      panels.forEach(function (p) {
+        var on = p.getAttribute('data-km') === k;
+        p.classList.toggle('is-on', on);
+        p.hidden = !on;
+      });
+      light(0);
+      frame(animate);
+    }
+    radios.forEach(function (b, i) {
+      b.addEventListener('click', function () { choose(b.getAttribute('data-km'), true); });
+      b.addEventListener('keydown', function (e) {
+        var n = radios.length, j = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % n;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + n) % n;
+        else if (e.key === 'Home') j = 0;
+        else if (e.key === 'End') j = n - 1;
+        if (j < 0) return;
+        e.preventDefault();
+        choose(radios[j].getAttribute('data-km'), true);
+        radios[j].focus();
+      });
+    });
+
+    choose(cur, false);
+    var rt = 0;
+    addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { frame(false); }, 120);
+    });
   }
 
-  /* ── TANKEN: STEP-THROUGH ──────────────────────────────────────────────────
-     Five screens in one phone frame. Tabs, previous and next, and the arrow
-     keys on the tabs. No timer: these are read, not watched. */
-  function stepper() {
-    var box = $('[data-stepper]');
+  /* ── WAYWARD: SCENES ───────────────────────────────────────────────────────
+     Five of the game's screens on one stage, the thumbnails as tabs. No
+     timer: these are looked at, not watched. Hidden scenes keep their
+     lightbox buttons out of the tab order. */
+  function scenes() {
+    var box = $('[data-scenes]');
     if (!box) return;
-    var tabs = $$('.tk-tab', box), shots = $$('.tk-shot', box);
-    var count = $('.tk-count b', box), cur = 0;
+    var tabs = $$('.ww-th', box), panes = $$('.ww-scene', box);
     box.setAttribute('data-ready', '');
     function select(i) {
-      cur = i;
       markTabs(tabs, i);
-      shots.forEach(function (s, k) {
-        s.classList.toggle('is-on', k === i);
-        s.setAttribute('aria-hidden', k === i ? 'false' : 'true');
-        // keep the lightbox buttons of hidden screens out of the tab order
-        $$('button', s).forEach(function (b) { b.tabIndex = k === i ? 0 : -1; });
+      panes.forEach(function (p, k) {
+        p.classList.toggle('is-on', k === i);
+        p.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+        $$('button', p).forEach(function (b) { b.tabIndex = k === i ? 0 : -1; });
       });
-      if (count) count.textContent = i + 1;
     }
     tabs.forEach(function (t, i) { t.addEventListener('click', function () { select(i); }); });
     tabKeys(tabs, select);
-    $('.tk-prev', box).addEventListener('click', function () { select((cur - 1 + tabs.length) % tabs.length); });
-    $('.tk-next', box).addEventListener('click', function () { select((cur + 1) % tabs.length); });
     select(0);
   }
 
@@ -946,7 +994,7 @@
     document.documentElement.dataset.swiss = '1';
     theme(); nav(); gridOverlay(); lightbox(); footerTop();
     progress(); launcherFade(); toTop(); launcher(); game();
-    roamFlow(); erntereif(); stepper();
+    roamMap(); scenes();
     scrollLoop();
     reveals();
     addEventListener('load', function () { revealOnScreen(false); });

@@ -1905,156 +1905,218 @@ html.theme-anim,html.theme-anim *{
    inverts in dark mode; the game is dark either way, so this one stays dark. */
 .dark-band.is-night{--band:#131311;--band-ink:#efede7}
 
-/* ── AI experiments: the three interactive pieces ──────────────────────────
-   Roam's three steps, Erntereif's month scrubber and Tanken's step-through.
-   Each is driven by swiss.js and each renders whole without it: Roam shows its
-   steps one under the next, Erntereif stays on September, Tanken falls back to
-   a row of five screens. html.js gates every hidden state, the same way the
+/* ── AI experiments: the interactive pieces ────────────────────────────────
+   Roam's map and Wayward's screens are driven by swiss.js and render whole
+   without it: Roam shows its 8 km loop, Wayward its five screens one under
+   the next. Erntereif's plates and Tanken's row need no script. html.js gates every hidden state, the same way the
    reveals do, so a failed script never hides content. */
 
-/* ROAM. One real run in the app's own screens, in three chapters. The tabs
-   are in the site's ink; the screens carry Roam's colours on their own. */
-.roam-flow{margin-top:var(--space-block)}
-.rf-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
-.rf-tab{position:relative;display:block;width:100%;text-align:left;padding:.95rem 0 .9rem;
-  border:0;border-top:1px solid var(--rule);background:none;color:var(--mute);cursor:pointer;
-  font:inherit;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;
-  transition:color .25s ease}
-.rf-tab:hover,.rf-tab[aria-selected="true"]{color:var(--ink)}
-.rf-n{font-variant-numeric:tabular-nums}
-/* The active tab's rule, and the auto-advance timer filling it. */
-.rf-bar{position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--ink);
-  transform:scaleX(0);transform-origin:left}
-.rf-tab[aria-selected="true"] .rf-bar{transform:scaleX(1)}
-.roam-flow.is-cycling .rf-tab[aria-selected="true"] .rf-bar{animation:rf-timer var(--rf-ms,6000ms) linear both}
-.roam-flow.is-paused .rf-tab[aria-selected="true"] .rf-bar{animation:none;transform:scaleX(1)}
-@keyframes rf-timer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* ROAM. The map carries the section: Roam's own loops from Rosenthaler Platz,
+   on the OpenStreetMap basemap from the app's Berlin pack, drawn in the
+   site's paper and ink. Beside it, the same figures the app shows for the
+   chosen loop. The map sticks while the stop list scrolls past it. */
+.rx{--map-bg:#ebe8e0;--map-paper:#fbfaf7;
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start;
+  margin-top:var(--space-block)}
+:root[data-theme="dark"] .rx{--map-bg:#151514;--map-paper:#252422}
+.rx-map{grid-column:1 / 9;position:sticky;top:calc(var(--bar) + 1.25rem);margin:0}
+.rx-svg{display:block;width:100%;height:auto;aspect-ratio:4 / 3;max-height:calc(100svh - var(--bar) - 5rem);background:var(--map-bg);
+  border:1px solid var(--rule);font-family:var(--sans);-webkit-user-select:none;user-select:none}
+.rx-places .is-off{display:none}
+.rx-credit{margin-top:.5rem;font-size:.72rem;color:var(--mute)}
 
-/* All three chapters share one grid cell, so the block is as tall as the
-   tallest and switching never moves the page under the reader. */
-.rf-panels{display:grid;margin-top:clamp(1.2rem,2.4vw,2rem)}
-.rf-panel{grid-area:1 / 1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:var(--gap);align-items:start;align-content:start}
-html.js .roam-flow[data-ready] .rf-panel:not(.is-on){visibility:hidden}
-.rf-txt{grid-column:1 / 4}
-.rf-shots{grid-column:4 / 13;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
-.rf-h{font-size:var(--t-h3);font-weight:700;letter-spacing:-.02em;line-height:1.1}
-.rf-d{margin-top:.7rem;font-size:var(--t-body);line-height:1.5;color:var(--ink-2);max-width:34ch}
-.rf-shot .device-img.rf-phone{max-width:100%;width:100%;border-radius:clamp(14px,1.6vw,24px);
+/* Everything in .rx-mk is drawn in screen pixels: swiss.js sets --u, the
+   map units per CSS pixel, so markers and names stay one size at any zoom. */
+.rx-mk{transform:scale(calc(var(--u,4) * var(--mk,1)))}
+.rx-places text{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  text-anchor:middle;fill:var(--ink);fill-opacity:.42}
+.rx-places .is-water{fill:#4f6b6d;fill-opacity:.8;font-style:italic;letter-spacing:.2em}
+:root[data-theme="dark"] .rx-places .is-water{fill:#7f9a9c}
+
+.rx-ghost,.rx-case,.rx-line{fill:none;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.rx-ghost{stroke:var(--ink);stroke-opacity:.3;stroke-width:1.25}
+.rx[data-on="5"] .rx-ghost[data-km="5"],.rx[data-on="8"] .rx-ghost[data-km="8"],.rx[data-on="12"] .rx-ghost[data-km="12"]{display:none}
+.rx-case{stroke:var(--map-paper);stroke-width:8;stroke-opacity:.85}
+.rx-line{stroke:var(--red);stroke-width:3.25}
+.rx-route{opacity:0;visibility:hidden;transition:opacity .45s var(--ez),visibility 0s .45s}
+.rx-route.is-on{opacity:1;visibility:visible;transition:opacity .45s var(--ez)}
+
+.rx-stop{cursor:pointer}
+.rx-stop circle{fill:var(--map-paper);stroke:var(--ink);stroke-width:1.5;transition:fill .2s ease,stroke .2s ease}
+.rx-n{font-size:10.5px;font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums;pointer-events:none}
+.rx-lbl{font-size:13px;font-weight:700;letter-spacing:-.01em;fill:var(--ink);opacity:0;
+  paint-order:stroke;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round;transition:opacity .2s ease;pointer-events:none}
+.rx-stop.is-hot circle{fill:var(--red);stroke:var(--map-paper)}
+.rx-stop.is-hot .rx-n{fill:#fff}
+.rx-stop.is-hot .rx-lbl{opacity:1}
+.rx-start circle{fill:var(--ink);stroke:var(--map-paper);stroke-width:3}
+.rx-start text{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;fill:var(--ink);
+  paint-order:stroke;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round}
+
+/* The panel: distance, then the loop as the app describes it. */
+.rx-side{grid-column:9 / 13}
+.rx-dist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--rule)}
+.rx-dist button{position:relative;padding:.75rem 0 .2rem;border:0;background:none;color:var(--mute);cursor:pointer;
+  font:inherit;font-size:var(--t-mid);font-weight:700;letter-spacing:-.03em;text-align:left;
+  font-variant-numeric:tabular-nums;transition:color .25s ease}
+.rx-dist button::before{content:"";position:absolute;left:0;right:var(--gap);top:-1px;height:2px;background:var(--ink);
+  transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ez)}
+.rx-dist button:hover,.rx-dist button[aria-checked="true"]{color:var(--ink)}
+.rx-dist button[aria-checked="true"]::before{transform:none}
+.rx-dist button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+html:not(.js) .rx-dist{display:none}
+
+.rx-title{margin-top:1.5rem;font-size:var(--t-h3);font-weight:700;letter-spacing:-.022em;line-height:1.12}
+.rx-meta{margin-top:.45rem;font-size:var(--t-small);color:var(--mute);font-variant-numeric:tabular-nums}
+.rx-why{margin-top:1.2rem;font-size:var(--t-small);line-height:1.5;color:var(--ink-2)}
+.rx-k{display:block;margin:1.7rem 0 .55rem;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);
+  text-transform:uppercase;color:var(--mute)}
+.rx-why .rx-k{margin:0 0 .3rem}
+
+.rx-stops{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.rx-s{display:grid;grid-template-columns:1.5rem minmax(0,1fr) auto;column-gap:.75rem;align-items:center;
+  width:100%;padding:.5rem 0;border:0;border-bottom:1px solid var(--rule-2);background:none;color:inherit;
+  font:inherit;text-align:left;cursor:pointer}
+.rx-sn{display:grid;place-items:center;width:1.5rem;height:1.5rem;border:1.5px solid var(--ink);border-radius:50%;
+  font-size:.7rem;font-weight:700;font-variant-numeric:tabular-nums;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
+.rx-st b{display:block;font-size:var(--t-small);font-weight:700;line-height:1.3;transition:color .2s ease}
+.rx-st i{display:block;font-style:normal;font-size:.8rem;line-height:1.35;color:var(--mute)}
+.rx-sk{font-size:.8rem;color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rx-s:hover b,.rx-s.is-hot b{color:var(--red-ink)}
+.rx-s.is-hot .rx-sn{background:var(--red);border-color:var(--red);color:#fff}
+.rx-s:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* The surface strip: the app's stretches to the metre, with km ticks, and
+   a red mark for the stop in focus. Fills differ in pattern as well as tone. */
+.rx-strip{position:relative;padding-bottom:1.25rem}
+.rx-bar{position:relative;height:14px;background:var(--rule-2);overflow:hidden}
+.rx-bar i{position:absolute;top:0;bottom:0}
+.rx-ticks span{position:absolute;top:19px;transform:translateX(-50%);font-size:.66rem;line-height:1;color:var(--mute);
+  font-variant-numeric:tabular-nums}
+.rx-ticks span::before{content:"";position:absolute;left:50%;top:-5px;height:4px;border-left:1px solid var(--rule)}
+.rx-here{position:absolute;top:-4px;height:22px;width:2px;margin-left:-1px;background:var(--red);opacity:0;
+  transition:left .35s var(--ez),opacity .2s ease}
+.rx-here.is-on{opacity:1}
+.sf-0{background:color-mix(in srgb,var(--ink) 15%,transparent)}
+.sf-1{background:var(--ink)}
+.sf-2{background:radial-gradient(circle,var(--paper) 0 1px,transparent 1.4px) 0 0 / 4px 4px,var(--ink)}
+.sf-3{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--ink) 55%,transparent) 0 1px,transparent 1px 4px),
+  color-mix(in srgb,var(--ink) 22%,transparent)}
+.sf-4{background:radial-gradient(circle,color-mix(in srgb,var(--ink) 70%,transparent) 0 1px,transparent 1.4px) 0 0 / 4px 4px,
+  color-mix(in srgb,var(--ink) 20%,transparent)}
+.sf-5{background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--ink) 70%,transparent) 0 2px,transparent 2px 5px),
+  color-mix(in srgb,var(--ink) 26%,transparent)}
+.sf-6{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--ink) 60%,transparent) 0 1px,transparent 1px 3px),
+  color-mix(in srgb,var(--ink) 20%,transparent)}
+.sf-7{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--ink) 25%,transparent) 0 1px,transparent 1px 5px)}
+.rx-legend{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;list-style:none;margin:.25rem 0 0;padding:0;
+  font-size:.8rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.rx-legend li{display:flex;align-items:center;gap:.45rem}
+.rx-legend i{display:block;width:11px;height:11px;border:1px solid var(--rule)}
+.rx-notes{list-style:none;margin:0;padding:0;font-size:var(--t-small);color:var(--ink-2)}
+.rx-notes li{padding:.45rem 0;border-top:1px solid var(--rule-2)}
+.rx-notes li:last-child{border-bottom:1px solid var(--rule-2)}
+.rx+.cap{margin-top:var(--space-tight)}
+
+/* The same 8 km loop in the app: four screens in a row. */
+.rx-app-l{margin-top:var(--space-block)}
+.rx-app{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);margin-top:var(--space-tight)}
+.rx-shot .device-img.rx-phone{max-width:100%;width:100%;border-radius:clamp(14px,1.6vw,24px);
   border:1px solid var(--rule);box-shadow:0 10px 30px rgba(19,19,17,.08);margin-bottom:.9rem}
-.rf-shot .appshot-c .flow-d{margin-top:.3rem}
-/* A chapter fades in when it is chosen; under reduced motion it just appears
-   (the site-wide block at the foot of this file zeroes the duration). */
-.roam-flow .rf-panel.is-on .rf-shot{animation:rf-in .6s var(--ez) both}
-.roam-flow .rf-panel.is-on .rf-shot:nth-child(2){animation-delay:.08s}
-.roam-flow .rf-panel.is-on .rf-shot:nth-child(3){animation-delay:.16s}
-@keyframes rf-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.roam-flow+.cap{margin-top:var(--space-tight)}
+.rx-shot .appshot-c .flow-d{margin-top:.3rem}
+.rx-app+.cap{margin-top:var(--space-tight)}
 
-/* No script: no tabs to press, so every step is shown, one under the next. */
-html:not(.js) .rf-tabs{display:none}
-html:not(.js) .rf-panels{gap:var(--space-block)}
-html:not(.js) .rf-panel{grid-area:auto}
+/* WAYWARD. The game's own screens on one large stage, thumbnails under it.
+   All five scenes share one grid cell, so switching never moves the page. */
+.ww{margin-top:var(--space-block)}
+.ww-stage{display:grid}
+.ww-scene{grid-area:1 / 1;margin:0}
+.ww-scene .cap{min-height:3em}
+html.js .ww[data-ready] .ww-scene:not(.is-on){visibility:hidden}
+html.js .ww[data-ready] .ww-scene.is-on{animation:ww-in .5s var(--ez) both}
+@keyframes ww-in{from{opacity:.35}to{opacity:1}}
+.ww-thumbs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(.5rem,1.2vw,1rem);margin-top:var(--space-tight)}
+.ww-th{position:relative;display:block;padding:.6rem 0 0;border:0;border-top:1px solid var(--rule);background:none;
+  color:var(--mute);font:inherit;text-align:left;cursor:pointer;transition:color .25s ease}
+.ww-th::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ez)}
+.ww-th img{display:block;width:100%;height:auto;aspect-ratio:16 / 9;object-fit:cover;opacity:.5;
+  transition:opacity .25s ease}
+.ww-th span{display:block;margin-top:.5rem;font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase}
+.ww-th:hover,.ww-th[aria-selected="true"]{color:var(--ink)}
+.ww-th:hover img,.ww-th[aria-selected="true"] img{opacity:1}
+.ww-th[aria-selected="true"]::before{transform:none}
+.ww-th:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* No script: the five one under the next, no thumbnails. */
+html:not(.js) .ww-thumbs{display:none}
+html:not(.js) .ww-stage{gap:var(--space-block)}
+html:not(.js) .ww-scene{grid-area:auto}
 
-/* ERNTEREIF. The app's own hero, reset in the site's type: the month headline,
-   its two figures, what arrives that month, and the bars as the scrubber. */
-.er-scrub{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:end;
-  margin-bottom:var(--space-tight);padding:clamp(1.4rem,3vw,2.4rem);background:var(--sheet);border:1px solid var(--rule)}
-.er-head{grid-column:1 / 6}
-.er-scale{grid-column:7 / 13;position:relative}
-.er-tone{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);text-transform:uppercase;color:var(--mute)}
-.er-title{margin-top:.5rem;font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:.98}
-.er-title em{font-style:normal;color:var(--red)}
-.er-stats{display:flex;gap:clamp(1.4rem,3vw,2.6rem);margin-top:clamp(1rem,2vw,1.5rem);padding-top:.9rem;border-top:1px solid var(--rule)}
-.er-stats dt{font-size:var(--t-small);color:var(--mute)}
-.er-stats dd{font-size:clamp(1.8rem,3.4vw,2.8rem);font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;margin-top:.3rem}
-.er-new{margin-top:1rem;font-size:var(--t-small);color:var(--mute)}
-.er-new span{color:var(--ink)}
-.er-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:clamp(.3rem,1vw,.7rem);
-  height:clamp(160px,18vw,230px);align-items:end}
-.er-bar{display:flex;flex-direction:column;justify-content:flex-end;height:100%;text-align:center}
-.er-bar i{display:block;position:relative;height:calc(var(--h) / 66 * 82%);min-height:6px;
-  background:var(--rule);transition:background-color .25s ease}
-.er-bar i b{font-style:normal;position:absolute;left:0;right:0;bottom:100%;padding-bottom:.3rem;font-size:var(--t-small);
-  font-weight:700;color:var(--ink);opacity:0;font-variant-numeric:tabular-nums;transition:opacity .2s ease}
-.er-bar>span{margin-top:.5rem;font-size:var(--t-lab);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
-.er-bar.is-on i{background:var(--ink)}
-.er-bar.is-on i b{opacity:1}
-.er-bar.is-on>span{color:var(--ink)}
-/* The range input covers the bars, transparent: clicking or dragging anywhere
-   over them picks the month under the pointer. */
-.er-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;
-  -webkit-appearance:none;appearance:none;touch-action:pan-y}
-.er-range:focus-visible+*,.er-scale:has(.er-range:focus-visible){outline:2px solid var(--ink);outline-offset:6px}
-html:not(.js) .er-range{display:none}
-/* The app's own grid for the chosen month, all seven stacked in one cell. The
-   lightbox wraps each image in a button, so the stacking is on whatever the
-   direct child is. */
-.er-shots{grid-column:1 / -1;display:grid;margin-top:var(--space-tight)}
-.er-shots>*{grid-area:1 / 1}
-html.js .er-shots>:not(.is-on):not(:has(.is-on)){visibility:hidden}
+/* ERNTEREIF. March against September, tile for tile, from the app's own
+   data and its own paintings. The sheet is the app's cream in both themes,
+   so the paintings sit on it the way they do in the app (multiply drops
+   their white ground). Colour is harvested that month; grey is cold store. */
+.er-plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);align-items:start;
+  margin-top:var(--space-block)}
+.er-plate{margin:0;padding:clamp(1.1rem,2.4vw,2rem);background:#f6f1e7;color:#131311;border:1px solid var(--rule)}
+.er-ph{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.3rem 1rem;
+  padding-bottom:.8rem;border-bottom:1px solid rgba(19,19,17,.14)}
+.er-pm{font-size:var(--t-h2);font-weight:700;letter-spacing:-.038em;line-height:1}
+.er-pc{font-size:var(--t-small);color:#4b4944;font-variant-numeric:tabular-nums}
+.er-pc b{font-size:var(--t-mid);font-weight:700;letter-spacing:-.03em;color:#131311}
+.er-pc span{white-space:nowrap}
+.er-tiles{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:2px;list-style:none;margin:1rem 0 0;padding:0}
+.er-t img{display:block;width:100%;height:auto;aspect-ratio:1;mix-blend-mode:multiply}
+.er-t.is-store img{filter:grayscale(1);opacity:.4}
+.er-pf{margin-top:1rem;padding-top:.8rem;border-top:1px solid rgba(19,19,17,.14);font-size:var(--t-small);line-height:1.5;color:#33322e}
+.er-key{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;list-style:none;margin:var(--space-tight) 0 0;padding:0;
+  font-size:var(--t-small);color:var(--mute)}
+.er-key li{display:flex;align-items:center;gap:.5rem}
+.er-key i{display:block;width:12px;height:12px;background:#c7682f}
+.er-key i.is-store{background:#b9b6ae}
+.er-app-l{margin-top:var(--space-block)}
+.er-app{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:var(--space-tight)}
+.er-app figure{margin:0}
 
-/* TANKEN. Steps down the left, one phone on the right. */
-.tk-flow{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:center}
-.tk-tabs{grid-column:1 / 6;display:grid}
-.tk-stage{grid-column:7 / 12;display:grid;justify-items:center}
-.tk-tab{display:block;width:100%;text-align:left;padding:1rem 0 1rem 1.1rem;border:0;border-top:1px solid var(--rule);
-  border-left:2px solid transparent;background:none;color:inherit;font:inherit;cursor:pointer;
-  transition:border-color .25s ease}
-.tk-tab:last-child{border-bottom:1px solid var(--rule)}
-.tk-tab .flow-n{display:block;color:var(--mute)}
-.tk-tab .flow-t{display:block;font-size:var(--t-body);letter-spacing:-.012em;line-height:1.25;margin-top:.3rem;color:var(--mute);
-  transition:color .25s ease}
-.tk-tab .flow-d{display:block;font-size:var(--t-small);color:var(--mute);margin-top:.35rem;line-height:1.5;max-width:40ch}
-.tk-tab:hover .flow-t{color:var(--ink)}
-.tk-tab[aria-selected="true"]{border-left-color:var(--red)}
-.tk-tab[aria-selected="true"] .flow-t{color:var(--ink);font-weight:700}
-.tk-tab[aria-selected="false"] .flow-d{display:none}
-.tk-shot{grid-area:1 / 1;width:100%}
-.tk-shot .device-img{margin-bottom:0}
-/* The step list already carries the words; the caption stays in the page for
-   the lightbox and for the phone layout below. */
-.tk-shot .appshot-c{display:none}
-html.js .tk-flow[data-ready] .tk-shot:not(.is-on){visibility:hidden}
-.tk-nav{grid-area:2 / 1;display:flex;align-items:center;gap:1rem;margin-top:1rem}
-.tk-nav button{min-width:44px;min-height:44px;border:1px solid var(--ink);background:none;color:var(--ink);
-  font:inherit;font-size:1.05rem;cursor:pointer;transition:background-color .25s ease,color .25s ease}
-.tk-nav button:hover{background:var(--ink);color:var(--paper)}
-.tk-count{font-size:var(--t-lab);font-weight:700;letter-spacing:var(--tr-lab);color:var(--mute);font-variant-numeric:tabular-nums}
-.tk-count b{color:var(--ink)}
-/* No script: the five screens as a plain row, captions under each. */
-html:not(.js) .tk-flow{display:block}
-html:not(.js) .tk-tabs,html:not(.js) .tk-nav{display:none}
-html:not(.js) .tk-stage{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--gap)}
-html:not(.js) .tk-shot{grid-area:auto}
-html:not(.js) .tk-shot .appshot-c{display:block;margin-top:.8rem}
+/* TANKEN. The app's five dark screens side by side on a black plate, the
+   same black as the screens, so the interface sits in it. */
+.tk-plate{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(.8rem,1.6vw,1.6rem);
+  padding:clamp(1.4rem,3vw,2.6rem) clamp(1rem,2.4vw,2.2rem);background:#000;color:#efede7;
+  --ink:#efede7;--ink-2:#dedcd6;--mute:#a3a199;--rule:rgba(239,237,231,.12);--red-ink:#ff5b36}
+.tk-plate .device-img{max-width:100%;width:100%;margin-bottom:1rem}
+.tk-plate .appshot-c{padding-top:.8rem;border-top:1px solid var(--rule)}
+.tk-plate .appshot-c .flow-t{font-size:var(--t-small);font-weight:700}
+.tk-plate .appshot-c .flow-d{font-size:.8rem}
 
 @media (max-width:900px){
-  .rf-panel{grid-template-columns:1fr;gap:1.1rem}
-  .rf-txt,.rf-shots{grid-column:auto}
-  /* The three screens become a row to swipe through, the next one peeking in. */
-  .rf-shots{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1rem;
+  /* Map on top, full width and not sticky; the panel under it. */
+  .rx-map,.rx-side{grid-column:1 / -1}
+  .rx-map{position:static}
+  /* The four screens become a row to swipe through, the next one peeking in. */
+  .rx-app{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1rem;
     margin-inline:calc(var(--pad) * -1);padding:0 var(--pad) .4rem;scroll-padding-inline:var(--pad);scrollbar-width:none}
-  .rf-shots::-webkit-scrollbar{display:none}
-  .rf-shot{flex:0 0 min(64vw,300px);scroll-snap-align:start}
-  .er-scrub{grid-template-columns:1fr;row-gap:1.6rem}
-  .er-head,.er-scale{grid-column:auto}
-  .tk-flow{grid-template-columns:1fr}
-  .tk-tabs{grid-column:auto;grid-template-columns:repeat(5,minmax(0,1fr))}
-  .tk-stage{grid-column:auto}
-  .tk-tab{padding:.75rem 0 .7rem;border-left:0;border-top:2px solid var(--rule);border-bottom:0 !important;text-align:center}
-  .tk-tab .flow-t,.tk-tab .flow-d{display:none !important}
-  .tk-tab[aria-selected="true"]{border-top-color:var(--red)}
-  .tk-tab[aria-selected="true"] .flow-n{color:var(--ink)}
-  .tk-shot .appshot-c{display:block;text-align:center;margin-top:1rem}
-  .tk-shot .appshot-c .flow-n{display:none}
+  .rx-app::-webkit-scrollbar{display:none}
+  .rx-shot{flex:0 0 min(58vw,280px);scroll-snap-align:start}
+  /* Tanken's five screens become a row to swipe through. */
+  .tk-plate{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+    scroll-padding-inline:clamp(1rem,2.4vw,2.2rem)}
+  .tk-plate::-webkit-scrollbar{display:none}
+  .tk-plate .tk-shot{flex:0 0 min(56vw,260px);scroll-snap-align:start}
+}
+@media (max-width:700px){
+  .er-plates,.er-app{grid-template-columns:1fr}
 }
 @media (max-width:560px){
-  .rf-tab{font-size:.7rem;letter-spacing:.06em;padding-top:.8rem}
-  .er-scrub{padding:1.2rem}
-  .tk-tab .flow-n{font-size:.68rem;letter-spacing:.04em}
-  .tk-shot .device-img{max-width:230px}
+  .rx-map{margin-inline:calc(var(--pad) * -1)}
+  .rx{--mk:.86}
+  .rx-svg{aspect-ratio:1 / 1;max-height:none}
+  .rx-svg{border-inline:0}
+  .rx-credit{padding-inline:var(--pad)}
+  .ww-th span{font-size:.62rem;letter-spacing:.06em}
+  .er-tiles{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .tk-plate{margin-inline:calc(var(--pad) * -1)}
 }
 @media (prefers-reduced-motion:reduce){
-  .roam-flow .rf-bar{animation:none !important}
+  .rx-route,.rx-dist button::before,.rx-here,.ww-th::before{transition:none !important}
+  html.js .ww[data-ready] .ww-scene.is-on{animation:none}
 }
