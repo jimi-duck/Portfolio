@@ -787,11 +787,214 @@
     });
   }
 
+  /* ── TABS, SHARED ──────────────────────────────────────────────────────────
+     Wayward's scenes on the experiments page are an ARIA tab set:
+     roving tabindex, arrows and Home/End move and select, Enter is the
+     button's own. `select` is the component's; this only wires the keys. */
+  function tabKeys(tabs, select) {
+    tabs.forEach(function (t, i) {
+      t.addEventListener('keydown', function (e) {
+        var n = tabs.length, j = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % n;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + n) % n;
+        else if (e.key === 'Home') j = 0;
+        else if (e.key === 'End') j = n - 1;
+        if (j < 0) return;
+        e.preventDefault();
+        select(j, true);
+        tabs[j].focus();
+      });
+    });
+  }
+  function markTabs(tabs, i) {
+    tabs.forEach(function (t, k) {
+      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      t.tabIndex = k === i ? 0 : -1;
+    });
+  }
+
+  /* ── ROAM: THE MAP ─────────────────────────────────────────────────────────
+     Three of Roam's own loops on its own map. The distance buttons are a
+     radio group (arrows move and choose); choosing one fades the loop in and
+     moves the map to frame it, instantly under reduced motion. A stop in the
+     list, or its marker on the map, lights both and marks its km on the
+     surface strip. The map is framed to whatever shape its box is, so the
+     phone's squarer map still shows the whole loop. */
+  function roamMap() {
+    var root = $('[data-roam-map]');
+    if (!root) return;
+    var svg = $('.rx-svg', root), base = $('.rx-base', root);
+    var boxes = JSON.parse(root.getAttribute('data-boxes'));
+    var img = JSON.parse(root.getAttribute('data-img'));
+    var radios = $$('.rx-dist [role="radio"]', root);
+    var routes = $$('.rx-route', root), panels = $$('.rx-panel', root);
+    var cur = '8', vb = null, raf = 0;
+    var places = $$('.rx-places > g', root);
+    places.forEach(function (g) {
+      var m = /translate\(([\d.]+) ([\d.]+)\)/.exec(g.getAttribute('transform')) || [0, 0, 0];
+      g.__x = +m[1]; g.__y = +m[2];
+    });
+
+    // light or dark basemap, following the site's theme
+    var lightSrc = base.getAttribute('href'), darkSrc = base.getAttribute('data-dark');
+    function paint() {
+      base.setAttribute('href', document.documentElement.getAttribute('data-theme') === 'dark' ? darkSrc : lightSrc);
+    }
+    paint();
+    if ('MutationObserver' in window) {
+      new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
+
+    function fit(b) {
+      var r = svg.getBoundingClientRect();
+      var A = r.width && r.height ? r.width / r.height : 1.5;
+      var x = b[0], y = b[1], w = b[2], h = b[3];
+      if (w / h < A) { var nw = h * A; x -= (nw - w) / 2; w = nw; }
+      else { var nh = w / A; y -= (nh - h) / 2; h = nh; }
+      if (w <= img[2]) x = Math.max(img[0], Math.min(x, img[0] + img[2] - w));
+      if (h <= img[3]) y = Math.max(img[1], Math.min(y, img[1] + img[3] - h));
+      return [x, y, w, h];
+    }
+    function apply(v) {
+      vb = v;
+      svg.setAttribute('viewBox', v.map(function (n) { return n.toFixed(1); }).join(' '));
+      var cw = svg.getBoundingClientRect().width || 1;
+      svg.style.setProperty('--u', (v[2] / cw).toFixed(4));
+      // a place name near the edge would be cut off: leave it out
+      places.forEach(function (g) {
+        var x = g.__x, y = g.__y, mx = v[2] * 0.14, my = v[3] * 0.06;
+        g.classList.toggle('is-off', x < v[0] + mx || x > v[0] + v[2] - mx || y < v[1] + my || y > v[1] + v[3] - my);
+      });
+    }
+    function frame(animate) {
+      var to = fit(boxes[cur]);
+      cancelAnimationFrame(raf);
+      if (!animate || !vb || reduced) { apply(to); return; }
+      var from = vb.slice(), t0 = performance.now(), D = 750;
+      (function step(now) {
+        var t = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - t, 4);
+        apply(from.map(function (a, i) { return a + (to[i] - a) * e; }));
+        if (t < 1) raf = requestAnimationFrame(step);
+      })(t0);
+    }
+
+    // stops: one lit at a time, list and map together
+    function light(i) {
+      var panel = $('.rx-panel[data-km="' + cur + '"]', root);
+      var route = $('.rx-route[data-km="' + cur + '"]', root);
+      $$('.rx-s', panel).forEach(function (b) {
+        var on = b.getAttribute('data-i') === String(i);
+        b.classList.toggle('is-hot', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      $$('.rx-stop', route).forEach(function (g) {
+        var on = g.getAttribute('data-i') === String(i);
+        g.classList.toggle('is-hot', on);
+        // the lit marker draws over its neighbours
+        if (on) g.parentNode.appendChild(g);
+      });
+      var here = $('.rx-here', panel), btn = i ? $('.rx-s[data-i="' + i + '"]', panel) : null;
+      if (here) {
+        if (btn) here.style.left = btn.getAttribute('data-at') + '%';
+        here.classList.toggle('is-on', !!btn);
+      }
+    }
+    var pinned = 0;
+    panels.forEach(function (p) {
+      var bar = $('.rx-bar', p);
+      if (bar) {
+        var here = document.createElement('span');
+        here.className = 'rx-here';
+        here.setAttribute('aria-hidden', 'true');
+        bar.parentNode.appendChild(here);
+      }
+      $$('.rx-s', p).forEach(function (b) {
+        var i = +b.getAttribute('data-i');
+        b.addEventListener('click', function () { pinned = pinned === i ? 0 : i; light(pinned); });
+        b.addEventListener('mouseenter', function () { light(i); });
+        b.addEventListener('mouseleave', function () { light(pinned); });
+        b.addEventListener('focus', function () { light(i); });
+        b.addEventListener('blur', function () { light(pinned); });
+      });
+    });
+    routes.forEach(function (r) {
+      $$('.rx-stop', r).forEach(function (g) {
+        var i = +g.getAttribute('data-i');
+        g.addEventListener('click', function () { pinned = pinned === i ? 0 : i; light(pinned); });
+        g.addEventListener('mouseenter', function () { light(i); });
+        g.addEventListener('mouseleave', function () { light(pinned); });
+      });
+    });
+
+    function choose(k, animate) {
+      cur = k;
+      pinned = 0;
+      root.setAttribute('data-on', k);
+      radios.forEach(function (b) {
+        var on = b.getAttribute('data-km') === k;
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+      });
+      routes.forEach(function (r) { r.classList.toggle('is-on', r.getAttribute('data-km') === k); });
+      panels.forEach(function (p) {
+        var on = p.getAttribute('data-km') === k;
+        p.classList.toggle('is-on', on);
+        p.hidden = !on;
+      });
+      light(0);
+      frame(animate);
+    }
+    radios.forEach(function (b, i) {
+      b.addEventListener('click', function () { choose(b.getAttribute('data-km'), true); });
+      b.addEventListener('keydown', function (e) {
+        var n = radios.length, j = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % n;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + n) % n;
+        else if (e.key === 'Home') j = 0;
+        else if (e.key === 'End') j = n - 1;
+        if (j < 0) return;
+        e.preventDefault();
+        choose(radios[j].getAttribute('data-km'), true);
+        radios[j].focus();
+      });
+    });
+
+    choose(cur, false);
+    var rt = 0;
+    addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { frame(false); }, 120);
+    });
+  }
+
+  /* ── WAYWARD: SCENES ───────────────────────────────────────────────────────
+     Five of the game's screens on one stage, the thumbnails as tabs. No
+     timer: these are looked at, not watched. Hidden scenes keep their
+     lightbox buttons out of the tab order. */
+  function scenes() {
+    var box = $('[data-scenes]');
+    if (!box) return;
+    var tabs = $$('.ww-th', box), panes = $$('.ww-scene', box);
+    box.setAttribute('data-ready', '');
+    function select(i) {
+      markTabs(tabs, i);
+      panes.forEach(function (p, k) {
+        p.classList.toggle('is-on', k === i);
+        p.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+        $$('button', p).forEach(function (b) { b.tabIndex = k === i ? 0 : -1; });
+      });
+    }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { select(i); }); });
+    tabKeys(tabs, select);
+    select(0);
+  }
+
   /* ── BOOT ──────────────────────────────────────────────────────────────── */
   function boot() {
     document.documentElement.dataset.swiss = '1';
     theme(); nav(); gridOverlay(); lightbox(); footerTop();
     progress(); launcherFade(); toTop(); launcher(); game();
+    roamMap(); scenes();
     scrollLoop();
     reveals();
     addEventListener('load', function () { revealOnScreen(false); });
