@@ -923,6 +923,8 @@ body.grid-on #gridhint{display:block}
    it takes the full width, and it gets a lighter rule than the page-level band
    because the chapter's own 2px rule is the landmark here. */
 .glance.is-inset{width:100%;margin:clamp(1.8rem,3.4vw,2.8rem) 0;border-top-color:var(--rule)}
+/* Two cells, set on the same two columns as the headline and lede above. */
+@media (min-width:901px){.glance.is-two{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* The page-level band on the experiments page is an index: each label jumps to
    its project. */
 .lab-index dt a{color:var(--ink)}
