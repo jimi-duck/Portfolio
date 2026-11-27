@@ -929,17 +929,17 @@ body.grid-on #gridhint{display:block}
    its project. */
 .lab-index dt a{color:var(--ink)}
 .lab-index dt a:hover{color:var(--red-ink)}
-/* A standalone project link. The homepage .wproj-cta, but it hovers on itself
-   rather than on a parent card, and is set in the accent so it reads as the
-   one thing to do in the chapter. */
-.lab-cta{display:inline-flex;align-items:center;gap:.6rem;margin-top:clamp(1.2rem,2.2vw,1.8rem);
-  position:relative;padding-bottom:.45rem;color:var(--red-ink)}
+/* A standalone project link, set as a solid button so it reads as the one
+   thing to do in the chapter. The label carries its own ↗; red on hover. */
+.lab-cta{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(1.2rem,2.2vw,1.8rem);
+  min-height:48px;padding:.85rem 1.35rem;background:var(--ink);color:var(--paper);
+  transition:background-color .3s var(--ez),color .3s var(--ez)}
 .lab-cta .cta-t{font-size:var(--t-lab);font-weight:700;text-transform:uppercase;letter-spacing:var(--tr-lab)}
-.lab-cta::before{content:'\2192';font-size:1rem;line-height:1;transition:transform .45s var(--ez)}
-.lab-cta::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;
-  transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ez)}
-.lab-cta:hover::after{transform:scaleX(1);transform-origin:left}
-.lab-cta:hover::before{transform:translateX(4px)}
+.lab-cta:hover{background:var(--red);color:#fff}
+.lab-cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* On the dark band the ink is light, so the label takes the band colour. */
+.dark-band .lab-cta{color:var(--band)}
+.dark-band .lab-cta:hover{color:#fff}
 
 /* The chapter number. Grey rather than red: a page with nine chapters would
    otherwise spend the accent nine times. The number is there so a skimmer can
